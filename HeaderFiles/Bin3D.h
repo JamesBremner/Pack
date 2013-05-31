@@ -21,6 +21,9 @@ public:
     void set_x_sub_bin(Bin *value);
     void set_y_sub_bin(Bin *value);
     void set_z_sub_bin(Bin *value);
+
+	virtual void ScaleSize( float f );
+
     
     void itemsInBin(vector<Item*> &items);
     void binRemSpace(vector<Bin*> &bins);

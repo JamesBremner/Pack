@@ -26,6 +26,8 @@ public:
     void set_parent_bin( Bin *value );
     void set_item ( Item *item2D );
     virtual Bin *Root( Bin* bin );
+
+	virtual void ScaleSize( float f ) { }
     
     
     virtual void itemsInBin(vector<Item*> &items) = 0;

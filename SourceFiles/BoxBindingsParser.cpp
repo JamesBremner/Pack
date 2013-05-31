@@ -48,28 +48,47 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
         vector<string> id_bin;
         split(id_bin, bin_str, is_any_of(":"));
         
+		const int expected_field_count = 3;
         
-        if( id_bin.size() < 2 || id_bin.size() > 2)
+        if( id_bin.size() < expected_field_count || id_bin.size() > expected_field_count )
         {
             dim = BoxBindingsParser::BIN_PARSE_ERROR;
             break;
         }
         string bin_id = id_bin[0];
-        string bin_size = id_bin[1];
+		string bin_dimension_units = id_bin[1];
+        string bin_size = id_bin[2];
         id_bin.clear();
         
         vector<string> bin_size_v;
         split(bin_size_v, bin_size, is_any_of("x"));
                 
-        if ( isDimError( bin_size_v.size() ) == true )
+        if ( isDimError( (int)bin_size_v.size() ) == true )
         {
             dim = BoxBindingsParser::PACKER_ERROR;
             break;
         } 
         else
-            dim = bin_size_v.size();
+            dim = (int)bin_size_v.size();
+
+		Bin * pBin = buildBin ( bin_id, bin_size_v );
+
+		// Convert from input dimensional units
+		// to internal units, assumed to be inches ( the default )
+		// Any unrecognized unit is just taken to be inches
+
+		if ( bin_dimension_units == "ft" ) {
+			pBin->ScaleSize( 12.0 );
+		} else if ( bin_dimension_units == "mm" ) {
+			pBin->ScaleSize( 0.0393701 );
+		} else if ( bin_dimension_units == "cm" ) {
+			pBin->ScaleSize( 0.393701 );
+		} else if ( bin_dimension_units == "m" ) {
+			pBin->ScaleSize( 39.3701 );
+		}
+
         
-        bins.push_back( buildBin ( bin_id, bin_size_v ) );
+        bins.push_back( pBin );
         
         bin_size_v.clear();
         
@@ -135,7 +154,7 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
         }
         
         string item_id = id_item[0];
-        int constraints = atof( id_item[1].c_str() );
+        int constraints = (int) atof( id_item[1].c_str() );
         string item_size = id_item[2];
 
         
@@ -144,13 +163,13 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
         vector<string> item_size_v;
         split(item_size_v, item_size, is_any_of("x"));
         
-        if ( isDimError( item_size_v.size() ) == true )
+        if ( isDimError( (int)item_size_v.size() ) == true )
         {
             dim = BoxBindingsParser::PACKER_ERROR;
             break;
         } 
         else  
-            dim = item_size_v.size();
+            dim = (int)item_size_v.size();
         
         items.push_back( buildItem ( item_id, item_size_v, constraints) );
         

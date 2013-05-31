@@ -191,7 +191,14 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+/**
 
+  Pack items in bins
+
+  @param[in] bins  The bin specifications
+  @param[in] items The item specifications
+
+*/
 const char *PACKIT4ME_packThem( const char *bins, const char *items )
 {
 
