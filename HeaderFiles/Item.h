@@ -18,6 +18,7 @@ class Item : public virtual Shape2D {
 		int constraints();
 		void set_constraints( int value );
 
+	virtual void ScaleSize( float f ) { }
 
 		virtual void encodeAsJSON(stringstream &jsonStr) = 0;
 	private:

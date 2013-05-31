@@ -44,12 +44,12 @@ void Utils::displayHelp()
 	cout << "packit4me v1.0.0, open source bin packing algorithm based on classic bin packing best fit" << endl;
 	cout << "Copyright (C) 2012 by Arash Sharif under MIT license" << endl;
 	cout << "Copyright (C) 2013 by James Bremner under MIT license" << endl << endl;
-	cout << "use: packit4me [options] " << "example: packit4me -b 0:ft:5x5x5 -i 0:0:1x1x1 -s b -o result" << endl << endl;
+	cout << "use: packit4me [options] " << "example: packit4me -b 0:ft:5x5x5 -i 0:ft:0:1x1x1 -s b -o result" << endl << endl;
 	cout << "\t-b\t- bin or bins size (format: {id}::{dim_unit}:{size1}x{size2}x{size3}). comma dil multiple" << endl;
-	cout << "\t-i\t- item or items size (format: {id}:{constraints}:{size1}x{size2}x{size3}) comma dil multiple" << endl;
+	cout << "\t-i\t- item or items size (format: {id}:{dim_unit}:{constraints}:{size1}x{size2}x{size3}) comma dil multiple" << endl;
 	cout << "\t-s\t- shape. Either 'b' for box or 't' for any tube or round" << endl;
 	cout << "\t-o\t- output file. the output (json) are written to this file.  prints to stdo if left out" << endl << endl;
-	cout << "find source @ https://github.com/asharif/packit4.me" << endl << endl;
+	cout << "find source @ https://github.com/JamesBremner/packit4me2" << endl << endl;
 
 }
 

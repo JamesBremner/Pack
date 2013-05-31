@@ -39,6 +39,8 @@ protected:
     virtual Bin *buildBin( string bin_id, vector<string> bin_size_v );
     virtual Item *buildItem( string item_id, vector<string> item_size_v, int constraints);
 
+private:
+	float DimensionUnitScale( const string& unit_string );
 };
 
 #endif	/* BINDINGPARSER_H */

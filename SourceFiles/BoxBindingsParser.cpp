@@ -75,25 +75,37 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
 
 		// Convert from input dimensional units
 		// to internal units, assumed to be inches ( the default )
-		// Any unrecognized unit is just taken to be inches
 
-		if ( bin_dimension_units == "ft" ) {
-			pBin->ScaleSize( 12.0 );
-		} else if ( bin_dimension_units == "mm" ) {
-			pBin->ScaleSize( 0.0393701 );
-		} else if ( bin_dimension_units == "cm" ) {
-			pBin->ScaleSize( 0.393701 );
-		} else if ( bin_dimension_units == "m" ) {
-			pBin->ScaleSize( 39.3701 );
-		}
+		pBin->ScaleSize( DimensionUnitScale( bin_dimension_units ) );
 
-        
         bins.push_back( pBin );
         
         bin_size_v.clear();
         
     }
     
+}
+/**
+
+  Scale according to input dimension units into inches
+
+	param[in] unit_string  The dimensional unit string input e.g. ft, in
+
+	@return Scale required, 1.0 if not recognized
+
+*/
+float BoxBindingsParser::DimensionUnitScale( const string& unit_string )
+{
+		if ( unit_string == "ft" ) {
+			return 12.0f;
+		} else if ( unit_string == "mm" ) {
+			return  0.0393701f;
+		} else if ( unit_string == "cm" ) {
+			return 0.393701f;
+		} else if ( unit_string == "m" ) {
+			return 39.3701f;
+		}
+		return 1.0f;
 }
 
 Bin *BoxBindingsParser::buildBin( string bin_id, vector<string> bin_size_v )
@@ -146,16 +158,18 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
         vector<string> id_item;
         split(id_item, item_str, is_any_of(":"));
         
-       
-        if( id_item.size() < 3 || id_item.size() > 3 )
+       const int expected_field_count = 4;
+
+        if( id_item.size() < 4 || id_item.size() > 4 )
         {
             dim = BoxBindingsParser::ITEM_PARSE_ERROR;
             break;
         }
         
         string item_id = id_item[0];
-        int constraints = (int) atof( id_item[1].c_str() );
-        string item_size = id_item[2];
+		string item_dimension_units = id_item[1];
+        int constraints = (int) atof( id_item[2].c_str() );
+        string item_size = id_item[3];
 
         
         id_item.clear();
@@ -170,8 +184,15 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
         } 
         else  
             dim = (int)item_size_v.size();
-        
-        items.push_back( buildItem ( item_id, item_size_v, constraints) );
+
+		Item * pItem = buildItem ( item_id, item_size_v, constraints);
+ 
+		// Convert from input dimensional units
+		// to internal units, assumed to be inches ( the default )
+
+		pItem->ScaleSize( DimensionUnitScale( item_dimension_units ) );
+
+        items.push_back( pItem );
         
         item_size_v.clear();
         
