@@ -1,3 +1,7 @@
+
+#include "stdafx.h"
+
+#ifndef WIN32
 #include <iostream>
 #include <fstream>
 #include <typeinfo>
@@ -48,6 +52,7 @@
 #include "BoxBindingsParser.cpp"
 #include "TubeBindingsParser.cpp"
 using namespace std;
+#endif
 
 int main(int argc, char *argv[]) 
 { 

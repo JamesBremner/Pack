@@ -5,7 +5,7 @@
  * Created on June 14, 2012, 1:16 PM
  */
 
-#include "Item.h"
+#include "stdafx.h"
 
 Item::Item() {
 }

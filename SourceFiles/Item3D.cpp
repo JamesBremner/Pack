@@ -1,5 +1,5 @@
 
-#include <sstream>
+#include "stdafx.h"
 
 /* 
  * File:   Item3D.cpp

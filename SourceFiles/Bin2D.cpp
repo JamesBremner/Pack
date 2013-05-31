@@ -1,5 +1,5 @@
 
-#include <vector>
+#include "stdafx.h"
 
 #ifndef NULL
 #define NULL   ((void *) 0)

@@ -1,7 +1,5 @@
 
-#include <map>
-#include <vector>
-#include <string>
+#include "stdafx.h"
 
 #ifndef NULL
 #define NULL   ((void *) 0)

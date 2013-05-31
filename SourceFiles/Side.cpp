@@ -1,4 +1,7 @@
 
+#include "stdafx.h"
+
+
 Side::Side()
 {
 

@@ -4,7 +4,10 @@
  * 
  * Created on June 13, 2012, 11:51 AM
  */
-using namespace std;
+
+#include "stdafx.h"
+
+
 
 Bin::Bin():Shape2D() {
     
