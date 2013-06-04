@@ -20,8 +20,18 @@ BoxPacker2D::~BoxPacker2D()
 
 }
 
-void BoxPacker2D::packThem( vector<Bin*> bins, vector<Item*> items )
+namespace functors {
+bool IsUnusedExtraBin( Bin * b )
 {
+	return ( b->id().find("_cpy") != -1 &&
+		! b->itemsInBinCount() );
+}
+}
+
+void BoxPacker2D::packThem( vector<Bin*>& ref_bins, vector<Item*> items )
+{
+
+	vector<Bin*> bins( ref_bins );
 
 	sort( items.begin(), items.end(), Utils::compareDescShape );
 
@@ -46,9 +56,29 @@ void BoxPacker2D::packThem( vector<Bin*> bins, vector<Item*> items )
 			bin_found_index++;
 		} 
 
-		if ( is_bin_found == true )
-			bins.erase( bins.begin() + bin_found_index ); 
+		if ( is_bin_found == true ) {
+
+			Bin * used = *(bins.begin() + bin_found_index);
+			bins.erase( bins.begin() + bin_found_index );
+			if( ! used->parent_bin() ) {
+				// about to pack an item in an unused bin
+				// get a new bin ready for future use
+				Bin * new_bin = used->CreateNewEmptyCopy();
+				bins.push_back( new_bin );
+				ref_bins.push_back( new_bin );
+			}
+
+		} else {
+			// this item would not fit in any of the bins we have available
+			int dbg = 1;
+		}
 	}
+
+	// delete unused extra bins
+	ref_bins.erase( remove_if( ref_bins.begin(), ref_bins.end(),
+		functors::IsUnusedExtraBin ),
+		ref_bins.end() );
+
 
 }
 

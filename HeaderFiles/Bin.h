@@ -28,10 +28,12 @@ public:
     virtual Bin *Root( Bin* bin );
 
 	virtual void ScaleSize( float f ) { }
+	virtual void Dumper() {}
     
     
     virtual void itemsInBin(vector<Item*> &items) = 0;
     virtual void binRemSpace(vector<Bin*> &bins) = 0;
+	virtual Bin* CreateNewEmptyCopy() { return NULL; }
     
     virtual int itemsInBinCount();
     virtual int remsInBinCount();

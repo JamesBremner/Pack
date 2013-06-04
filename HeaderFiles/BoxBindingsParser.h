@@ -11,6 +11,8 @@ using namespace std;
 
 class BoxBindingsParser {
 
+public:
+
 	struct bin_build_instructions {
 		string bin_id;
 		vector<string> size_v;
@@ -24,7 +26,7 @@ class BoxBindingsParser {
 	};
 
 
-public:
+
     
     static const int PACKER_1D = 1;
     static const int PACKER_2D = 2;
@@ -41,7 +43,8 @@ public:
     void parseBinsAndItems( const char *bins, const char *items,
                               vector<Bin*> &bins_v, vector<Item*> &items_v, int &dim );
     
-    
+    virtual Bin *buildBin( bin_build_instructions& instructions );
+
 protected:
     
     int dim_;
@@ -50,7 +53,6 @@ protected:
     void parseItems( vector<Item*> &items, vector<string> item_v, int &dim );
     
     virtual bool isDimError( int dim );
-    virtual Bin *buildBin( bin_build_instructions& instructions );
     virtual Item *buildItem( item_build_instructions& instructions );
 
 private:

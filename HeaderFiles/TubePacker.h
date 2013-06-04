@@ -19,7 +19,7 @@ public:
     TubePacker(const TubePacker& orig);
     virtual ~TubePacker();
     
-    void packThem( vector<Bin*> bins, vector<Item*> items);
+    void packThem( vector<Bin*>& bins, vector<Item*> items);
     bool packIt( Bin *bin, Item *item, vector<Bin*> &bins);
     void splitBinLength( Bin *bin, Item *item );
     

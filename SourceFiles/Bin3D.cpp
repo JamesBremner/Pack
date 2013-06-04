@@ -15,6 +15,46 @@ Bin3D::Bin3D(const Bin3D& orig) {
 Bin3D::~Bin3D() {
 }
 
+Bin * Bin3D::CreateNewEmptyCopy()
+{
+	BoxBindingsParser::bin_build_instructions instructions;
+	char buf[20];
+
+	// identify this as a new copy
+	string sid = id();
+	int p = sid.find("_cpy");
+	if( p == -1 ) {
+		sid += "_cpy2";
+	} else {
+		int cpy = atoi( sid.substr(p+4).c_str() );
+		sprintf_s(buf,9,"%d",cpy+1);
+		sid = sid.substr(0,p+4) + buf;
+	}
+	instructions.bin_id = sid;
+
+	// copy the dimensions
+	sprintf_s(buf,19,"%9f",side_1_->size() );
+	instructions.size_v.push_back( string( buf ) );
+	sprintf_s(buf,19,"%9f",side_2_->size() );
+	instructions.size_v.push_back( string( buf ) );
+	sprintf_s(buf,19,"%9f",side_3_->size() );
+	instructions.size_v.push_back( string( buf ) );
+
+	instructions.dimension_units = "in";
+
+	BoxBindingsParser parser;
+	return parser.buildBin( instructions );
+
+}
+
+void Bin3D::Dumper()
+{
+	printf("%s items %d, ",
+		id().c_str(),
+		itemsInBinCount() );
+}
+
+
 void Bin3D::set_x_sub_bin(Bin *value)
 {
     

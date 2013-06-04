@@ -13,8 +13,9 @@ TubePacker::TubePacker(const TubePacker& orig) {
 TubePacker::~TubePacker() {
 }
 
-void TubePacker::packThem( vector<Bin*> bins, vector<Item*> items)
+void TubePacker::packThem( vector<Bin*>& ref_bins, vector<Item*> items)
 {
+	vector<Bin*> bins( ref_bins );
     
     for( unsigned k=0; k < items.size(); ++k )
     {

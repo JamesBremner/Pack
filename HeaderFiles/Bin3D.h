@@ -15,6 +15,8 @@ class Bin3D : public Bin1D, public Bin2D, public Shape3D
 public:
     Bin3D();
     Bin3D(const Bin3D& orig);
+
+	Bin * CreateNewEmptyCopy();
     
     virtual ~Bin3D();
         
@@ -23,6 +25,7 @@ public:
     void set_z_sub_bin(Bin *value);
 
 	virtual void ScaleSize( float f );
+	virtual void Dumper();
 
     
     void itemsInBin(vector<Item*> &items);

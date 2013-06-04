@@ -20,7 +20,7 @@ public:
     BoxPacker2D(const BoxPacker2D& orig);
     virtual ~BoxPacker2D();
     
-    virtual void packThem( vector<Bin*> bins, vector<Item*> items);
+    virtual void packThem( vector<Bin*>& ref_bins, vector<Item*> items);
     virtual bool packIt( Bin *bin, Item *item, vector<Bin*> &bins );
     virtual void splitBinWidth( Bin *bin, Item *item );
     virtual void splitBinHeight( Bin *bin, Item *item );

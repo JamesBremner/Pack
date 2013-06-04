@@ -17,7 +17,7 @@ public:
     Packer(const Packer& orig);
     virtual ~Packer();
     
-    virtual void packThem( vector<Bin*> bins, vector<Item*> items) = 0;
+    virtual void packThem( vector<Bin*>& bins, vector<Item*> items) = 0;
     virtual bool packIt( Bin *bin, Item *item, vector<Bin*> &bins ) = 0;
 
 
