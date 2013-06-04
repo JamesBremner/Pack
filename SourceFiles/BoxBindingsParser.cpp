@@ -48,7 +48,7 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
         vector<string> id_bin;
         split(id_bin, bin_str, is_any_of(":"));
         
-		const int expected_field_count = 3;
+		const int expected_field_count = 4;
         
         if( id_bin.size() < expected_field_count || id_bin.size() > expected_field_count )
         {
@@ -56,9 +56,15 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
             break;
         }
 		bin_build_instructions instructions;
-        string bin_id = id_bin[0];
+        instructions.bin_id = id_bin[0];
 		instructions.dimension_units = id_bin[1];
-        string bin_size = id_bin[2];
+		int quantity = (int) atof( id_bin[2].c_str() );
+		if( quantity == -1 )
+			instructions.can_copy = true;
+		else
+			instructions.can_copy = false;
+        string bin_size = id_bin[3];
+
         id_bin.clear();
         
         vector<string> bin_size_v;
@@ -72,11 +78,16 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
         else
             dim = (int)bin_size_v.size();
 
-		instructions.bin_id = bin_id;
 		instructions.size_v = bin_size_v;
 
 		// Build the bin and store it
-        bins.push_back( buildBin ( instructions ) );
+		if( quantity > 0 ) {
+			for( int k = 0; k < quantity; k++ ) {
+				bins.push_back( buildBin ( instructions ) );
+			}
+		} else {
+			bins.push_back( buildBin ( instructions ) );
+		}
         
         bin_size_v.clear();
         
@@ -154,6 +165,8 @@ Bin *BoxBindingsParser::buildBin( bin_build_instructions& instructions )
 	// to internal units, assumed to be inches ( the default )
 
 	bin->ScaleSize( DimensionUnitScale( instructions.dimension_units ) );
+
+	bin->setCanCopy( instructions.can_copy );
 
 
 	return bin;

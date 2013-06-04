@@ -192,6 +192,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\SourceFiles\BoxPacker2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\SourceFiles\BoxPacker3D.cpp"
+				>
+			</File>
+			<File
 				RelativePath="$(RAVENROOT)\cutest.cpp"
 				>
 			</File>
@@ -205,6 +213,10 @@
 			</File>
 			<File
 				RelativePath="..\SourceFiles\Item3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\SourceFiles\Packer.cpp"
 				>
 			</File>
 			<File
@@ -244,7 +256,19 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\SourceFiles\TubeBindingsParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\SourceFiles\TubePacker.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\unit_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\SourceFiles\Utils.cpp"
 				>
 			</File>
 		</Filter>

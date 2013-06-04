@@ -37,6 +37,8 @@ public:
     
     virtual int itemsInBinCount();
     virtual int remsInBinCount();
+	void setCanCopy( bool flag )		{ myCanCopy = flag; }
+	bool CanCopy()						{ return myCanCopy;}
     
     virtual double binSpaceUsed();
     virtual double remSpaceAvail();
@@ -58,6 +60,7 @@ protected:
     
     Bin *parent_bin_;
     Item *item_;
+	bool myCanCopy;
 
 };
 

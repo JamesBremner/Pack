@@ -40,7 +40,11 @@ Bin * Bin3D::CreateNewEmptyCopy()
 	sprintf_s(buf,19,"%9f",side_3_->size() );
 	instructions.size_v.push_back( string( buf ) );
 
+	// we should always be using the defaultyunits internally
 	instructions.dimension_units = "in";
+
+	// we would never come here unless we have an endless supply of these
+	instructions.can_copy = true;
 
 	BoxBindingsParser parser;
 	return parser.buildBin( instructions );

@@ -62,10 +62,13 @@ void BoxPacker2D::packThem( vector<Bin*>& ref_bins, vector<Item*> items )
 			bins.erase( bins.begin() + bin_found_index );
 			if( ! used->parent_bin() ) {
 				// about to pack an item in an unused bin
-				// get a new bin ready for future use
-				Bin * new_bin = used->CreateNewEmptyCopy();
-				bins.push_back( new_bin );
-				ref_bins.push_back( new_bin );
+				if( used->CanCopy() ) {
+					// we have an endless supply of there
+					// get a new bin ready for future use
+					Bin * new_bin = used->CreateNewEmptyCopy();
+					bins.push_back( new_bin );
+					ref_bins.push_back( new_bin );
+				}
 			}
 
 		} else {

@@ -17,6 +17,7 @@ public:
 		string bin_id;
 		vector<string> size_v;
 		string dimension_units;
+		bool can_copy;
 	};
 	struct item_build_instructions {
 		string id;
