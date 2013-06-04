@@ -10,6 +10,20 @@
 using namespace std;
 
 class BoxBindingsParser {
+
+	struct bin_build_instructions {
+		string bin_id;
+		vector<string> size_v;
+		string dimension_units;
+	};
+	struct item_build_instructions {
+		string id;
+		vector<string> size_v;
+		string dimension_units;
+		int constraints;
+	};
+
+
 public:
     
     static const int PACKER_1D = 1;
@@ -36,10 +50,11 @@ protected:
     void parseItems( vector<Item*> &items, vector<string> item_v, int &dim );
     
     virtual bool isDimError( int dim );
-    virtual Bin *buildBin( string bin_id, vector<string> bin_size_v );
-    virtual Item *buildItem( string item_id, vector<string> item_size_v, int constraints);
+    virtual Bin *buildBin( bin_build_instructions& instructions );
+    virtual Item *buildItem( item_build_instructions& instructions );
 
 private:
+
 	float DimensionUnitScale( const string& unit_string );
 };
 

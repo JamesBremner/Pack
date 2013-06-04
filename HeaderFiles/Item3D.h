@@ -8,6 +8,7 @@
 #ifndef ITEM3D_H
 #define	ITEM3D_H
 using namespace std;
+#pragma warning( disable : 4250 )
 
 class Item3D : public Shape3D, public Item {
 	public:

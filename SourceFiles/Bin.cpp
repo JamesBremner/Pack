@@ -46,7 +46,7 @@ int Bin:: itemsInBinCount()
 {
     vector<Item*> items;
     itemsInBin(items);
-    int count = items.size();
+    int count = (int)items.size();
     items.clear();
     
     return count;    
@@ -56,7 +56,7 @@ int Bin:: remsInBinCount()
 {
     vector<Bin*> rems;
     binRemSpace(rems);
-    int count = rems.size();
+    int count = (int)rems.size();
     rems.clear();
     
     return count;    
