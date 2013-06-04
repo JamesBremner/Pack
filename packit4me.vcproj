@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(BOOSTROOT)"
+				AdditionalIncludeDirectories="$(BOOSTROOT);../HeaderFiles"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -232,15 +232,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HeaderFiles\stdafx.h"
+				>
+			</File>
+			<File
 				RelativePath=".\headerfiles\TubeBindingsParser.h"
 				>
 			</File>
 			<File
 				RelativePath=".\headerfiles\TubePacker.h"
-				>
-			</File>
-			<File
-				RelativePath=".\headerfiles\Utils.h"
 				>
 			</File>
 		</Filter>
@@ -342,6 +342,10 @@
 			</File>
 			<File
 				RelativePath=".\sourcefiles\Utils.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\headerfiles\Utils.h"
 				>
 			</File>
 		</Filter>

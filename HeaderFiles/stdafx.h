@@ -1,4 +1,4 @@
-
+#ifdef _MSC_VER 
 #include <iostream>
 #include <fstream>
 #include <typeinfo>
@@ -32,3 +32,4 @@
 #include "Utils.h"
 
 using namespace std;
+#endif

@@ -1,7 +1,23 @@
 
 #include "stdafx.h"
 
-#ifndef WIN32
+#ifndef _MSC_VER 
+
+/*
+
+We are NOT compiling under microsoft visual C++
+
+This means that we do not have the stdafx precompiled header feature
+
+A conditional has rendered the stadafx.h include empty
+So instead we include all the headers here and all the source code files
+so that everything is compiled in one large unit.
+
+This is an unusual solution ( to me, JB ) but this is how Arash Sharif
+did things in the original code, so I have left it untouched.
+
+*/
+
 #include <iostream>
 #include <fstream>
 #include <typeinfo>
