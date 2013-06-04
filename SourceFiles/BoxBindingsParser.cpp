@@ -169,9 +169,9 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
         vector<string> id_item;
         split(id_item, item_str, is_any_of(":"));
         
-       const int expected_field_count = 4;
+       const int expected_field_count = 5;
 
-        if( id_item.size() < 4 || id_item.size() > 4 )
+        if( id_item.size() < expected_field_count || id_item.size() > expected_field_count )
         {
             dim = BoxBindingsParser::ITEM_PARSE_ERROR;
             break;
@@ -180,7 +180,8 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
         string item_id = id_item[0];
 		instructions.dimension_units = id_item[1];
         instructions.constraints = (int) atof( id_item[2].c_str() );
-        string item_size = id_item[3];
+		int quantity = (int) atof( id_item[3].c_str() );
+        string item_size = id_item[4];
 
         
         id_item.clear();
@@ -198,7 +199,10 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
 
 		instructions.size_v =  item_size_v;
 
-        items.push_back( buildItem( instructions ) );
+		
+		for( int k = 0; k < quantity; k++ ) {
+			items.push_back( buildItem( instructions  ) );
+		}
         
         item_size_v.clear();
         
