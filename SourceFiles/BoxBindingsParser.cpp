@@ -1,5 +1,6 @@
 #include "stdafx.h"
-
+#include <boost/algorithm/string.hpp>
+#include <boost/unordered_set.hpp>
 #ifndef NULL
 #define NULL   ((void *) 0)
 #endif
@@ -8,7 +9,7 @@ using namespace std;
 using namespace boost;
 
 BoxBindingsParser::BoxBindingsParser() {
-    
+
     dim_ = 0;
 
 }
@@ -33,10 +34,10 @@ void BoxBindingsParser::parseBinsAndItems( const char *bins, const char *items,
     {
         item_v.clear();
         return;
-        
+
     }
     parseItems( items_v, item_v, dim );
-    item_v.clear();    
+    item_v.clear();
 }
 
 void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int &dim )
@@ -47,9 +48,9 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
         string bin_str = bin_v[i];
         vector<string> id_bin;
         split(id_bin, bin_str, is_any_of(":"));
-        
+
 		const int expected_field_count = 4;
-        
+
         if( id_bin.size() < expected_field_count || id_bin.size() > expected_field_count )
         {
             dim = BoxBindingsParser::BIN_PARSE_ERROR;
@@ -66,15 +67,15 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
         string bin_size = id_bin[3];
 
         id_bin.clear();
-        
+
         vector<string> bin_size_v;
         split(bin_size_v, bin_size, is_any_of("x"));
-                
+
         if ( isDimError( (int)bin_size_v.size() ) == true )
         {
             dim = BoxBindingsParser::PACKER_ERROR;
             break;
-        } 
+        }
         else
             dim = (int)bin_size_v.size();
 
@@ -88,11 +89,11 @@ void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int
 		} else {
 			bins.push_back( buildBin ( instructions ) );
 		}
-        
+
         bin_size_v.clear();
-        
+
     }
-    
+
 }
 /**
 
@@ -129,33 +130,33 @@ Bin *BoxBindingsParser::buildBin( bin_build_instructions& instructions )
     Bin3D *bin3d;
     switch( instructions.size_v.size() )
     {
-        case 1:                     
+        case 1:
             bin = new Bin1D();
             bin->set_id( instructions.bin_id );
             bin->set_side_1( new Side(atof(instructions.size_v[0].c_str()), 'w') );
             bin->set_side_2( new Side(atof(instructions.size_v[1].c_str()), 'h') );
-            
+
             break;
-            
+
         case 2:
             bin = new Bin2D();
             bin->set_id( instructions.bin_id );
             bin->set_side_1( new Side(atof(instructions.size_v[0].c_str()), 'w') );
             bin->set_side_2( new Side(atof(instructions.size_v[1].c_str()), 'h') );
-          
+
             break;
-            
+
         case 3:
             bin = new Bin3D();
             bin3d = dynamic_cast<Bin3D*>(bin);
             bin3d->set_id( instructions.bin_id );
             bin3d->set_side_1( new Side(atof(instructions.size_v[0].c_str()), 'w') );
             bin3d->set_side_2( new Side(atof(instructions.size_v[1].c_str()), 'h') );
-            bin3d->set_side_3( new Side(atof(instructions.size_v[2].c_str()), 'l') );            
+            bin3d->set_side_3( new Side(atof(instructions.size_v[2].c_str()), 'l') );
 
 			break;
 
-		default:            
+		default:
 			break;
 
 
@@ -181,7 +182,7 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
 		string item_str = item_v[i];
         vector<string> id_item;
         split(id_item, item_str, is_any_of(":"));
-        
+
        const int expected_field_count = 5;
 
         if( id_item.size() < expected_field_count || id_item.size() > expected_field_count )
@@ -189,36 +190,36 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
             dim = BoxBindingsParser::ITEM_PARSE_ERROR;
             break;
         }
-        
+
         string item_id = id_item[0];
 		instructions.dimension_units = id_item[1];
         instructions.constraints = (int) atof( id_item[2].c_str() );
 		int quantity = (int) atof( id_item[3].c_str() );
         string item_size = id_item[4];
 
-        
+
         id_item.clear();
-        
+
         vector<string> item_size_v;
         split(item_size_v, item_size, is_any_of("x"));
-        
+
         if ( isDimError( (int)item_size_v.size() ) == true )
         {
             dim = BoxBindingsParser::PACKER_ERROR;
             break;
-        } 
-        else  
+        }
+        else
             dim = (int)item_size_v.size();
 
 		instructions.size_v =  item_size_v;
 
-		
+
 		for( int k = 0; k < quantity; k++ ) {
 			items.push_back( buildItem( instructions  ) );
 		}
-        
+
         item_size_v.clear();
-        
+
     }
 }
 
@@ -228,17 +229,17 @@ Item *BoxBindingsParser::buildItem( item_build_instructions& instructions )
     Item* item;
     Item2D* item2d;
     Item3D* item3d;
- 
+
     switch( instructions.size_v.size() )
     {
-        case 1:                     
+        case 1:
             item = new Item2D();
             item2d = dynamic_cast<Item2D*>(item);
             item2d->set_id( instructions.id );
             item2d->set_side_1( new Side( atof(instructions.size_v[0].c_str()), 'w' ) );
             item2d->set_side_2( new Side( atof(instructions.size_v[1].c_str()), 'h' ) );
             break;
-            
+
         case 2:
             item = new Item2D();
             item2d = dynamic_cast<Item2D*>(item);
@@ -246,34 +247,34 @@ Item *BoxBindingsParser::buildItem( item_build_instructions& instructions )
             item2d->set_side_1( new Side( atof(instructions.size_v[0].c_str()), 'w' ) );
             item2d->set_side_2( new Side( atof(instructions.size_v[1].c_str()), 'h' ) );
             break;
-            
+
         case 3:
             item = new Item3D();
             item3d = dynamic_cast<Item3D*>(item);
             item3d->set_id( instructions.id );
             item3d->set_side_1( new Side( atof(instructions.size_v[0].c_str()), 'w' ));
             item3d->set_side_2( new Side( atof(instructions.size_v[1].c_str()), 'h'  ) );
-            item3d->set_side_3( new Side( atof(instructions.size_v[2].c_str()), 'l'  ) );            
+            item3d->set_side_3( new Side( atof(instructions.size_v[2].c_str()), 'l'  ) );
             break;
-            
-        default:            
+
+        default:
             break;
-        
-        
-    }   
+
+
+    }
 
 	item->set_constraints( instructions.constraints );
 
 	item->ScaleSize( DimensionUnitScale( instructions.dimension_units ) );
-    
-    return item;  
+
+    return item;
 }
 
 bool BoxBindingsParser::isDimError( int dim )
 {
     if ( dim < 2 || dim > 3 )
         return true;
-    
+
     if( dim_ == 0)
     {
         dim_ = dim;

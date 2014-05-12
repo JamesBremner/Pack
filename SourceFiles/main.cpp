@@ -1,77 +1,9 @@
 
 #include "stdafx.h"
 
-#ifndef _MSC_VER 
 
-/*
-
-We are NOT compiling under microsoft visual C++
-
-This means that we do not have the stdafx precompiled header feature
-
-A conditional has rendered the stadafx.h include empty
-So instead we include all the headers here and all the source code files
-so that everything is compiled in one large unit.
-
-This is an unusual solution ( to me, JB ) but this is how Arash Sharif
-did things in the original code, so I have left it untouched.
-
-*/
-
-#include <iostream>
-#include <fstream>
-#include <typeinfo>
-#include <vector>
-#include <map>
-#include <string.h>
-#include <stdlib.h>
-#include <exception>
-#include <algorithm>
-#include <sstream>
-#include <boost/algorithm/string.hpp>
-#include <boost/unordered_set.hpp>
-#include "Side.h"
-#include "Shape.h"
-#include "Shape2D.h"
-#include "Shape3D.h"
-#include "Item.h"
-#include "Item2D.h"
-#include "Item3D.h"
-#include "Bin.h"
-#include "Bin1D.h"
-#include "Bin2D.h"
-#include "Bin3D.h"
-#include "Packer.h"
-#include "BoxPacker2D.h"
-#include "BoxPacker3D.h"
-#include "TubePacker.h"
-#include "Bindings.h"
-#include "BoxBindingsParser.h"
-#include "TubeBindingsParser.h"
-#include "Utils.h"
-#include "Side.cpp"
-#include "Shape.cpp"
-#include "Shape2D.cpp"
-#include "Shape3D.cpp"
-#include "Bin.cpp"
-#include "Bin1D.cpp"
-#include "Bin2D.cpp"
-#include "Bin3D.cpp"
-#include "Packer.cpp"
-#include "Item.cpp"
-#include "Item2D.cpp"
-#include "Item3D.cpp"
-#include "Utils.cpp"
-#include "BoxPacker2D.cpp"
-#include "BoxPacker3D.cpp"
-#include "TubePacker.cpp"
-#include "BoxBindingsParser.cpp"
-#include "TubeBindingsParser.cpp"
-using namespace std;
-#endif
-
-int main(int argc, char *argv[]) 
-{ 
+int main(int argc, char *argv[])
+{
 
 
 	if ( argc == 1 )
@@ -190,7 +122,7 @@ int main(int argc, char *argv[])
 	if ( out_file == NULL )
 	{
 		cout << json << endl;
-	} 
+	}
 	else
 	{
 
@@ -277,7 +209,7 @@ const char *PACKIT4ME_packThem( const char *bins, const char *items )
 
 	char *s_buffer =  new char[json.size()+1];
 	copy(json.begin(), json.end(), s_buffer);
-	s_buffer[json.size()] = '\0';        
+	s_buffer[json.size()] = '\0';
 
 
 	Utils::cleanUpBindingCall( bins_v, items_v, parser );
@@ -342,7 +274,7 @@ const char *PACKIT4ME_packThemTube( const char *bins, const char *items)
 
 	char *s_buffer =  new char[json.size()+1];
 	copy(json.begin(), json.end(), s_buffer);
-	s_buffer[json.size()] = '\0';        
+	s_buffer[json.size()] = '\0';
 
 	Utils::cleanUpBindingCall( bins_v, items_v, parser );
 

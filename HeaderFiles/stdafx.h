@@ -1,4 +1,4 @@
-#ifdef _MSC_VER 
+
 #include <iostream>
 #include <fstream>
 #include <typeinfo>
@@ -9,8 +9,7 @@
 #include <exception>
 #include <algorithm>
 #include <sstream>
-#include <boost/algorithm/string.hpp>
-#include <boost/unordered_set.hpp>
+
 #include "Side.h"
 #include "Shape.h"
 #include "Shape2D.h"
@@ -32,4 +31,4 @@
 #include "Utils.h"
 
 using namespace std;
-#endif
+
