@@ -38,6 +38,7 @@ void BoxBindingsParser::parseBinsAndItems( const char *bins, const char *items,
     }
     parseItems( items_v, item_v, dim );
     item_v.clear();
+
 }
 
 void BoxBindingsParser::parseBins( vector<Bin*> &bins, vector<string> bin_v, int &dim )
@@ -192,6 +193,7 @@ void BoxBindingsParser::parseItems( vector<Item*> &items, vector<string> item_v,
         }
 
         string item_id = id_item[0];
+        instructions.id = id_item[0];
 		instructions.dimension_units = id_item[1];
         instructions.constraints = (int) atof( id_item[2].c_str() );
 		int quantity = (int) atof( id_item[3].c_str() );
