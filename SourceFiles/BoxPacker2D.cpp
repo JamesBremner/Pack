@@ -63,16 +63,7 @@ void BoxPacker2D::packThem( vector<Bin*>& ref_bins, vector<Item*> items )
             Bin * used = *(bins.begin() + bin_found_index);
             bins.erase( bins.begin() + bin_found_index );
 
-            for( auto b : bins )
-            {
-                if( b->Root( b ) == used->Root( used ))
-                {
-                    b->Dumper();
-                }
-            }
-
-
-            if( ! used->parent_bin() )
+             if( ! used->parent_bin() )
             {
                 // about to pack an item in an unused bin
                 if( used->CanCopy() )
@@ -217,8 +208,8 @@ bool BoxPacker2D::checkFitsNoConstr(Bin *bin, Item *item, vector<Bin*> &bins)
     if( item2d->side_1()->size() <= bin->side_1()->size() && item2d->side_2()->size() <= bin->side_2()->size() )
     {
 
-        cout << "packing item " << item->progid() << " into bin " << bin->progid();
-        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
+//        cout << "packing item " << item->progid() << " into bin " << bin->progid();
+//        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
 
         bin->set_item( item );
         item->setBin( bin->Root( bin )->progid() );
@@ -283,12 +274,12 @@ bool BoxPacker2D::merger( Bin* packbin, Bin* newbin, vector<Bin*> &bins )
 //    cout << "->Merger" << endl;
 //    newbin->Dumper();
 //    cout << "candidates:" << endl;
-    Bin* newbrinroot = newbin->Root( newbin );
+    Bin* newbinroot = newbin->Root( newbin );
     // loop over all bins
     for( auto bin : bins )
     {
         // check that this is part of the user specified bin we are adding to
-        if( newbrinroot != bin->Root( bin ) )
+        if( newbinroot != bin->Root( bin ) )
             continue;
         // check that this is not the bin we are packing item into
         if( packbin == bin )

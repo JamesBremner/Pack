@@ -25,8 +25,8 @@ void Item2D::encodeAsJSON(stringstream &jsonStr)
     jsonStr << "\"item_size\": \"" << origSize() << "\",";
     jsonStr << "\"user_id\": \"" << id() << "\",";
     jsonStr << "\"prog_id\": \"" << myID << "\",";
-    jsonStr << "\"size_1\": " << origSide1()->size() << ",";
-    jsonStr << "\"size_2\": " << origSide2()->size() << ",";
+//    jsonStr << "\"size_1\": " << origSide1()->size() << ",";
+//    jsonStr << "\"size_2\": " << origSide2()->size() << ",";
 	jsonStr << "\"constraints\": " << constraints() << ",";
 	jsonStr << "\"bin\": " << getBin() << ",";
 	jsonStr << "\"W\": " << getWLocation() << ",";
