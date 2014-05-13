@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Item3D.h
  * Author: arash
  *
@@ -27,6 +27,23 @@ class Item3D : public Shape3D, public Item {
 		virtual void ScaleSize( float f );
 
 		void encodeAsJSON(stringstream &jsonStr);
+
+    virtual double getWLocation()
+    {
+        return myWLocation;
+    }
+    virtual void setWLocation( double w )
+    {
+        myWLocation = w;
+    }
+    virtual double getHLocation()
+    {
+        return myHLocation;
+    }
+    virtual void setHLocation( double h )
+    {
+        myHLocation = h;
+    }
 
 	private:
 

@@ -15,7 +15,7 @@ BoxPacker2D::BoxPacker2D(const BoxPacker2D& orig)
 	BoxPacker2D();
 }
 
-BoxPacker2D::~BoxPacker2D() 
+BoxPacker2D::~BoxPacker2D()
 {
 
 }
@@ -45,16 +45,16 @@ void BoxPacker2D::packThem( vector<Bin*>& ref_bins, vector<Item*> items )
 		bool is_bin_found = false;
 		int bin_found_index = 0;
 		for( vector<Bin*>::iterator member = bins.begin(); member != bins.end(); member++ )
-		{   
+		{
 			//cout << "bins: "  << dynamic_cast<Bin3D*>(*member)->volume() <<  endl;
-			if ( packIt( *member, items[k], bins ) == true) 
+			if ( packIt( *member, items[k], bins ) == true)
 			{
 
 				is_bin_found = true;
 				break;
 			}
 			bin_found_index++;
-		} 
+		}
 
 		if ( is_bin_found == true ) {
 
@@ -90,7 +90,7 @@ void BoxPacker2D::packThem( vector<Bin*>& ref_bins, vector<Item*> items )
 bool BoxPacker2D::packIt( Bin *bin, Item *item, vector<Bin*> &bins)
 {
 
-	int constraints = item->constraints();    
+	int constraints = item->constraints();
 
 	if ( constraints == Item2D::CONSTRAINT_WIDTH)
 		return checkFitsConstrWidth(bin, item, bins);
@@ -106,7 +106,7 @@ bool BoxPacker2D::packIt( Bin *bin, Item *item, vector<Bin*> &bins)
 bool BoxPacker2D::checkFitsConstrWidth(Bin *bin, Item *item, vector<Bin*> &bins)
 {
 	Item2D *item2d = dynamic_cast<Item2D*>(item);
-	if( item2d->side_1()->size() <= bin->side_1()->size() && 
+	if( item2d->side_1()->size() <= bin->side_1()->size() &&
 			item2d->side_2()->size() <= bin->side_2()->size() )
 	{
 
@@ -201,7 +201,13 @@ bool BoxPacker2D::checkFitsNoConstr(Bin *bin, Item *item, vector<Bin*> &bins)
 	if( item2d->side_1()->size() <= bin->side_1()->size() && item2d->side_2()->size() <= bin->side_2()->size() )
 	{
 
+//        cout << "packing item " << item->progid() << " into bin " << bin->progid();
+//        cout << " located at " << bin->getHOffsetFromRoot() << "," << bin->getWOffsetFromRoot() << endl;
+
 		bin->set_item( item );
+		item->setBin( bin->Root( bin )->progid() );
+		item->setHLocation( bin->getHOffsetFromRoot() );
+		item->setWLocation( bin->getWOffsetFromRoot() );
 
 		//if it fits split item and recurse
 		splitBinWidth( bin, item );
@@ -210,12 +216,19 @@ bool BoxPacker2D::checkFitsNoConstr(Bin *bin, Item *item, vector<Bin*> &bins)
 
 		if ( bin2d->x_sub_bin() != NULL )
 		{
+//            cout << "x_sub_bin " << bin2d->x_sub_bin()->progid() << " " <<
+//                bin2d->x_sub_bin()->side_1()->size() << " by " << bin2d->x_sub_bin()->side_2()->size() <<
+//                " at " << bin2d->x_sub_bin()->getHOffsetFromRoot() << "," <<  bin2d->x_sub_bin()->getWOffsetFromRoot() <<endl;
 
 			bins.push_back( bin2d->x_sub_bin() );
 
 		}
+
 		if( bin2d->y_sub_bin() != NULL )
 		{
+//           cout << "y_sub_bin " << bin2d->y_sub_bin()->progid() << " " <<
+//            bin2d->y_sub_bin()->side_1()->size() << " by " << bin2d->y_sub_bin()->side_2()->size() <<
+//               " at " << bin2d->y_sub_bin()->getHOffsetFromRoot() << "," <<  bin2d->y_sub_bin()->getWOffsetFromRoot() <<endl;
 
 			bins.push_back( bin2d->y_sub_bin() );
 		}
@@ -247,6 +260,8 @@ void BoxPacker2D::splitBinWidth( Bin *bin, Item *item )
 		sub_binX->set_side_2( bin->side_2()->size_side_to( dx_h ));
 		sub_binX->set_parent_bin( bin );
 		sub_binX->set_id(bin->id());
+		sub_binX->setWOffsetFromRoot( bin2d->getWOffsetFromRoot() + item2d->side_1()->size() );
+		sub_binX->setHOffsetFromRoot( bin2d->getHOffsetFromRoot() );
 		bin2d->set_x_sub_bin( sub_binX );
 
 
@@ -273,6 +288,8 @@ void BoxPacker2D::splitBinHeight( Bin *bin, Item *item )
 		sub_binY->set_side_2( bin->side_2()->size_side_to( dy_h ));
 		sub_binY->set_parent_bin( bin );
 		sub_binY->set_id(bin->id());
+		sub_binY->setHOffsetFromRoot( bin2d->getHOffsetFromRoot() + item2d->side_2()->size() );
+		sub_binY->setWOffsetFromRoot( bin2d->getWOffsetFromRoot() );
 		bin2d->set_y_sub_bin( sub_binY );
 
 

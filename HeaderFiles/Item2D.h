@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Item2D.h
  * Author: arash
  *
@@ -9,20 +9,37 @@
 #define	ITEM2D_H
 using namespace std;
 
-class Item2D : public virtual Item {
-	public:
+class Item2D : public virtual Item
+{
+public:
 
-		static const int NO_CONSTRAINTS = 0;
-		static const int CONSTRAINT_WIDTH = 1;
-		static const int CONSTRAINT_HEIGHT = 2;
-		Item2D();
-		Item2D(const Item& orig);
-		virtual ~Item2D();
+    static const int NO_CONSTRAINTS = 0;
+    static const int CONSTRAINT_WIDTH = 1;
+    static const int CONSTRAINT_HEIGHT = 2;
+    Item2D();
+    Item2D(const Item& orig);
+    virtual ~Item2D();
 
-		virtual void encodeAsJSON(stringstream &jsonStr);
+    virtual void encodeAsJSON(stringstream &jsonStr);
 
+    virtual double getWLocation()
+    {
+        return myWLocation;
+    }
+    virtual void setWLocation( double w )
+    {
+        myWLocation = w;
+    }
+    virtual double getHLocation()
+    {
+        return myHLocation;
+    }
+    virtual void setHLocation( double h )
+    {
+        myHLocation = h;
+    }
 
-	private:
+private:
 
 };
 

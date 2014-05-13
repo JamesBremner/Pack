@@ -7,12 +7,15 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../Debug/packit4me2" prefix_auto="1" extension_auto="1" />
+				<Option output="Debug/packit4me2" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters=" -b 0:ft:2:2x1 -i a:ft:0:1:1x1 -s b" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add directory="HeaderFiles" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -31,8 +34,49 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="$(#boost.include)" />
+			<Add directory="HeaderFiles" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="HeaderFiles/Bin.h" />
+		<Unit filename="HeaderFiles/Bin1D.h" />
+		<Unit filename="HeaderFiles/Bin2D.h" />
+		<Unit filename="HeaderFiles/Bin3D.h" />
+		<Unit filename="HeaderFiles/Bindings.h" />
+		<Unit filename="HeaderFiles/BoxBindingsParser.h" />
+		<Unit filename="HeaderFiles/BoxPacker2D.h" />
+		<Unit filename="HeaderFiles/BoxPacker3D.h" />
+		<Unit filename="HeaderFiles/Item.h" />
+		<Unit filename="HeaderFiles/Item2D.h" />
+		<Unit filename="HeaderFiles/Item3D.h" />
+		<Unit filename="HeaderFiles/Packer.h" />
+		<Unit filename="HeaderFiles/Shape.h" />
+		<Unit filename="HeaderFiles/Shape2D.h" />
+		<Unit filename="HeaderFiles/Shape3D.h" />
+		<Unit filename="HeaderFiles/Side.h" />
+		<Unit filename="HeaderFiles/TubeBindingsParser.h" />
+		<Unit filename="HeaderFiles/TubePacker.h" />
+		<Unit filename="HeaderFiles/Utils.h" />
+		<Unit filename="HeaderFiles/stdafx.h" />
+		<Unit filename="SourceFiles/Bin.cpp" />
+		<Unit filename="SourceFiles/Bin1D.cpp" />
+		<Unit filename="SourceFiles/Bin2D.cpp" />
+		<Unit filename="SourceFiles/Bin3D.cpp" />
+		<Unit filename="SourceFiles/BoxBindingsParser.cpp" />
+		<Unit filename="SourceFiles/BoxPacker2D.cpp" />
+		<Unit filename="SourceFiles/BoxPacker3D.cpp" />
+		<Unit filename="SourceFiles/Item.cpp" />
+		<Unit filename="SourceFiles/Item2D.cpp" />
+		<Unit filename="SourceFiles/Item3D.cpp" />
+		<Unit filename="SourceFiles/Packer.cpp" />
+		<Unit filename="SourceFiles/Shape.cpp" />
+		<Unit filename="SourceFiles/Shape2D.cpp" />
+		<Unit filename="SourceFiles/Shape3D.cpp" />
+		<Unit filename="SourceFiles/Side.cpp" />
+		<Unit filename="SourceFiles/TubeBindingsParser.cpp" />
+		<Unit filename="SourceFiles/TubePacker.cpp" />
+		<Unit filename="SourceFiles/Utils.cpp" />
+		<Unit filename="SourceFiles/main.cpp" />
+		<Unit filename="SourceFiles/stdafx.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

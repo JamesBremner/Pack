@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Shape.h
  * Author: arash
  *
@@ -15,18 +15,21 @@ public:
     Shape();
     Shape(const Shape& orig);
     virtual ~Shape();
-    
+
     string id();
     void set_id( string value );
-    
-    
+    int progid() { return myID; }
+
+
     virtual bool operator <( Shape &b) = 0;
     virtual bool operator >( Shape &b) = 0;
     virtual bool operator ==( Shape &b) = 0;
-    
+
 protected:
-    
-    string id_;
+
+    string id_;             /// User's ID
+    int myID;               /// Unique ID assigned by program
+    static int lastID;       /// last used unique ID
 
 };
 
