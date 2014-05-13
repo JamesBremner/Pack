@@ -51,10 +51,10 @@ public:
     virtual void totalRemSpaceAvailable( double &avail) = 0;
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep) = 0;
 
-     virtual   double getHOffsetFromRoot() {}
-   virtual double setHOffsetFromRoot( double h ) {}
-    virtual double getWOffsetFromRoot()  {}
-    virtual double setWOffsetFromRoot( double w ) {}
+     virtual   double getLocationHeight() {return 0; }
+   virtual void setLocationHeight( double h ) { }
+    virtual double getLocationWidth()  {return 0; }
+    virtual void setLocationWidth( double w ) { }
 
 
     virtual bool operator <( Shape &b) = 0;

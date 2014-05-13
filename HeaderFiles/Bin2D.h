@@ -24,10 +24,10 @@ public:
     Bin *y_sub_bin();
     virtual void set_y_sub_bin(Bin *value);
 
-    double getHOffsetFromRoot()                 { return myHOffsetFromRoot; }
-    double setHOffsetFromRoot( double h )       { myHOffsetFromRoot = h; }
-    double getWOffsetFromRoot()                 { return myWOffsetFromRoot; }
-    double setWOffsetFromRoot( double w )       { myWOffsetFromRoot = w; }
+    double getLocationHeight()                 { return myHOffsetFromRoot; }
+    void setLocationHeight( double h )       { myHOffsetFromRoot = h; }
+    double getLocationWidth()                 { return myWOffsetFromRoot; }
+    void setLocationWidth( double w )       { myWOffsetFromRoot = w; }
 
 
     virtual void itemsInBin(vector<Item*> &items);
@@ -36,6 +36,7 @@ public:
     virtual void totalChildSpaceUsed( double &used );
     virtual void totalRemSpaceAvailable( double &avail);
 
+    virtual void Dumper();
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
 
     virtual bool operator <( Shape &b);

@@ -39,12 +39,12 @@ bool BoxPacker3D::packIt(Bin *bin, Item *item, vector<Bin*> &bins) {
 
 void BoxPacker3D::splitBinWidth(Bin *bin, Item *item) {
     Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
-    
+
     map<string, double> sides = findSubBinSizes( bin, item );
     double dx_w = sides["dx_w"];
     double dx_h = sides["dx_h"];
     double dx_l = sides["dx_l"];
-    
+
 
     if (dx_w <= 0)
         bin3d->set_x_sub_bin(NULL);
@@ -71,8 +71,8 @@ void BoxPacker3D::splitBinHeight(Bin *bin, Item *item) {
     double dy_w = sides["dy_w"];
     double dy_h = sides["dy_h"];
     double dy_l = sides["dy_l"];
-    
-    
+
+
     if (dy_h <= 0)
         bin3d->set_y_sub_bin(NULL);
     else {
@@ -97,8 +97,8 @@ void BoxPacker3D::splitBinLength(Bin *bin, Item *item) {
     double dz_w = sides["dz_w"];
     double dz_h = sides["dz_h"];
     double dz_l = sides["dz_l"];
-    
-    
+
+
     if (dz_l <= 0)
         bin3d->set_z_sub_bin(NULL);
     else {
@@ -119,8 +119,8 @@ void BoxPacker3D::splitBinLength(Bin *bin, Item *item) {
 bool BoxPacker3D::checkFitsConstrWidth(Bin *bin, Item *item, vector<Bin*> &bins) {
     Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
     Item3D *item3d = (Item3D*) item;
-    
-    
+
+
     if (bin3d->side_2()->size() < bin3d->side_3()->size()) {
 
         Side *tmps;
@@ -176,8 +176,8 @@ bool BoxPacker3D::checkFitsConstrWidth(Bin *bin, Item *item, vector<Bin*> &bins)
 bool BoxPacker3D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins) {
     Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
     Item3D *item3d = (Item3D*) item;
-    
-    
+
+
     if (bin3d->side_1()->size() < bin3d->side_3()->size()) {
 
         Side *tmps;
@@ -186,7 +186,7 @@ bool BoxPacker3D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
         bin3d->set_side_3(tmps);
     }
 
-    
+
 
     if (item3d->side_1()->size() < item3d->side_3()->size()) {
 
@@ -196,7 +196,7 @@ bool BoxPacker3D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
         item3d->set_side_3(tmps);
     }
 
-    
+
 
     if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
             item3d->side_2()->size() <= bin3d->side_2()->size() &&
@@ -209,7 +209,7 @@ bool BoxPacker3D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
         splitBinHeight(bin, item);
         splitBinLength(bin, item);
 
-        Bin2D * bin2d = dynamic_cast<Bin2D*> (bin);
+        //Bin2D * bin2d = dynamic_cast<Bin2D*> (bin);
 
         if (bin3d->x_sub_bin() != NULL) {
 
@@ -255,7 +255,7 @@ bool BoxPacker3D::checkFitsConstrLength(Bin *bin, Item *item, vector<Bin*> &bins
         item3d->set_side_2(tmps);
     }
 
-    
+
     if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
             item3d->side_2()->size() <= bin3d->side_2()->size() &&
             item3d->side_3()->size() <= bin3d->side_3()->size()) {
@@ -267,7 +267,7 @@ bool BoxPacker3D::checkFitsConstrLength(Bin *bin, Item *item, vector<Bin*> &bins
         splitBinHeight(bin, item);
         splitBinLength(bin, item);
 
-        Bin2D * bin2d = dynamic_cast<Bin2D*> (bin);
+        //Bin2D * bin2d = dynamic_cast<Bin2D*> (bin);
 
         if (bin3d->x_sub_bin() != NULL) {
 
@@ -348,7 +348,7 @@ bool BoxPacker3D::checkFitsNoConstr(Bin *bin, Item *item, vector<Bin*> &bins) {
         item3d->set_side_2(item3d->side_3());
         item3d->set_side_3(tmps);
     }
-    
+
     if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
             item3d->side_2()->size() <= bin3d->side_2()->size() &&
             item3d->side_3()->size() <= bin3d->side_3()->size()) {

@@ -211,10 +211,10 @@ const char *PACKIT4ME_packThem( const char *bins, const char *items )
 	copy(json.begin(), json.end(), s_buffer);
 	s_buffer[json.size()] = '\0';
 
-//	for( auto i : items_v ) {
-//        i->Print();
-//	}
-//
+	for( auto i : items_v ) {
+        i->Print();
+	}
+
 
 	Utils::cleanUpBindingCall( bins_v, items_v, parser );
 

@@ -119,7 +119,11 @@ void Bin2D:: totalRemSpaceAvailable(double& avail)
 
 }
 
-
+     void Bin2D::Dumper()
+     {
+         cout << progid() << " " << side_1()->size() << "," << side_2()->size() <<
+            " at " << getLocationHeight() << "," << getLocationWidth() << endl;
+     }
 void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 {
     jsonStr << "{\"bin_size\": \"" << origSize() << "\",";

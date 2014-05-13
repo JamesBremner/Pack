@@ -54,19 +54,8 @@ constraints are for each item and if the item can be rotated:
 
 Dependencies:
 1.  To compile the algorithm you need to make sure you have boost for c++ installed
-2.  For ruby you need ffi
-
-To build lib (*nix only at the moment):
-
-cd into /module/algorithm/src/cpp
-make build-lib
 
 
-put resulting .so file into your LD_LIBRARY_PATH
-
-
-To build executable (*nix only at the moment)
-make build
 
 run ./packit4me or ./packit4me -help for options
 
