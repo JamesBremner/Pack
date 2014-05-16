@@ -38,6 +38,13 @@ public:
     {
         myHLocation = h;
     }
+    string getSpin()
+    {
+    stringstream ss;
+    ss << side_1_->orig_side() <<side_2_->orig_side();
+    return ss.str();
+    }
+
 
 private:
 

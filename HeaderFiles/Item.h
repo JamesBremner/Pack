@@ -33,11 +33,14 @@ public:
     virtual void setWLocation( double w ) = 0;
     virtual double getHLocation() = 0;
     virtual void setHLocation( double h ) = 0;
+    bool getSpinLocation()  { return mySpinLocation; }
+    void setSpinLocation( bool s ) { mySpinLocation = s; }
 
 
 protected:
     double  myWLocation;
     double  myHLocation;
+    bool    mySpinLocation;
 
 private:
 

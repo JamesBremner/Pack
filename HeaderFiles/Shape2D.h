@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Shape2D.h
  * Author: arash
  *
@@ -19,11 +19,11 @@
 using namespace std;
 
 class Shape2D : public Shape{
-    
+
 protected:
     Side *side_1_;
     Side *side_2_;
-  
+
 public:
     Shape2D();
     Shape2D(const Shape2D& orig);
@@ -33,19 +33,22 @@ public:
     void set_side_1(Side *value);
     Side *side_2();
     void set_side_2(Side *value);
-    
+
     virtual Side * origSide1();
     virtual Side * origSide2();
     virtual string origSize();
-    
-       
-    
-    
+
+
+        bool IsSpun()
+    {
+        return ( side_1_->orig_side() != 'w' );
+    }
+
     double area();
     virtual bool operator <( Shape &b);
     virtual bool operator >( Shape &b);
     virtual bool operator ==( Shape &b);
-    
-    
+
+
 };
 

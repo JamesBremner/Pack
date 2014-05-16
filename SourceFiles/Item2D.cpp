@@ -29,6 +29,10 @@ void Item2D::encodeAsJSON(stringstream &jsonStr)
 //    jsonStr << "\"size_2\": " << origSide2()->size() << ",";
 	jsonStr << "\"constraints\": " << constraints() << ",";
 	jsonStr << "\"bin\": " << getBin() << ",";
+	if( getSpinLocation() )
+        jsonStr << "\"rotation\" : \"yes\",";
+        else
+           jsonStr << "\"rotation\" : \"no\",";
 	jsonStr << "\"W\": " << getWLocation() << ",";
 	jsonStr << "\"H\": " << getHLocation();
 

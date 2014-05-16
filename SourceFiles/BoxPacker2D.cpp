@@ -183,7 +183,7 @@ bool BoxPacker2D::checkFitsNoConstr(Bin *bin, Item *item, vector<Bin*> &bins)
 {
     Item2D *item2d = dynamic_cast<Item2D*>(item);
 
-    //sort both bin and item
+     //rotate both bin and item so side1 is longer than side2
     if ( bin->side_1()->size() < bin->side_2()->size() )
     {
 
@@ -194,22 +194,30 @@ bool BoxPacker2D::checkFitsNoConstr(Bin *bin, Item *item, vector<Bin*> &bins)
     }
 
 
-    if ( dynamic_cast<Item2D*>(item)->side_1()->size() < dynamic_cast<Item2D*>(item)->side_2()->size() )
+    if ( item2d->side_1()->size() < item2d->side_2()->size() )
     {
-
+        //cout << "item rotating " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
         Side *tmps;
-        Item2D *item2d = dynamic_cast<Item2D*>(item);
         tmps = item2d->side_1();
         item2d->set_side_1( item2d->side_2() );
         item2d->set_side_2( tmps );
-    }
+        //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
+   }
 
 
     if( item2d->side_1()->size() <= bin->side_1()->size() && item2d->side_2()->size() <= bin->side_2()->size() )
     {
-
-//        cout << "packing item " << item->progid() << " into bin " << bin->progid();
-//        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
+        item2d->setSpinLocation( false );
+        if( item2d->IsSpun() && ( ! bin->IsSpun() ) ) {
+            item2d->setSpinLocation( true );
+        } else if( ( ! item2d->IsSpun() ) && bin->IsSpun() ) {
+            item2d->setSpinLocation( true );
+        }
+        cout << "packing item " << item->progid() << " ( " << item2d->getSpin() << " ) into bin " << bin->progid();
+        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
+        //if( bin_rotated ) cout << "bin rotated ";
+        if( item2d->getSpinLocation()  ) cout << "item rotated ";
+        cout << endl;
 
         bin->set_item( item );
         item->setBin( bin->Root( bin )->progid() );
