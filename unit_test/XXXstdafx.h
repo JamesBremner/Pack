@@ -20,7 +20,7 @@
 #include <exception>
 #include <algorithm>
 #include <sstream>
-
+#include <memory>
 
 
 #include "cutest.h"

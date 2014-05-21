@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "cutest.h"
 
 TEST( DimensionalUnits )
 {
@@ -84,87 +85,63 @@ TEST( ItemQuantity )
 
 TEST( BinQuantity1 )
 {
-	BoxBindingsParser *parser = new BoxBindingsParser();
 
-	char *bins = "0:ft:1:2x2x2";
-	char *items = "0:ft:0:125:1x1x1";
-	vector<Bin*> bins_v;
-	vector<Item*> items_v;
+	char *bins = "0:ft:1:2x2";
+	char *items = "0:ft:0:125:1x1";
 
-	int dim;
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	CHECK_EQUAL( 1, W.Bins.size() );
+	CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
 
-	CHECK_EQUAL( 125, items_v.size() );
 
-	BoxPacker3D *packer = new BoxPacker3D();
-	packer->BoxPacker2D::packThem(bins_v, items_v);
-	delete packer;
-
-	CHECK_EQUAL( 1, bins_v.size() );
-	int packed_item_count = 0;
-	for( vector< Bin* >::iterator ibin = bins_v.begin();
-		ibin != bins_v.end(); ibin++ )
-	{
-		packed_item_count += (*ibin)->itemsInBinCount();
-	}
-	CHECK_EQUAL( 8, packed_item_count );
 }
 TEST( BinQuantity2 )
 {
 
-	vector<Bin*> bins_v;
-	vector<Item*> items_v;
-	char* bins = "0:ft:2:2x2x2";
-	char* items = "0:ft:0:125:1x1x1";
+	char* bins = "0:ft:2:2x2";
+	char* items = "0:ft:0:125:1x1";
 
-	int dim;
-	BoxBindingsParser *parser = new BoxBindingsParser();
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-	delete parser;
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	CHECK_EQUAL( 2, W.Bins.size() );
+	CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
+	CHECK_EQUAL( 4, W.Bins[1]->itemsInBinCount() );
 
-	BoxPacker3D *packer = new BoxPacker3D();
-	packer->BoxPacker2D::packThem(bins_v, items_v);
-	delete packer;
-
-	CHECK_EQUAL( 2, bins_v.size() );
-	int packed_item_count = 0;
-	for( vector< Bin* >::iterator ibin = bins_v.begin();
-		ibin != bins_v.end(); ibin++ )
-	{
-		packed_item_count += (*ibin)->itemsInBinCount();
-	}
-	CHECK_EQUAL( 16, packed_item_count );
 
 }
 TEST( BinQuantityEndless )
 {
 
-	vector<Bin*> bins_v;
-	vector<Item*> items_v;
-	char* bins = "0:ft:-1:2x2x2";
-	char* items = "0:ft:0:125:1x1x1";
+	char* bins = "0:ft:-1:2x2";
+	char* items = "0:ft:0:125:1x1";
 
-	int dim;
-	BoxBindingsParser *parser = new BoxBindingsParser();
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-	delete parser;
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	CHECK_EQUAL( 32, W.Bins.size() );
+	CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
+	CHECK_EQUAL( 4, W.Bins[1]->itemsInBinCount() );
 
-	BoxPacker3D *packer = new BoxPacker3D();
-	packer->BoxPacker2D::packThem(bins_v, items_v);
-	delete packer;
-
-	CHECK_EQUAL( 16, bins_v.size() );
-	int packed_item_count = 0;
-	for( vector< Bin* >::iterator ibin = bins_v.begin();
-		ibin != bins_v.end(); ibin++ )
-	{
-		packed_item_count += (*ibin)->itemsInBinCount();
-	}
-	CHECK_EQUAL( 125, packed_item_count );
 
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+TEST( Defragment )
+{
+	char* bins = "0:ft:0:3x3";
+	char* items = "0:ft:0:125:1x2";
+
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	CHECK_EQUAL( 1, W.Bins.size() );
+	CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
+
+}
+
+int main(int argc, char *argv[])
 {
 	return raven::set::UnitTest::RunAllTests();
 

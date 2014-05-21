@@ -75,8 +75,8 @@
 		<Unit filename="../SourceFiles/TubeBindingsParser.cpp" />
 		<Unit filename="../SourceFiles/TubePacker.cpp" />
 		<Unit filename="../SourceFiles/Utils.cpp" />
+		<Unit filename="../SourceFiles/cWorld.cpp" />
 		<Unit filename="../SourceFiles/stdafx.cpp" />
-		<Unit filename="stdafx.h" />
 		<Unit filename="unit_test.cpp" />
 		<Extensions>
 			<code_completion />

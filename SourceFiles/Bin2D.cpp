@@ -105,6 +105,40 @@ void Bin2D:: totalRemSpaceAvailable(double& avail)
 
 }
 
+Bin * Bin2D::CreateNewEmptyCopy()
+{
+	Bin::bin_build_instructions instructions;
+	char buf[20];
+
+	// identify this as a new copy
+	string sid = id();
+	int p = sid.find("_cpy");
+	if( p == -1 ) {
+		sid += "_cpy2";
+	} else {
+		int cpy = atoi( sid.substr(p+4).c_str() );
+		snprintf(buf,9,"%d",cpy+1);
+		sid = sid.substr(0,p+4) + buf;
+	}
+	instructions.bin_id = sid;
+
+	// copy the dimensions
+	snprintf(buf,19,"%9f",side_1_->size() );
+	instructions.size_v.push_back( string( buf ) );
+	snprintf(buf,19,"%9f",side_2_->size() );
+	instructions.size_v.push_back( string( buf ) );
+
+	// we should always be using the defaultyunits internally
+	instructions.dimension_units = "in";
+
+	// we would never come here unless we have an endless supply of these
+	instructions.can_copy = true;
+
+	return Bin::Build( instructions );
+
+}
+
+
      void Bin2D::Dumper()
      {
          cout << progid() << " " << side_1()->size() << "," << side_2()->size() <<

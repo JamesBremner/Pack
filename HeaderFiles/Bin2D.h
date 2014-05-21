@@ -35,7 +35,7 @@ public:
     virtual double binUtilizationRating();
     virtual void totalChildSpaceUsed( double &used );
     virtual void totalRemSpaceAvailable( double &avail);
-
+    virtual Bin * CreateNewEmptyCopy();
     virtual void Dumper();
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
 

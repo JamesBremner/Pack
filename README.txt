@@ -1,3 +1,4 @@
+Copyright (c) 2014 by James Bremner
 Copyright (C) 2012 by Arash Sharif
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,9 +19,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-Copyright (c) 2013 by James Bremner
 
-Windows build mods
+The code is based on Arash Sharif's 2012 packit4me modified
+
+- to build on windows using codeblocks
+- to utilize C++11 features, particularly shared pointers
+- to merge fragmented unused space
+- to record locations of items in bins
 
 ------------------------------------------------------------------------------------------------
 

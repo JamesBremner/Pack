@@ -409,7 +409,7 @@ bool BoxPacker3D::checkFitsConstrWidthHeight(Bin *bin, Item *item, vector<Bin*> 
 //
 //    }
 //
-//    return false;
+    return false;
 
 }
 
