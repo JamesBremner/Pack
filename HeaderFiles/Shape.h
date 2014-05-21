@@ -20,6 +20,11 @@ public:
     void set_id( string value );
     int progid() { return myID; }
 
+    virtual void set_side_1(Side *value) {};
+    virtual void set_side_2(Side *value) {};
+    virtual void set_side_3(Side *value) {};
+
+    virtual double volume() { return 0; }
 
     virtual bool operator <( Shape &b) = 0;
     virtual bool operator >( Shape &b) = 0;

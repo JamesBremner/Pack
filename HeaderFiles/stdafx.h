@@ -9,6 +9,12 @@
 #include <exception>
 #include <algorithm>
 #include <sstream>
+#include <memory>
+
+class Bin;
+   using bin_t = std::shared_ptr< Bin >;
+    using bin_v_t = std::vector< bin_t >;
+
 
 #include "Side.h"
 #include "Shape.h"
@@ -17,10 +23,14 @@
 #include "Item.h"
 #include "Item2D.h"
 #include "Item3D.h"
+    using item_t = std::shared_ptr< Item >;
+        using item_v_t = std::vector< item_t >;
 #include "Bin.h"
 #include "Bin1D.h"
 #include "Bin2D.h"
 #include "Bin3D.h"
+
+
 #include "Packer.h"
 #include "BoxPacker2D.h"
 #include "BoxPacker3D.h"
@@ -29,6 +39,7 @@
 #include "BoxBindingsParser.h"
 #include "TubeBindingsParser.h"
 #include "Utils.h"
+#include "cWorld.h"
 
 using namespace std;
 

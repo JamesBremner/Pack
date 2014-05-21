@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Utils.h
  * Author: arash
  *
@@ -17,14 +17,14 @@ public:
     Utils();
     Utils(const Utils& orig);
     virtual ~Utils();
-    
-   
-    static bool compareAscShape(Shape *a, Shape *b);
+
+
+    static bool compareAscShape(std::shared_ptr<Shape> a, std::shared_ptr<Shape> b);
     static bool compareDescInt( int a, int b );
-	static bool compareDescShape(Shape *a, Shape *b);
+	static bool compareDescShape(std::shared_ptr<Shape> a, std::shared_ptr<Shape> b);
 	static void cleanUpBindingCall( vector<Bin*> &bins_v, vector<Item*> &items_v, BoxBindingsParser *parser );
 	static void displayHelp();
-    
+
 
 };
 

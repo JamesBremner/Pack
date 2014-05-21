@@ -19,10 +19,10 @@ public:
     Bin2D(const Bin2D& orig);
     virtual ~Bin2D();
 
-    Bin *x_sub_bin();
-    virtual void set_x_sub_bin(Bin *value);
-    Bin *y_sub_bin();
-    virtual void set_y_sub_bin(Bin *value);
+
+    virtual void set_x_sub_bin(bin_t value);
+    virtual void set_y_sub_bin(bin_t value);
+
 
     double getLocationHeight()                 { return myHOffsetFromRoot; }
     void setLocationHeight( double h )       { myHOffsetFromRoot = h; }
@@ -30,7 +30,7 @@ public:
     void setLocationWidth( double w )       { myWOffsetFromRoot = w; }
 
 
-    virtual void itemsInBin(vector<Item*> &items);
+    virtual void itemsInBin(item_v_t &items);
     virtual void binRemSpace(vector<Bin*> &bins);
     virtual double binUtilizationRating();
     virtual void totalChildSpaceUsed( double &used );
@@ -45,8 +45,7 @@ public:
 
 protected:
 
-    Bin *y_sub_bin_;
-    Bin *x_sub_bin_;
+
 
 };
 

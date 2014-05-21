@@ -10,10 +10,20 @@
 
 using namespace std;
 
-class Bin : public virtual Shape2D
+struct bin_build_instructions;
+
+class Bin : public virtual Shape2D, public std::enable_shared_from_this< Bin >
 {
 
 public:
+
+    struct bin_build_instructions
+    {
+        string bin_id;
+        vector<string> size_v;
+        string dimension_units;
+        bool can_copy;
+    };
 
     Bin();
     Bin(const Bin& orig);
@@ -22,23 +32,32 @@ public:
 
 
 
-    Bin *parent_bin();
-    void set_parent_bin( Bin *value );
-    void set_item ( Item *item2D );
-    virtual Bin *Root( Bin* bin );
+    bin_t parent_bin();
+    void set_parent_bin( bin_t value );
+    void set_item ( item_t item2D );
+    virtual bin_t Root( bin_t bin );
 
-	virtual void ScaleSize( float f ) { }
-	virtual void Dumper() {}
+    virtual void ScaleSize( float f ) { }
+    virtual void Dumper() {}
 
 
-    virtual void itemsInBin(vector<Item*> &items) = 0;
+    virtual void itemsInBin(item_v_t &items) = 0;
     virtual void binRemSpace(vector<Bin*> &bins) = 0;
-	virtual Bin* CreateNewEmptyCopy() { return NULL; }
+    virtual Bin* CreateNewEmptyCopy()
+    {
+        return NULL;
+    }
 
     virtual int itemsInBinCount();
     virtual int remsInBinCount();
-	void setCanCopy( bool flag )		{ myCanCopy = flag; }
-	bool CanCopy()						{ return myCanCopy;}
+    void setCanCopy( bool flag )
+    {
+        myCanCopy = flag;
+    }
+    bool CanCopy()
+    {
+        return myCanCopy;
+    }
 
     virtual double binSpaceUsed();
     virtual double remSpaceAvail();
@@ -51,25 +70,38 @@ public:
     virtual void totalRemSpaceAvailable( double &avail) = 0;
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep) = 0;
 
-     virtual   double getLocationHeight() {return 0; }
-   virtual void setLocationHeight( double h ) { }
-    virtual double getLocationWidth()  {return 0; }
+    virtual   double getLocationHeight()
+    {
+        return 0;
+    }
+    virtual void setLocationHeight( double h ) { }
+    virtual double getLocationWidth()
+    {
+        return 0;
+    }
     virtual void setLocationWidth( double w ) { }
 
+    bin_t get_x_sub_bin() { return x_sub_bin_; }
+    bin_t get_y_sub_bin() { return y_sub_bin_; }
+    virtual void set_x_sub_bin(bin_t value) { }
+    virtual void set_y_sub_bin(bin_t value) { }
 
     virtual bool operator <( Shape &b) = 0;
     virtual bool operator >( Shape &b) = 0;
     virtual bool operator ==( Shape &b) = 0;
 
+    static Bin* Build(  bin_build_instructions& instructions );
+
 protected:
 
 
-    Bin *parent_bin_;
-    Item *item_;
-	bool myCanCopy;
+    bin_t parent_bin_;
+    bin_t y_sub_bin_;
+    bin_t x_sub_bin_;
+    item_t item_;
+    bool myCanCopy;
     double myHOffsetFromRoot;
     double myWOffsetFromRoot;
-
 };
 
 #endif	/* BIN_H */

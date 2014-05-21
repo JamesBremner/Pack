@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Packer.h
  * Author: arash
  *
@@ -16,9 +16,9 @@ public:
     Packer();
     Packer(const Packer& orig);
     virtual ~Packer();
-    
-    virtual void packThem( vector<Bin*>& bins, vector<Item*> items) = 0;
-    virtual bool packIt( Bin *bin, Item *item, vector<Bin*> &bins ) = 0;
+
+    virtual void packThem( bin_v_t& ref_bins, item_v_t& items ) = 0;
+    virtual bool packIt( bin_t bin, item_t item, bin_v_t &bins ) = 0;
 
 
 };

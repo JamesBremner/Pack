@@ -32,6 +32,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="$(#boost.include)" />
@@ -56,6 +57,7 @@
 		<Unit filename="HeaderFiles/TubeBindingsParser.h" />
 		<Unit filename="HeaderFiles/TubePacker.h" />
 		<Unit filename="HeaderFiles/Utils.h" />
+		<Unit filename="HeaderFiles/cWorld.h" />
 		<Unit filename="HeaderFiles/stdafx.h" />
 		<Unit filename="SourceFiles/Bin.cpp" />
 		<Unit filename="SourceFiles/Bin1D.cpp" />
@@ -75,6 +77,7 @@
 		<Unit filename="SourceFiles/TubeBindingsParser.cpp" />
 		<Unit filename="SourceFiles/TubePacker.cpp" />
 		<Unit filename="SourceFiles/Utils.cpp" />
+		<Unit filename="SourceFiles/cWorld.cpp" />
 		<Unit filename="SourceFiles/main.cpp" />
 		<Unit filename="SourceFiles/stdafx.cpp" />
 		<Extensions>

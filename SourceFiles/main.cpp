@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 
+cWorld theWorld;
 
 int main(int argc, char *argv[])
 {
@@ -104,24 +105,25 @@ int main(int argc, char *argv[])
 
 	}
 
+    if( theWorld.Build( bin, item ) != 0 ) {
+        cout << "ERROR: could not build bins and items" << endl;
+        return 1;
+    }
 
-	const char *json = NULL;
-	if( strcmp(shape, "t") == 0 )
-		json = PACKIT4ME_packThemTube( bin, item);
-	else
-		json = PACKIT4ME_packThem( bin, item );
+    theWorld.Pack();
 
-	string json_s(json);
+    string json_s = theWorld.getJson();
+
 	if 	( json_s.find("error") != string::npos )
 	{
-		cout << json << endl;
+		cout << json_s << endl;
 		return 1;
 	}
 
 
 	if ( out_file == NULL )
 	{
-		cout << json << endl;
+		cout << json_s << endl;
 	}
 	else
 	{
@@ -129,160 +131,74 @@ int main(int argc, char *argv[])
 		fstream file;
 
 		file.open(out_file, fstream::out);
-		file << json;
+		file << json_s;
 		file.close();
 
 	}
 
-	delete[] json;
-
 	return 0;
 }
-
-/**
-
-  Pack items in bins
-
-  @param[in] bins  The bin specifications
-  @param[in] items The item specifications
-
-*/
-const char *PACKIT4ME_packThem( const char *bins, const char *items )
-{
-
-	BoxBindingsParser *parser = new BoxBindingsParser();
-
-	vector<Bin*> bins_v;
-	vector<Item*> items_v;
-
-
-	int dim;
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-
-	if ( dim == BoxBindingsParser::BIN_PARSE_ERROR )
-	{
-		Utils::cleanUpBindingCall( bins_v, items_v, parser );
-		return "error, could not parse bin.  please confirm bin string format id::v1[xv2xv3]";
-	}
-
-	if ( dim == BoxBindingsParser::ITEM_PARSE_ERROR )
-	{
-		Utils::cleanUpBindingCall( bins_v, items_v, parser );
-		return "error, could not parse item.  please confirm item string format id:constraints:v1[xv2xv3]";
-	}
-
-	if ( dim == BoxBindingsParser::PACKER_ERROR )
-	{
-		Utils::cleanUpBindingCall( bins_v, items_v, parser );
-		return "error, check input strings";
-	}
-
-
-	if( dim == BoxBindingsParser::PACKER_2D )
-	{
-		BoxPacker2D *packer = new BoxPacker2D();
-		packer->packThem(bins_v, items_v);
-		delete packer;
-	}
-
-	if( dim == BoxBindingsParser::PACKER_3D )
-	{
-		BoxPacker3D *packer = new BoxPacker3D();
-		packer->BoxPacker2D::packThem(bins_v, items_v);
-		delete packer;
-	}
-
-	stringstream jsonStr;
-	jsonStr << "[";
-	for( unsigned i=0; i < bins_v.size(); ++i )
-	{
-		bins_v[i]->encodeAsJSON(jsonStr, false);
-		if ( i != bins_v.size() - 1)
-			jsonStr << ",";
-	}
-
-	jsonStr << "]";
-
-
-
-	string json = jsonStr.str();
-
-	char *s_buffer =  new char[json.size()+1];
-	copy(json.begin(), json.end(), s_buffer);
-	s_buffer[json.size()] = '\0';
-
-	for( auto i : items_v ) {
-        i->Print();
-	}
-
-
-	Utils::cleanUpBindingCall( bins_v, items_v, parser );
-
-	return s_buffer;
-
-}
-
 
 const char *PACKIT4ME_packThemTube( const char *bins, const char *items)
 {
 
-	TubeBindingsParser *parser = new TubeBindingsParser();
-
-	vector<Bin*> bins_v;
-	vector<Item*> items_v;
-
-	int dim;
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-
-	if ( dim == BoxBindingsParser::BIN_PARSE_ERROR )
-	{
-
-		Utils::cleanUpBindingCall( bins_v, items_v, parser );
-		return "error, could not parse bin.  please confirm bin string format id:v1[xv2xv3]";
-	}
-
-	if ( dim == BoxBindingsParser::ITEM_PARSE_ERROR )
-	{
-
-		Utils::cleanUpBindingCall( bins_v, items_v, parser );
-		return "error, could not parse item.  please confirm item string format id:constraints:v1[xv2xv3]";
-	}
-
-	if ( dim == BoxBindingsParser::PACKER_ERROR )
-	{
-
-		Utils::cleanUpBindingCall( bins_v, items_v, parser );
-		return "error, check input strings";
-
-	}
-
-	TubePacker *packer = new TubePacker();
-	packer->packThem(bins_v, items_v);
-	delete packer;
-
-
-	stringstream jsonStr;
-	jsonStr << "[";
-	for( unsigned i=0; i < bins_v.size(); ++i )
-	{
-		bins_v[i]->encodeAsJSON(jsonStr, false);
-		if ( i != bins_v.size() - 1)
-			jsonStr << ",";
-	}
-
-	jsonStr << "]";
-
-
-
-	string json = jsonStr.str();
-
-	char *s_buffer =  new char[json.size()+1];
-	copy(json.begin(), json.end(), s_buffer);
-	s_buffer[json.size()] = '\0';
-
-	Utils::cleanUpBindingCall( bins_v, items_v, parser );
-
-
-	return s_buffer;
+//	TubeBindingsParser *parser = new TubeBindingsParser();
+//
+//	vector<Bin*> bins_v;
+//	vector<Item*> items_v;
+//
+//	int dim;
+//	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
+//
+//	if ( dim == BoxBindingsParser::BIN_PARSE_ERROR )
+//	{
+//
+//		Utils::cleanUpBindingCall( bins_v, items_v, parser );
+//		return "error, could not parse bin.  please confirm bin string format id:v1[xv2xv3]";
+//	}
+//
+//	if ( dim == BoxBindingsParser::ITEM_PARSE_ERROR )
+//	{
+//
+//		Utils::cleanUpBindingCall( bins_v, items_v, parser );
+//		return "error, could not parse item.  please confirm item string format id:constraints:v1[xv2xv3]";
+//	}
+//
+//	if ( dim == BoxBindingsParser::PACKER_ERROR )
+//	{
+//
+//		Utils::cleanUpBindingCall( bins_v, items_v, parser );
+//		return "error, check input strings";
+//
+//	}
+//
+//	TubePacker *packer = new TubePacker();
+//	packer->packThem(bins_v, items_v);
+//	delete packer;
+//
+//
+//	stringstream jsonStr;
+//	jsonStr << "[";
+//	for( unsigned i=0; i < bins_v.size(); ++i )
+//	{
+//		bins_v[i]->encodeAsJSON(jsonStr, false);
+//		if ( i != bins_v.size() - 1)
+//			jsonStr << ",";
+//	}
+//
+//	jsonStr << "]";
+//
+//
+//
+//	string json = jsonStr.str();
+//
+//	char *s_buffer =  new char[json.size()+1];
+//	copy(json.begin(), json.end(), s_buffer);
+//	s_buffer[json.size()] = '\0';
+//
+//	Utils::cleanUpBindingCall( bins_v, items_v, parser );
+//
+//
+//	return s_buffer;
 
 }

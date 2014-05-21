@@ -9,6 +9,8 @@
 #define	ITEM_H
 using namespace std;
 
+struct item_build_instructions;
+
 class Item : public virtual Shape2D
 {
 public:
@@ -35,7 +37,9 @@ public:
     virtual void setHLocation( double h ) = 0;
     bool getSpinLocation()  { return mySpinLocation; }
     void setSpinLocation( bool s ) { mySpinLocation = s; }
+        string getSpin() { return ""; }
 
+static Item* Build(  item_build_instructions& instructions );
 
 protected:
     double  myWLocation;

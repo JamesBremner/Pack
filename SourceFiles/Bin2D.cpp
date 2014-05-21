@@ -22,21 +22,11 @@ Bin2D::Bin2D(const Bin2D& orig) {
 Bin2D::~Bin2D()
 {
 
-    if ( x_sub_bin_ != NULL )
-        delete x_sub_bin_;
-    if ( y_sub_bin_ != NULL )
-        delete y_sub_bin_;
-
 }
 
-Bin *Bin2D::x_sub_bin()
-{
-    return x_sub_bin_;
-};
 
 
-
-void Bin2D::set_x_sub_bin(Bin *value)
+void Bin2D::set_x_sub_bin( bin_t value)
 {
 
     if ( side_1_->orig_side() == 'w' )
@@ -45,14 +35,10 @@ void Bin2D::set_x_sub_bin(Bin *value)
         y_sub_bin_ = value;
 };
 
-Bin *Bin2D::y_sub_bin()
-{
-    return y_sub_bin_;
-};
 
 
 
-void Bin2D::set_y_sub_bin(Bin *value)
+void Bin2D::set_y_sub_bin( bin_t value)
 {
     if ( side_2_->orig_side() == 'h' )
         y_sub_bin_ = value;
@@ -60,7 +46,7 @@ void Bin2D::set_y_sub_bin(Bin *value)
         x_sub_bin_ = value;
 };
 
-void Bin2D:: itemsInBin( vector<Item*> &items)
+void Bin2D:: itemsInBin( item_v_t &items)
 {
     if ( item_ != NULL)
         items.push_back( item_ );
@@ -95,7 +81,7 @@ void Bin2D:: binRemSpace( vector<Bin*> &bins)
 void Bin2D:: totalChildSpaceUsed( double &used )
 {
     if ( item_ != NULL )
-        used += dynamic_cast<Item2D*>(item_)->area();
+        used += item_->area();
 
     if ( x_sub_bin_ != NULL )
         x_sub_bin_->totalChildSpaceUsed( used );
@@ -137,7 +123,7 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
     jsonStr << "\"rem_perc_avail\": " << remSpaceAvail() << ",";
     jsonStr << "\"total_size\": " << area() << ",";
 
-    vector<Item*> items;
+    item_v_t items;
     itemsInBin(items);
 
     jsonStr << "\"items\": [";
@@ -189,7 +175,7 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
         else
         {
             jsonStr << "\"x_sub_bin\": ";
-            x_sub_bin()->encodeAsJSON( jsonStr, isDeep );
+            get_x_sub_bin()->encodeAsJSON( jsonStr, isDeep );
 
         }
 
@@ -200,7 +186,7 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
         else
         {
             jsonStr << "\"y_sub_bin\": ";
-            y_sub_bin()->encodeAsJSON( jsonStr, isDeep );
+            get_y_sub_bin()->encodeAsJSON( jsonStr, isDeep );
 
         }
     }

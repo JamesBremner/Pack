@@ -17,7 +17,7 @@ Bin3D::~Bin3D() {
 
 Bin * Bin3D::CreateNewEmptyCopy()
 {
-	BoxBindingsParser::bin_build_instructions instructions;
+	Bin::bin_build_instructions instructions;
 	char buf[20];
 
 	// identify this as a new copy
@@ -46,8 +46,7 @@ Bin * Bin3D::CreateNewEmptyCopy()
 	// we would never come here unless we have an endless supply of these
 	instructions.can_copy = true;
 
-	BoxBindingsParser parser;
-	return parser.buildBin( instructions );
+	return Bin::Build( instructions );
 
 }
 
@@ -59,7 +58,7 @@ void Bin3D::Dumper()
 }
 
 
-void Bin3D::set_x_sub_bin(Bin *value)
+void Bin3D::set_x_sub_bin(bin_t value)
 {
 
     if ( side_1_->orig_side() == 'w' )
@@ -71,7 +70,7 @@ void Bin3D::set_x_sub_bin(Bin *value)
 };
 
 
-void Bin3D::set_y_sub_bin(Bin *value)
+void Bin3D::set_y_sub_bin(bin_t value)
 {
     if ( side_1_->orig_side() == 'h' )
         x_sub_bin_ = value;
@@ -81,7 +80,7 @@ void Bin3D::set_y_sub_bin(Bin *value)
         z_sub_bin_ = value;
 };
 
-void Bin3D:: set_z_sub_bin(Bin *value)
+void Bin3D:: set_z_sub_bin(bin_t value)
 {
     if ( side_1_->orig_side() == 'l' )
         x_sub_bin_ = value;
@@ -99,7 +98,7 @@ void Bin3D::ScaleSize( float f )
 	side_3_->set_size( side_3_->size() * f );
 }
 
-void Bin3D::itemsInBin(vector<Item*> &items)
+void Bin3D::itemsInBin(item_v_t &items)
 {
     if ( Bin2D::item_ != NULL)
         items.push_back( Bin2D::item_ );
@@ -138,8 +137,7 @@ void Bin3D::totalChildSpaceUsed( double &used )
 
     if ( Bin2D::item_ != NULL ) {
 
-        Item3D* item3d = (Item3D*)Bin2D::item_;
-	used += item3d->volume();
+	used += item_->volume();
 
     }
 
@@ -206,7 +204,7 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
     jsonStr << "\"rem_perc_avail\": " << remSpaceAvail() << ",";
     jsonStr << "\"total_size\": " << volume() << ",";
 
-    vector<Item*> items;
+    item_v_t items;
     itemsInBin(items);
 
     jsonStr << "\"items\": [";
@@ -265,7 +263,7 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
         else
         {
             jsonStr << "\"x_sub_bin\": ";
-            x_sub_bin()->encodeAsJSON( jsonStr, isDeep );
+            get_x_sub_bin()->encodeAsJSON( jsonStr, isDeep );
 
         }
 
@@ -276,7 +274,7 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
         else
         {
             jsonStr << "\"y_sub_bin\": ";
-            y_sub_bin()->encodeAsJSON( jsonStr, isDeep );
+            get_y_sub_bin()->encodeAsJSON( jsonStr, isDeep );
 
         }
 
@@ -298,7 +296,7 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 
 double Bin3D::binUtilizationRating()
 {
-    Bin3D *root = dynamic_cast<Bin3D*>(Root((Bin*)this));
+    bin_t root = Root(shared_from_this());
 
     if ( root->binSpaceUsed() != 0)
      	return root->binSpaceUsed() * volume();

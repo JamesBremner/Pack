@@ -15,14 +15,14 @@ Utils::~Utils() {
 }
 
 
-bool Utils::compareAscShape(Shape *a, Shape *b)
+bool Utils::compareAscShape(std::shared_ptr<Shape> a, std::shared_ptr<Shape> b)
 {
 	return (*a) < (*b);
 
 
 }
 
-bool Utils::compareDescShape(Shape *a, Shape *b)
+bool Utils::compareDescShape(std::shared_ptr<Shape> a, std::shared_ptr<Shape> b)
 {
 
 	return (*a) > (*b);

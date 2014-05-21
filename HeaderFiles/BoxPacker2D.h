@@ -20,10 +20,10 @@ public:
     BoxPacker2D(const BoxPacker2D& orig);
     virtual ~BoxPacker2D();
 
-    virtual void packThem( vector<Bin*>& ref_bins, vector<Item*> items);
-    virtual bool packIt( Bin *bin, Item *item, vector<Bin*> &bins );
-    virtual void splitBinWidth( Bin *bin, Item *item );
-    virtual void splitBinHeight( Bin *bin, Item *item );
+    virtual void packThem( bin_v_t& ref_bins, item_v_t& items);
+    virtual bool packIt( bin_t bin, item_t item, bin_v_t &bins );
+    virtual void splitBinWidth( bin_t bin, item_t item );
+    virtual void splitBinHeight( bin_t bin, item_t item );
 
 
 protected:
@@ -31,7 +31,7 @@ protected:
 
     virtual bool checkFitsConstrWidth(Bin *bin, Item *item, vector<Bin*> &bins);
     virtual bool checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins);
-    virtual bool checkFitsNoConstr(Bin *bin, Item *item, vector<Bin*> &bins );
+    virtual bool checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins );
 
 /** Merge unused space
 @param[in] packbin  the bin we are packing
@@ -39,7 +39,7 @@ protected:
 @param[in] bins     all the unused bins
 @return true if the merge took place
 */
-   bool merger( Bin* packbin, Bin* newbin, vector<Bin*> &bins );
+   bool merger( bin_t packbin, bin_t newbin, bin_v_t &bins );
 
 };
 

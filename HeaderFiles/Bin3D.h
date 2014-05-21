@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Bin3D.h
  * Author: arash
  *
@@ -11,40 +11,40 @@ using namespace std;
 
 class Bin3D : public Bin1D, public Bin2D, public Shape3D
 {
-    
+
 public:
     Bin3D();
     Bin3D(const Bin3D& orig);
 
 	Bin * CreateNewEmptyCopy();
-    
+
     virtual ~Bin3D();
-        
-    void set_x_sub_bin(Bin *value);
-    void set_y_sub_bin(Bin *value);
-    void set_z_sub_bin(Bin *value);
+
+    void set_x_sub_bin(bin_t value);
+    void set_y_sub_bin(bin_t value);
+    void set_z_sub_bin(bin_t value);
 
 	virtual void ScaleSize( float f );
 	virtual void Dumper();
 
-    
-    void itemsInBin(vector<Item*> &items);
+
+    void itemsInBin(item_v_t &items);
     void binRemSpace(vector<Bin*> &bins);
     double binUtilizationRating();
     void totalChildSpaceUsed( double &used );
     void totalRemSpaceAvailable( double &avail);
-    
+
     double binSpaceUsed();
     double remSpaceAvail();
-    
+
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
-    
+
     bool operator <( Shape &b);
     bool operator >( Shape &b);
     bool operator ==( Shape &b);
-    
+
 protected:
-    
+
 
 };
 

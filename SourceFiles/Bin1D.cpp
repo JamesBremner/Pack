@@ -25,23 +25,21 @@ Bin1D::Bin1D(const Bin1D& orig) {
 
 Bin1D::~Bin1D() {
 
-    if ( z_sub_bin_ != NULL )
-        delete z_sub_bin_;
 }
 
 
 
-Bin *Bin1D::z_sub_bin()
+bin_t Bin1D::z_sub_bin()
 {
     return z_sub_bin_;
 };
 
-void Bin1D:: set_z_sub_bin(Bin *value)
+void Bin1D:: set_z_sub_bin(bin_t value)
 {
     z_sub_bin_ = value;
 };
 
-void Bin1D:: itemsInBin( vector<Item*> &items)
+void Bin1D:: itemsInBin( item_v_t &items)
 {
     if ( item_ != NULL)
         items.push_back( item_ );
@@ -73,7 +71,7 @@ void Bin1D:: binRemSpace( vector<Bin*> &bins)
 void Bin1D:: totalChildSpaceUsed( double &used )
 {
     if ( item_ != NULL )
-        used += dynamic_cast<Item2D*>(item_)->area();
+        used += item_->area();
 
     if ( z_sub_bin_ != NULL )
         z_sub_bin_->totalChildSpaceUsed( used );
@@ -108,7 +106,7 @@ void Bin1D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
     jsonStr << "\"rem_perc_avail\": " << remSpaceAvail() << ",";
     jsonStr << "\"total_size\": " << area() << ",";
 
-    vector<Item*> items;
+    item_v_t items;
     itemsInBin(items);
 
 
