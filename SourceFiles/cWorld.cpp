@@ -73,6 +73,18 @@ string cWorld::getJson()
     return string( s_buffer );
 }
 
+    string cWorld::getCutList()
+    {
+        stringstream ss;
+        for( auto b : Bins )
+        {
+            cCutList L;
+            b->CreateCutList( L );
+            ss << L.get();
+        }
+        return ss.str();
+    }
+
 int cWorld::BuildBins( vector<string>& bin_v )
 {
 

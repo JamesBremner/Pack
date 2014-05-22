@@ -229,6 +229,19 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 
 }
 
+     void Bin2D::CreateCutList( cCutList& l )
+    {
+        l.clear();
+        item_v_t items;
+        itemsInBin(items);
+        for( auto i : items )
+        {
+            i->AddToCutList( l );
+        }
+        l.Join();
+
+    }
+
 bool  Bin2D:: operator <( Shape &b)
 {
     Bin2D *bin = dynamic_cast<Bin2D*>(&b);

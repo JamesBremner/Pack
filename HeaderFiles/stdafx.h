@@ -15,7 +15,7 @@ class Bin;
    using bin_t = std::shared_ptr< Bin >;
     using bin_v_t = std::vector< bin_t >;
 
-
+#include "cCut.h"
 #include "Side.h"
 #include "Shape.h"
 #include "Shape2D.h"
@@ -40,6 +40,7 @@ class Bin;
 #include "TubeBindingsParser.h"
 #include "Utils.h"
 #include "cWorld.h"
+
 
 using namespace std;
 

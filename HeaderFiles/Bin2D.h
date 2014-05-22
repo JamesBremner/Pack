@@ -38,6 +38,7 @@ public:
     virtual Bin * CreateNewEmptyCopy();
     virtual void Dumper();
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
+    virtual void CreateCutList( cCutList& l );
 
     virtual bool operator <( Shape &b);
     virtual bool operator >( Shape &b);

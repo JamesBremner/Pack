@@ -43,6 +43,8 @@ public:
     /// JSON format world description and packing results
     string getJson();
 
+    string getCutList();
+
     /// Convert feet, cm or m into inches
     static float DimensionUnitScale( const string& unit_string );
 

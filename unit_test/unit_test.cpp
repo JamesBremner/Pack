@@ -141,6 +141,54 @@ TEST( Defragment )
 
 }
 
+TEST( CutList )
+{
+    cCutList L;
+    L.Add( cCut( 1,1,1,2));
+    L.Add( cCut( 2,1,2,2));
+    CHECK_EQUAL( 2, L.size());
+
+    L.Add( cCut( 1,2,1,1));
+    CHECK_EQUAL( 2, L.size());
+
+    L.Add( cCut( 1,2,1,3));
+    CHECK_EQUAL( 3, L.size());
+    L.Join();
+    CHECK_EQUAL( 2, L.size());
+
+
+}
+
+TEST( BinCutList )
+{
+	char *bins = "0:ft:1:2x2";
+	char *items = "0:ft:0:1:1x1";
+
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	cCutList L;
+	W.Bins[0]->CreateCutList( L );
+	CHECK_EQUAL( 4, L.size());
+
+   cout << L.get();
+
+}
+TEST( BinCutList2 )
+{
+	char *bins = "0:ft:1:2x2";
+	char *items = "0:ft:0:2:1x1";
+
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	cCutList L;
+	W.Bins[0]->CreateCutList( L );
+	CHECK_EQUAL( 5, L.size());
+
+   cout << L.get();
+
+}
 int main(int argc, char *argv[])
 {
 	return raven::set::UnitTest::RunAllTests();

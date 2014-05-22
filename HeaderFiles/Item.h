@@ -38,6 +38,7 @@ public:
     bool getSpinLocation()  { return mySpinLocation; }
     void setSpinLocation( bool s ) { mySpinLocation = s; }
         string getSpin() { return ""; }
+    virtual void AddToCutList( cCutList& l ) {}
 
 static Item* Build(  item_build_instructions& instructions );
 

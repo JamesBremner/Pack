@@ -92,6 +92,8 @@ public:
 
     static Bin* Build(  bin_build_instructions& instructions );
 
+    virtual void CreateCutList( cCutList& l ) {}
+
 protected:
 
 

@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
     theWorld.Pack();
 
     string json_s = theWorld.getJson();
+    string cutlist_s = theWorld.getCutList();
 
 	if 	( json_s.find("error") != string::npos )
 	{
@@ -124,6 +125,7 @@ int main(int argc, char *argv[])
 	if ( out_file == NULL )
 	{
 		cout << json_s << endl;
+		cout << cutlist_s;
 	}
 	else
 	{
@@ -132,6 +134,7 @@ int main(int argc, char *argv[])
 
 		file.open(out_file, fstream::out);
 		file << json_s;
+		file << cutlist_s;
 		file.close();
 
 	}
