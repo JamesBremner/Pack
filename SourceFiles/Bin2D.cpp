@@ -61,10 +61,10 @@ void Bin2D:: itemsInBin( item_v_t &items)
 
 
 
-void Bin2D:: binRemSpace( vector<Bin*> &bins)
+void Bin2D:: binRemSpace( bin_v_t &bins)
 {
-    if ( item_ == NULL )
-        bins.push_back( this );
+     if ( item_ == NULL )
+        bins.push_back( shared_from_this() );
 
     if ( x_sub_bin_ != NULL )
         x_sub_bin_->binRemSpace( bins );
@@ -172,17 +172,16 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
     items.clear();
     jsonStr << "],";
 
-    vector<Bin*> bins;
+    bin_v_t bins;
     binRemSpace(bins);
 
     jsonStr << "\"rems\": [";
     for(unsigned i=0; i < bins.size(); ++i)
     {
-        Bin2D * bin2d = dynamic_cast<Bin2D*>(bins[i]);
         jsonStr << "{";
-        jsonStr << "\"rem_size\": \"" << bin2d->origSize() << "\",";
-        jsonStr << "\"size_1\": " << bin2d->origSide1()->size() << ",";
-        jsonStr << "\"size_2\": " << bin2d->origSide2()->size();
+        jsonStr << "\"rem_size\": \"" << bins[i]->origSize() << "\",";
+        jsonStr << "\"size_1\": " << bins[i]->origSide1()->size() << ",";
+        jsonStr << "\"size_2\": " << bins[i]->origSide2()->size();
         jsonStr << "}";
 
         if( i != bins.size() - 1)

@@ -42,7 +42,7 @@ public:
 
 
     virtual void itemsInBin(item_v_t &items) = 0;
-    virtual void binRemSpace(vector<Bin*> &bins) = 0;
+    virtual void binRemSpace(bin_v_t &bins) = 0;
     virtual Bin* CreateNewEmptyCopy()
     {
         return NULL;
@@ -83,8 +83,10 @@ public:
 
     bin_t get_x_sub_bin() { return x_sub_bin_; }
     bin_t get_y_sub_bin() { return y_sub_bin_; }
+    bin_t get_z_sub_bin() { return z_sub_bin_; }
     virtual void set_x_sub_bin(bin_t value) { }
     virtual void set_y_sub_bin(bin_t value) { }
+    void set_z_sub_bin( bin_t value )       { z_sub_bin_ = value; }
 
     virtual bool operator <( Shape &b) = 0;
     virtual bool operator >( Shape &b) = 0;
@@ -100,6 +102,7 @@ protected:
     bin_t parent_bin_;
     bin_t y_sub_bin_;
     bin_t x_sub_bin_;
+    bin_t z_sub_bin_;
     item_t item_;
     bool myCanCopy;
     double myHOffsetFromRoot;

@@ -97,6 +97,30 @@ TEST( BinQuantity1 )
 
 
 }
+TEST( Bin3DQuantity1 )
+{
+
+	char *bins = "0:ft:1:2x2x1";
+	char *items = "0:ft:0:125:1x1x1";
+
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	CHECK_EQUAL( 1, W.Bins.size() );
+	CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
+
+	bins = "0:ft:1:2x2x2";
+	items = "0:ft:0:125:1x1x1";
+
+	W.Clear();
+	W.Build( bins, items );
+	W.Pack();
+	CHECK_EQUAL( 1, W.Bins.size() );
+	CHECK_EQUAL( 8, W.Bins[0]->itemsInBinCount() );
+
+
+
+}
 TEST( BinQuantity2 )
 {
 

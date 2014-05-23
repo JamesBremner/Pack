@@ -29,7 +29,7 @@ public:
 
 
     void itemsInBin(item_v_t &items);
-    void binRemSpace(vector<Bin*> &bins);
+    void binRemSpace(bin_v_t &bins);
     double binUtilizationRating();
     void totalChildSpaceUsed( double &used );
     void totalRemSpaceAvailable( double &avail);

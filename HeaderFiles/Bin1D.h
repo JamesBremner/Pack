@@ -12,8 +12,7 @@ using namespace std;
 class Bin1D : public virtual Bin
 {
 
-protected:
-    bin_t z_sub_bin_;
+
 
 public:
     Bin1D();
@@ -22,10 +21,10 @@ public:
 
 
     bin_t z_sub_bin();
-    virtual void set_z_sub_bin(bin_t value);
+
 
     virtual void itemsInBin(item_v_t &items);
-    virtual void binRemSpace(vector<Bin*> &bins);
+    virtual void binRemSpace(bin_v_t &bins);
     virtual double binUtilizationRating();
     virtual void totalChildSpaceUsed( double &used );
     virtual void totalRemSpaceAvailable( double &avail);

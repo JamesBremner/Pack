@@ -33,9 +33,12 @@ public:
     void set_side_1(Side *value);
     Side *side_2();
     void set_side_2(Side *value);
+    virtual Side * side_3() { return NULL; }
+
 
     virtual Side * origSide1();
     virtual Side * origSide2();
+    virtual Side * origSide3() { return NULL; }
     virtual string origSize();
 
 

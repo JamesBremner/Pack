@@ -4,10 +4,11 @@
 #include <typeinfo>
 #include <vector>
 #include <map>
-#include <string.h>
+#include <cstring>
 #include <stdlib.h>
 #include <exception>
 #include <algorithm>
+#include <functional>
 #include <sstream>
 #include <memory>
 

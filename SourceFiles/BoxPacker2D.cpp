@@ -97,6 +97,8 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 bool BoxPacker2D::packIt( bin_t bin, item_t item, bin_v_t &bins )
 {
 
+    //cout << "BoxPacker2D::packIt\n";
+
     int constraints = item->constraints();
 
 //    if ( constraints == Item2D::CONSTRAINT_WIDTH)
@@ -298,7 +300,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             if( newbin->getLocationHeight() + newbin->side_2()->size() ==
                     bin->getLocationHeight() )
             {
-//                cout << "merge!" << endl;
+                cout << "merge!" << endl;
                 bin->side_2()->set_size( newbin->side_2()->size() + bin->side_2()->size() );
                 bin->setLocationHeight( newbin->getLocationHeight() );
                 return true;
@@ -306,7 +308,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             else if ( bin->getLocationHeight() + bin->side_2()->size() ==
                       newbin->getLocationHeight() )
             {
-//                cout << "merge!" << endl;
+               cout << "merge!" << endl;
                 bin->side_2()->set_size( newbin->side_2()->size() + bin->side_2()->size() );
                 return true;
             }
@@ -316,7 +318,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             if( newbin->getLocationWidth() + newbin->side_1()->size() ==
                     bin->getLocationWidth() )
             {
-//                cout << "merge!" << endl;
+                cout << "merge!" << endl;
                 bin->side_1()->set_size( newbin->side_1()->size() + bin->side_1()->size() );
                 bin->setLocationWidth(newbin->getLocationWidth() );
                 return true;
@@ -324,7 +326,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             else if ( bin->getLocationWidth() + bin->side_1()->size() ==
                       newbin->getLocationWidth() )
             {
-//                cout << "merge!" << endl;
+                cout << "merge!" << endl;
                 bin->side_1()->set_size( newbin->side_1()->size() + bin->side_1()->size() );
                 return true;
             }

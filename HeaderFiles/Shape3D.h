@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Shape3D.h
  * Author: arash
  *
@@ -12,32 +12,32 @@ using namespace std;
 
 class Shape3D : virtual public Shape2D
 {
-    
-   
+
+
 protected:
-        
+
     Side *side_3_;
-    
-public:   
-    
+
+public:
+
     Shape3D();
     ~Shape3D();
-    
+
     Side *side_3();
     void set_side_3( Side *value );
-    
-    Side * origSide1();
-    Side * origSide2();
-    Side * origSide3();
+
+    virtual Side * origSide1();
+    virtual Side * origSide2();
+    virtual Side * origSide3();
     string origSize();
-    
-       
+
+
     double volume();
-    
+
     virtual bool operator <( Shape &b);
     virtual bool operator >( Shape &b);
     virtual bool operator ==( Shape &b);
-    
+
 };
 
 #endif	/* SHAPE3D_H */

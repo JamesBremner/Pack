@@ -31,7 +31,7 @@ public:
 
 
     virtual void itemsInBin(item_v_t &items);
-    virtual void binRemSpace(vector<Bin*> &bins);
+    virtual void binRemSpace(bin_v_t &bins);
     virtual double binUtilizationRating();
     virtual void totalChildSpaceUsed( double &used );
     virtual void totalRemSpaceAvailable( double &avail);

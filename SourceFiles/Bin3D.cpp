@@ -115,11 +115,11 @@ void Bin3D::itemsInBin(item_v_t &items)
 
 }
 
-void Bin3D::binRemSpace(vector<Bin*> &bins)
+void Bin3D::binRemSpace( bin_v_t &bins)
 {
 
     if ( Bin2D::item_ == NULL )
-        bins.push_back( this );
+        bins.push_back( shared_from_this() );
 
     if ( x_sub_bin_ != NULL )
         x_sub_bin_->binRemSpace( bins );
@@ -219,19 +219,18 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 
     jsonStr << "],";
 
-    vector<Bin*> bins;
+    bin_v_t bins;
     binRemSpace(bins);
 
 
     jsonStr << "\"rems\": [";
     for(unsigned i=0; i < bins.size(); ++i)
     {
-        Bin3D * bin3d = dynamic_cast<Bin3D*>(bins[i]);
         jsonStr << "{";
-        jsonStr << "\"rem_size\": \"" << bin3d->origSize() << "\",";
-        jsonStr << "\"size_1\": " << bin3d->origSide1()->size() << ",";
-        jsonStr << "\"size_2\": " << bin3d->origSide2()->size() << ",";
-        jsonStr << "\"size_3\": " << bin3d->origSide3()->size();
+        jsonStr << "\"rem_size\": \"" << bins[i]->origSize() << "\",";
+        jsonStr << "\"size_1\": " << bins[i]->origSide1()->size() << ",";
+        jsonStr << "\"size_2\": " << bins[i]->origSide2()->size() << ",";
+        jsonStr << "\"size_3\": " << bins[i]->origSide3()->size();
         jsonStr << "}";
 
         if( i != bins.size() - 1)

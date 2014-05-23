@@ -48,6 +48,8 @@ public:
     /// Convert feet, cm or m into inches
     static float DimensionUnitScale( const string& unit_string );
 
+    void Clear();
+
 private:
     int BuildBins(  vector<string>& bin_v );
     int BuildItems(  vector<string>& item_v );

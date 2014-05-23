@@ -29,6 +29,13 @@ int   cWorld::Build(
     return BuildItems( item_v );
 }
 
+    void cWorld::Clear()
+    {
+        Bins.clear();
+        Items.clear();
+        Dimension = 0;
+    }
+
 void cWorld::Pack()
 {
     if( Dimension == 2 )

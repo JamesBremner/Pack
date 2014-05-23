@@ -54,7 +54,7 @@ int Bin:: itemsInBinCount()
 
 int Bin:: remsInBinCount()
 {
-    vector<Bin*> rems;
+    bin_v_t rems;
     binRemSpace(rems);
     int count = (int)rems.size();
     rems.clear();
@@ -107,4 +107,5 @@ bin_t Bin::Root( bin_t bin )
         return bin;
 
 }
+
 

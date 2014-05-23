@@ -134,6 +134,7 @@ int main(int argc, char *argv[])
 
 		file.open(out_file, fstream::out);
 		file << json_s;
+		file << endl;
 		file << cutlist_s;
 		file.close();
 
