@@ -86,7 +86,7 @@ public:
     bin_t get_z_sub_bin() { return z_sub_bin_; }
     virtual void set_x_sub_bin(bin_t value) { }
     virtual void set_y_sub_bin(bin_t value) { }
-    void set_z_sub_bin( bin_t value )       { z_sub_bin_ = value; }
+    virtual void set_z_sub_bin( bin_t value )  { }
 
     virtual bool operator <( Shape &b) = 0;
     virtual bool operator >( Shape &b) = 0;

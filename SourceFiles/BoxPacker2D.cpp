@@ -214,11 +214,11 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
         } else if( ( ! item->IsSpun() ) && bin->IsSpun() ) {
             item->setSpinLocation( true );
         }
-        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
-        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
-        //if( bin_rotated ) cout << "bin rotated ";
-        if( item->getSpinLocation()  ) cout << "item rotated ";
-        cout << endl;
+//        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
+//        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
+//        //if( bin_rotated ) cout << "bin rotated ";
+//        if( item->getSpinLocation()  ) cout << "item rotated ";
+//        cout << endl;
 
         bin->set_item( item );
         item->setBin( bin->Root( bin )->progid() );
@@ -300,7 +300,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             if( newbin->getLocationHeight() + newbin->side_2()->size() ==
                     bin->getLocationHeight() )
             {
-                cout << "merge!" << endl;
+                //cout << "merge!" << endl;
                 bin->side_2()->set_size( newbin->side_2()->size() + bin->side_2()->size() );
                 bin->setLocationHeight( newbin->getLocationHeight() );
                 return true;
@@ -308,7 +308,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             else if ( bin->getLocationHeight() + bin->side_2()->size() ==
                       newbin->getLocationHeight() )
             {
-               cout << "merge!" << endl;
+               //cout << "merge!" << endl;
                 bin->side_2()->set_size( newbin->side_2()->size() + bin->side_2()->size() );
                 return true;
             }
@@ -318,7 +318,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             if( newbin->getLocationWidth() + newbin->side_1()->size() ==
                     bin->getLocationWidth() )
             {
-                cout << "merge!" << endl;
+                //cout << "merge!" << endl;
                 bin->side_1()->set_size( newbin->side_1()->size() + bin->side_1()->size() );
                 bin->setLocationWidth(newbin->getLocationWidth() );
                 return true;
@@ -326,7 +326,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             else if ( bin->getLocationWidth() + bin->side_1()->size() ==
                       newbin->getLocationWidth() )
             {
-                cout << "merge!" << endl;
+                //cout << "merge!" << endl;
                 bin->side_1()->set_size( newbin->side_1()->size() + bin->side_1()->size() );
                 return true;
             }
