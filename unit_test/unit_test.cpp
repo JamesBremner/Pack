@@ -4,66 +4,31 @@
 #include "stdafx.h"
 #include "cutest.h"
 
-TEST( DimensionalUnits )
+
+TEST( DimensionalUnits2 )
 {
-	BoxBindingsParser *parser = new BoxBindingsParser();
+	char* bins = "0:ft:1:1x1";
+	char* items = "0:in:0:1250:1x1";
 
-	char *bins = "0:in:1:5x5x5";
-	char *items = "0:in:0:1:1x1x1";
-	vector<Bin*> bins_v;
-	vector<Item*> items_v;
+	cWorld W;
+	W.Build( bins, items );
+	W.Pack();
+	CHECK_EQUAL( 1, W.Bins.size() );
+	CHECK_EQUAL( 144, W.Bins[0]->itemsInBinCount() );
+	CHECK_CLOSE( 1, W.Items[0]->side_1()->size(),0.001);
+	CHECK_CLOSE( 1, W.Items[0]->side_2()->size(),0.001);
+	CHECK_CLOSE( 12, W.Bins[0]->side_1()->size(),0.001);
+	CHECK_CLOSE( 12, W.Bins[0]->side_2()->size(),0.001);
 
-	int dim;
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
+	bins = "0:in:1:1x1";
+	items = "0:ft:0:1250:1x1";
 
-	CHECK_CLOSE(5.0,bins_v[0]->side_1()->size(),0.1);
-	CHECK_CLOSE(5.0,bins_v[0]->side_2()->size(),0.1);
-	CHECK_CLOSE(1.0,items_v[0]->side_1()->size(),0.1);
-	CHECK_CLOSE(1.0,items_v[0]->side_2()->size(),0.1);
-
-	bins = "0:ft:1:5x5x5";
-	items = "0:ft:0:1:1x1x1";
-	bins_v.clear();
-	items_v.clear();
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-
-	CHECK_CLOSE(60.0,bins_v[0]->side_1()->size(),0.1);
-	CHECK_CLOSE(60.0,bins_v[0]->side_2()->size(),0.1);
-	CHECK_CLOSE(12.0,items_v[0]->side_1()->size(),0.1);
-	CHECK_CLOSE(12.0,items_v[0]->side_2()->size(),0.1);
-
-	bins = "0:cm:1:5x5x5";
-	items = "0:cm:0:1:1x1x1";
-	bins_v.clear();
-	items_v.clear();
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-
-	CHECK_CLOSE(1.97,bins_v[0]->side_1()->size(),0.01);
-	CHECK_CLOSE(1.97,bins_v[0]->side_2()->size(),0.01);
-	CHECK_CLOSE(0.39,items_v[0]->side_1()->size(),0.01);
-	CHECK_CLOSE(0.39,items_v[0]->side_2()->size(),0.01);
-
-	bins = "0:mm:1:5x5x5";
-	items = "0:mm:0:1:1x1x1";
-	bins_v.clear();
-	items_v.clear();
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-
-	CHECK_CLOSE(0.197,bins_v[0]->side_1()->size(),0.001);
-	CHECK_CLOSE(0.197,bins_v[0]->side_2()->size(),0.001);
-	CHECK_CLOSE(0.039,items_v[0]->side_1()->size(),0.001);
-	CHECK_CLOSE(0.039,items_v[0]->side_2()->size(),0.001);
-
-	bins = "0:m:1:5x5x5";
-	items = "0:m:0:1:1x1x1";
-	bins_v.clear();
-	items_v.clear();
-	parser->parseBinsAndItems( bins, items, bins_v, items_v, dim);
-
-	CHECK_CLOSE(197,bins_v[0]->side_1()->size(),1);
-	CHECK_CLOSE(197,bins_v[0]->side_2()->size(),1);
-	CHECK_CLOSE(39,items_v[0]->side_1()->size(),1);
-	CHECK_CLOSE(39,items_v[0]->side_2()->size(),1);
+	W.Build( bins, items );
+    CHECK_EQUAL( 1, W.Bins.size() );
+	CHECK_CLOSE( 12, W.Items[0]->side_1()->size(),0.001);
+	CHECK_CLOSE( 12, W.Items[0]->side_2()->size(),0.001);
+	CHECK_CLOSE( 1, W.Bins[0]->side_1()->size(),0.001);
+	CHECK_CLOSE( 1, W.Bins[0]->side_2()->size(),0.001);
 
 }
 

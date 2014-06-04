@@ -28,8 +28,10 @@ public:
     virtual Side * origSide2() = 0;
     virtual Side * origSide3() = 0;
     virtual Side * side_1() = 0;
-   virtual Side * side_2() = 0;
-   virtual Side * side_3() = 0;
+    virtual Side * side_2() = 0;
+    virtual Side * side_3() = 0;
+
+    virtual void ScaleSize( float f ) = 0;
 
     virtual double volume() { return 0; }
 

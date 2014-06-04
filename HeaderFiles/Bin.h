@@ -37,7 +37,7 @@ public:
     void set_item ( item_t item2D );
     virtual bin_t Root( bin_t bin );
 
-    virtual void ScaleSize( float f ) { }
+
     virtual void Dumper() {}
 
 

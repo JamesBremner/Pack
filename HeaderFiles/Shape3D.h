@@ -31,6 +31,7 @@ public:
     virtual Side * origSide3();
     string origSize();
 
+    virtual void ScaleSize( float f );
 
     double volume();
 

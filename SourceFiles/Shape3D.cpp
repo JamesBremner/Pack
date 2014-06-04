@@ -9,9 +9,9 @@ Shape3D::Shape3D():Shape2D()
     side_3_ = NULL;
 };
 
-Shape3D::~Shape3D() 
+Shape3D::~Shape3D()
 {
-    
+
     if(side_3_ != NULL)
         delete side_3_;
 };
@@ -27,7 +27,7 @@ void Shape3D::set_side_3(Side *value)
 };
 
 Side * Shape3D::origSide1()
-{    
+{
     if( side_1_->orig_side() == 'w')
         return side_1_;
     else if( side_2_->orig_side() == 'w')
@@ -61,7 +61,14 @@ string Shape3D::origSize()
     stringstream ss;
     ss << origSide1()->size() << " x " << origSide2()->size() << " x " << origSide3()->size();
     return ss.str();
-   
+
+}
+
+void Shape3D::ScaleSize( float f )
+{
+	side_1_->set_size( side_1_->size() * f );
+	side_2_->set_size( side_2_->size() * f );
+	side_3_->set_size( side_3_->size() * f );
 }
 
 
@@ -70,27 +77,27 @@ double Shape3D::volume()
     return (side_1_->size() * side_2_->size() * side_3_->size());
 }
 
-bool  Shape3D:: operator <( Shape &b) 
+bool  Shape3D:: operator <( Shape &b)
 {
 
-    Shape3D *b3d = dynamic_cast<Shape3D*>(&b); 
+    Shape3D *b3d = dynamic_cast<Shape3D*>(&b);
 
 	unsigned u_a = (unsigned) (this->volume() * 1000);
 	unsigned u_b = (unsigned) (b3d->volume() * 1000);
     return u_a < u_b;
 
-    
+
 }
 
 bool  Shape3D:: operator >( Shape &b)
-{ 
+{
     Shape3D *b3d = dynamic_cast<Shape3D*>(&b);
 
 
 	unsigned u_a = (unsigned) (this->volume() * 1000);
 	unsigned u_b = (unsigned) (b3d->volume() * 1000);
     return u_a > u_b;
-    
+
 }
 
 bool  Shape3D:: operator ==( Shape &b)
@@ -101,7 +108,7 @@ bool  Shape3D:: operator ==( Shape &b)
 	unsigned u_b = (unsigned) (b3d->volume() * 1000);
     return u_a == u_b;
 
-    
+
 }
 
 

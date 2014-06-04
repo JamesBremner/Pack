@@ -36,8 +36,8 @@
 			<Add directory="../HeaderFiles" />
 			<Add directory="$(#boost.include)" />
 		</Compiler>
-		<Unit filename="../../../../code/ravenset/cutest.cpp" />
-		<Unit filename="../../../../code/ravenset/cutest.h" />
+		<Unit filename="../../../ravenset/cutest.cpp" />
+		<Unit filename="../../../ravenset/cutest.h" />
 		<Unit filename="../HeaderFiles/Bin.h" />
 		<Unit filename="../HeaderFiles/Bin1D.h" />
 		<Unit filename="../HeaderFiles/Bin2D.h" />

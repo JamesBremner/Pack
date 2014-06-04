@@ -26,6 +26,7 @@ The code is based on Arash Sharif's 2012 packit4me modified
 - to utilize C++11 features, particularly shared pointers
 - to merge fragmented unused space
 - to record locations of items in bins
+- to output 2D cutting list
 
 ------------------------------------------------------------------------------------------------
 

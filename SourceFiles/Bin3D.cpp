@@ -91,13 +91,6 @@ void Bin3D:: set_z_sub_bin(bin_t value)
 };
 
 
-void Bin3D::ScaleSize( float f )
-{
-	side_1_->set_size( side_1_->size() * f );
-	side_2_->set_size( side_2_->size() * f );
-	side_3_->set_size( side_3_->size() * f );
-}
-
 void Bin3D::itemsInBin(item_v_t &items)
 {
     if ( Bin2D::item_ != NULL)

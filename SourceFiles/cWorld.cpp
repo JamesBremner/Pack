@@ -14,7 +14,7 @@ int   cWorld::Build(
     const char* bin_input_description,
     const char* item_input_description )
 {
-
+    Clear();
     vector<string> bin_v;
     boost::split(bin_v, bin_input_description, boost::is_any_of(","));
     vector<string> item_v;

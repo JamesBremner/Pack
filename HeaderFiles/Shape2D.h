@@ -35,6 +35,8 @@ public:
     void set_side_2(Side *value);
     virtual Side * side_3() { return NULL; }
 
+    virtual void ScaleSize( float f );
+
 
     virtual Side * origSide1();
     virtual Side * origSide2();

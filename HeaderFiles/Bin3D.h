@@ -24,7 +24,6 @@ public:
     void set_y_sub_bin(bin_t value);
     void set_z_sub_bin(bin_t value);
 
-	virtual void ScaleSize( float f );
 	virtual void Dumper();
 
 

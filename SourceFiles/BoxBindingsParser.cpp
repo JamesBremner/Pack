@@ -166,7 +166,8 @@ Bin *BoxBindingsParser::buildBin( bin_build_instructions& instructions )
 	// Convert from input dimensional units
 	// to internal units, assumed to be inches ( the default )
 
-	bin->ScaleSize( DimensionUnitScale( instructions.dimension_units ) );
+	//bin->ScaleSize( DimensionUnitScale( instructions.dimension_units ) );
+	bin->ScaleSize( 12 );
 
 	bin->setCanCopy( instructions.can_copy );
 

@@ -24,8 +24,6 @@ class Item3D : public Shape3D, public Item {
 		Item3D(const Item3D& orig);
 		virtual ~Item3D();
 
-		virtual void ScaleSize( float f );
-
 		void encodeAsJSON(stringstream &jsonStr);
 
     virtual double getWLocation()

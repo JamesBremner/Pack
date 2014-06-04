@@ -27,8 +27,6 @@ public:
     int getBin() { return myBinProgID; }
     void Print();
 
-    virtual void ScaleSize( float f ) { }
-
     virtual void encodeAsJSON(stringstream &jsonStr) = 0;
 
     virtual double getWLocation() = 0;

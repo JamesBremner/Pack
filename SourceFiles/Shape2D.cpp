@@ -13,7 +13,7 @@ using namespace std;
 Shape2D::Shape2D()
 {
     side_2_ = NULL;
-    side_1_ = NULL;    
+    side_1_ = NULL;
 
 };
 
@@ -22,12 +22,12 @@ Shape2D:: Shape2D(const Shape2D& orig)
     Shape2D();
 }
 
-Shape2D::~Shape2D() 
+Shape2D::~Shape2D()
 {
     if ( side_2_ != NULL)
         delete side_2_;
     if ( side_1_ != NULL )
-        delete side_1_;    
+        delete side_1_;
 
 };
 
@@ -52,7 +52,7 @@ void Shape2D::set_side_2(Side *value)
 };
 
 Side * Shape2D::origSide1()
-{    
+{
     if( side_1_->orig_side() == 'w')
         return side_1_;
     else
@@ -72,36 +72,40 @@ string Shape2D::origSize()
     stringstream ss;
     ss << origSide1()->size() << " x " << origSide2()->size();
     return ss.str();
-   
+
 }
 
-
+void Shape2D::ScaleSize( float f )
+{
+	side_1_->set_size( side_1_->size() * f );
+	side_2_->set_size( side_2_->size() * f );
+}
 
 double Shape2D:: area()
 {
-    
+
     return side_1_->size() * side_2_->size();
-    
+
 }
 
-bool  Shape2D:: operator <( Shape &b) 
+bool  Shape2D:: operator <( Shape &b)
 {
     Shape2D *b2d = (Shape2D*) &b;
 
 	unsigned u_a = (unsigned) (this->area() * 1000);
 	unsigned u_b = (unsigned) (b2d->area() * 1000);
     return u_a < u_b;
-    
+
 }
 
 bool  Shape2D:: operator >( Shape &b)
-{ 
+{
     Shape2D *b2d = (Shape2D*) &b;
 
 	unsigned u_a = (unsigned) (this->area() * 1000);
 	unsigned u_b = (unsigned) (b2d->area() * 1000);
     return u_a > u_b;
-    
+
 }
 
 bool  Shape2D:: operator ==( Shape &b)
@@ -111,7 +115,7 @@ bool  Shape2D:: operator ==( Shape &b)
 	unsigned u_a = (unsigned) (this->area() * 1000);
 	unsigned u_b = (unsigned) (b2d->area() * 1000);
     return u_a == u_b;
-    
+
 }
 
 

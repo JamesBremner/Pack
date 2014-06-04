@@ -13,12 +13,7 @@ public:
     /// the items which can be packed into bins
     std::vector< item_t > Items;
 
-    /** The dimensionality of the world
-
-    Currently ony 2D is supported
-    Though code is present toweards supporting 1D and 3D worlds
-
-    */
+    /// The dimensionality of the world
     int Dimension;
 
     /// Construct a new empty world
