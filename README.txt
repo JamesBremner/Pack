@@ -20,13 +20,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-The code is based on Arash Sharif's 2012 packit4me modified
+The code is based on Arash Sharif's 2012 packit4me, which is no longer supported.
+I have modified the modified Sharif's code to:
 
-- to build on windows using codeblocks
-- to utilize C++11 features, particularly shared pointers
-- to merge fragmented unused space
-- to record locations of items in bins
-- to output 2D cutting list
+- build on windows using codeblocks
+- utilize C++11 features, particularly shared pointers
+- merge fragmented unused space in the bins
+- record locations of items in bins
+- output 2D cutting list
 
 ------------------------------------------------------------------------------------------------
 
