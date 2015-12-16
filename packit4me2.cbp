@@ -7,11 +7,12 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="Debug/packit4me2" prefix_auto="1" extension_auto="1" />
+				<Option output="../Release/packit4me2" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../Release" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters=" -b 0:ft:2:2x1 -i a:ft:0:1:1x1 -s b" />
+				<Option parameters=" -b 0:mm:-1:1500x1500x500 -i 0:mm:0:12:300x200x100 -s b" />
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
@@ -20,9 +21,11 @@
 			</Target>
 			<Target title="Release">
 				<Option output="../Release/packit4me2" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../Release" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters=" -b 0:mm:-1:1500:1500:500 -i 0:mm:12:300x200x100 -s b" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>

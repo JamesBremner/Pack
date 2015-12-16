@@ -70,16 +70,21 @@ public:
     virtual void totalRemSpaceAvailable( double &avail) = 0;
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep) = 0;
 
-    virtual   double getLocationHeight()
+    double getLocationHeight()
     {
-        return 0;
+        return myHOffsetFromRoot;
     }
-    virtual void setLocationHeight( double h ) { }
-    virtual double getLocationWidth()
+    void setLocationHeight( double h ) { myHOffsetFromRoot = h; }
+    double getLocationWidth()
     {
-        return 0;
+        return myWOffsetFromRoot;
     }
-    virtual void setLocationWidth( double w ) { }
+    void setLocationWidth( double w ) { myWOffsetFromRoot = w;}
+    double getLocationLength()
+    {
+        return myLOffsetFromRoot;
+    }
+    void setLocationLength( double w ) { myLOffsetFromRoot = w;}
 
     bin_t get_x_sub_bin() { return x_sub_bin_; }
     bin_t get_y_sub_bin() { return y_sub_bin_; }
@@ -107,6 +112,7 @@ protected:
     bool myCanCopy;
     double myHOffsetFromRoot;
     double myWOffsetFromRoot;
+    double myLOffsetFromRoot;
 };
 
 #endif	/* BIN_H */

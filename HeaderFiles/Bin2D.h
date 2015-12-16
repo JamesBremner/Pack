@@ -23,13 +23,6 @@ public:
     virtual void set_x_sub_bin(bin_t value);
     virtual void set_y_sub_bin(bin_t value);
 
-
-    double getLocationHeight()                 { return myHOffsetFromRoot; }
-    void setLocationHeight( double h )       { myHOffsetFromRoot = h; }
-    double getLocationWidth()                 { return myWOffsetFromRoot; }
-    void setLocationWidth( double w )       { myWOffsetFromRoot = w; }
-
-
     virtual void itemsInBin(item_v_t &items);
     virtual void binRemSpace(bin_v_t &bins);
     virtual double binUtilizationRating();

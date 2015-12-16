@@ -29,10 +29,31 @@ public:
 
     virtual void encodeAsJSON(stringstream &jsonStr) = 0;
 
-    virtual double getWLocation() = 0;
-    virtual void setWLocation( double w ) = 0;
-    virtual double getHLocation() = 0;
-    virtual void setHLocation( double h ) = 0;
+     double getWLocation()
+    {
+        return myWLocation;
+    }
+     void setWLocation( double w )
+    {
+        myWLocation = w;
+    }
+     double getHLocation()
+    {
+        return myHLocation;
+    }
+     void setHLocation( double h )
+    {
+        myHLocation = h;
+    }
+    double getLLocation()
+    {
+        return myLLocation;
+    }
+     void setLLocation( double h )
+    {
+        myLLocation = h;
+    }
+
     bool getSpinLocation()  { return mySpinLocation; }
     void setSpinLocation( bool s ) { mySpinLocation = s; }
         string getSpin() { return ""; }
@@ -43,6 +64,7 @@ static Item* Build(  item_build_instructions& instructions );
 protected:
     double  myWLocation;
     double  myHLocation;
+    double  myLLocation;
     bool    mySpinLocation;
 
 private:

@@ -7,105 +7,106 @@ int main(int argc, char *argv[])
 {
 
 
-	if ( argc == 1 )
-	{
-		Utils::displayHelp();
-		return 0;
-	}
+    if ( argc == 1 )
+    {
+        Utils::displayHelp();
+        return 0;
+    }
 
-	char *bin = NULL;
-	char *item = NULL;
-	char *shape = NULL;
-	char *out_file = NULL;
+    char *bin = NULL;
+    char *item = NULL;
+    char *shape = NULL;
+    char *out_file = NULL;
 
-	for( int i=1; i < argc ; ++i )
-	{
+    for( int i=1; i < argc ; ++i )
+    {
 
-		if( strcmp(argv[i], "-help") == 0 )
-		{
-			Utils::displayHelp();
-			return 0;
-		}
+        if( strcmp(argv[i], "-help") == 0 )
+        {
+            Utils::displayHelp();
+            return 0;
+        }
 
-		if( strcmp(argv[i], "-b") == 0 )
-		{
-			if ( ( i+1 ) <= ( argc -1 ) )
-				bin = argv[i+1];
-			else
-			{
-				cout << "no bin found with -b" << endl;
-				return 1;
-			}
+        if( strcmp(argv[i], "-b") == 0 )
+        {
+            if ( ( i+1 ) <= ( argc -1 ) )
+                bin = argv[i+1];
+            else
+            {
+                cout << "no bin found with -b" << endl;
+                return 1;
+            }
 
-		}
+        }
 
-		if( strcmp(argv[i], "-i") == 0 )
-		{
-			if ( ( i+1 ) <= ( argc -1 ) )
-				item = argv[i+1];
-			else
-			{
-				cout << "no item found with -i" << endl;
-				return 1;
-			}
-		}
-
-
-		if( strcmp(argv[i], "-s") == 0 )
-		{
-			if ( ( i+1 ) <= ( argc -1 ) )
-				shape = argv[i+1];
-			else
-			{
-				cout << "no shape found with -s" << endl;
-				return 1;
-			}
-		}
-
-		if( strcmp(argv[i], "-o") == 0 )
-		{
-			if ( ( i+1 ) <= ( argc -1 ) )
-				out_file = argv[i+1];
-			else
-			{
-				cout << "no output file found with -o" << endl;
-				return 1;
-			}
-		}
-
-	}
-
-	if( bin == NULL )
-	{
-
-		cout << "did not get bin in args. pass in using -b" << endl;
-		return 1;
-	}
-
-	if( item == NULL )
-	{
-
-		cout << "did not get item in args. pass in using -i" << endl;
-		return 1;
-	}
+        if( strcmp(argv[i], "-i") == 0 )
+        {
+            if ( ( i+1 ) <= ( argc -1 ) )
+                item = argv[i+1];
+            else
+            {
+                cout << "no item found with -i" << endl;
+                return 1;
+            }
+        }
 
 
-	if( shape == NULL )
-	{
+        if( strcmp(argv[i], "-s") == 0 )
+        {
+            if ( ( i+1 ) <= ( argc -1 ) )
+                shape = argv[i+1];
+            else
+            {
+                cout << "no shape found with -s" << endl;
+                return 1;
+            }
+        }
 
-		cout << "did not get bin shape. pass in using -s" << endl;
-		return 1;
+        if( strcmp(argv[i], "-o") == 0 )
+        {
+            if ( ( i+1 ) <= ( argc -1 ) )
+                out_file = argv[i+1];
+            else
+            {
+                cout << "no output file found with -o" << endl;
+                return 1;
+            }
+        }
 
-	}
-	else if ( (strcmp(shape, "b") != 0) && (strcmp(shape, "t") != 0) )
-	{
-		cout << "-s switch can only be used with 'b' or 't'" << endl;
-		return 1;
+    }
+
+    if( bin == NULL )
+    {
+
+        cout << "did not get bin in args. pass in using -b" << endl;
+        return 1;
+    }
+
+    if( item == NULL )
+    {
+
+        cout << "did not get item in args. pass in using -i" << endl;
+        return 1;
+    }
 
 
-	}
+    if( shape == NULL )
+    {
 
-    if( theWorld.Build( bin, item ) != 0 ) {
+        cout << "did not get bin shape. pass in using -s" << endl;
+        return 1;
+
+    }
+    else if ( (strcmp(shape, "b") != 0) && (strcmp(shape, "t") != 0) )
+    {
+        cout << "-s switch can only be used with 'b' or 't'" << endl;
+        return 1;
+
+
+    }
+
+    if( theWorld.Build( bin, item ) != 0 )
+    {
         cout << "ERROR: could not build bins and items" << endl;
         return 1;
     }
@@ -115,32 +116,32 @@ int main(int argc, char *argv[])
     string json_s = theWorld.getJson();
     string cutlist_s = theWorld.getCutList();
 
-	if 	( json_s.find("error") != string::npos )
-	{
-		cout << json_s << endl;
-		return 1;
-	}
+    if 	( json_s.find("error") != string::npos )
+    {
+        cout << json_s << endl;
+        return 1;
+    }
 
 
-	if ( out_file == NULL )
-	{
-		cout << json_s << endl;
-		cout << cutlist_s;
-	}
-	else
-	{
+    if ( out_file == NULL )
+    {
+        cout << json_s << endl;
+        cout << cutlist_s;
+    }
+    else
+    {
 
-		fstream file;
+        fstream file;
 
-		file.open(out_file, fstream::out);
-		file << json_s;
-		file << endl;
-		file << cutlist_s;
-		file.close();
+        file.open(out_file, fstream::out);
+        file << json_s;
+        file << endl;
+        file << cutlist_s;
+        file.close();
 
-	}
+    }
 
-	return 0;
+    return 0;
 }
 
 const char *PACKIT4ME_packThemTube( const char *bins, const char *items)
@@ -204,5 +205,5 @@ const char *PACKIT4ME_packThemTube( const char *bins, const char *items)
 //
 //
 //	return s_buffer;
-
+    return "error, tube packing not implemented";
 }

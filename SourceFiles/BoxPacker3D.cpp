@@ -57,6 +57,10 @@ void BoxPacker3D::splitBinWidth(bin_t bin, item_t item) {
         sub_binX->set_side_3(bin->side_3()->size_side_to(dx_l));
         sub_binX->set_parent_bin(bin);
         sub_binX->set_id(bin->id());
+        sub_binX->setLocationWidth( bin->getLocationWidth() + item->side_1()->size() );
+        sub_binX->setLocationHeight( bin->getLocationHeight() );
+        sub_binX->setLocationLength( bin->getLocationLength() );
+
         bin->set_x_sub_bin(sub_binX);
 
 
@@ -84,6 +88,9 @@ void BoxPacker3D::splitBinHeight(bin_t bin, item_t item) {
         sub_binY->set_side_3(bin->side_3()->size_side_to(dy_l));
         sub_binY->set_parent_bin(bin);
         sub_binY->set_id(bin->id());
+        sub_binY->setLocationHeight( bin->getLocationHeight() + item->side_2()->size() );
+        sub_binY->setLocationWidth( bin->getLocationWidth() );
+        sub_binY->setLocationLength( bin->getLocationLength() );
         bin->set_y_sub_bin(sub_binY);
 
 
@@ -110,6 +117,9 @@ void BoxPacker3D::splitBinLength(bin_t bin, item_t item) {
         sub_binZ->set_side_3(bin->side_3()->size_side_to(dz_l));
         sub_binZ->set_parent_bin(bin);
         sub_binZ->set_id(bin->id());
+        sub_binZ->setLocationLength( bin->getLocationLength() + item->side_3()->size() );
+        sub_binZ->setLocationHeight( bin->getLocationHeight() );
+        sub_binZ->setLocationWidth( bin->getLocationWidth() );
         bin->set_z_sub_bin(sub_binZ);
 
 
@@ -352,7 +362,14 @@ bool BoxPacker3D::checkFitsNoConstr( bin_t bin,  item_t item, bin_v_t &bins ) {
             item->side_2()->size() <= bin->side_2()->size() &&
             item->side_3()->size() <= bin->side_3()->size()) {
 
+        // packing item
+
         bin->set_item(item);
+        item->setBin( bin->Root( bin )->progid() );
+        item->setHLocation( bin->getLocationHeight() );
+        item->setWLocation( bin->getLocationWidth() );
+        item->setLLocation( bin->getLocationLength() );
+
 
         //if it fits split item and recurse
         splitBinWidth(bin, item);

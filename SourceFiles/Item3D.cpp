@@ -28,7 +28,10 @@ void Item3D::encodeAsJSON(stringstream &jsonStr)
     jsonStr << "\"size_1\": " << origSide1()->size() << ",";
     jsonStr << "\"size_2\": " << origSide2()->size() << ",";
     jsonStr << "\"size_3\": " << origSide3()->size() << ",";
-    jsonStr << "\"constraints\": " << constraints();
+    jsonStr << "\"constraints\": " << constraints() << ",";
+    jsonStr << "\"W\": " << getWLocation() << ",";
+    jsonStr << "\"H\": " << getHLocation();
+    jsonStr << "\"L\": " << getLLocation();
     jsonStr << "}";
 
 }

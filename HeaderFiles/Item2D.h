@@ -22,22 +22,6 @@ public:
 
     virtual void encodeAsJSON(stringstream &jsonStr);
 
-    virtual double getWLocation()
-    {
-        return myWLocation;
-    }
-    virtual void setWLocation( double w )
-    {
-        myWLocation = w;
-    }
-    virtual double getHLocation()
-    {
-        return myHLocation;
-    }
-    virtual void setHLocation( double h )
-    {
-        myHLocation = h;
-    }
     string getSpin()
     {
     stringstream ss;
