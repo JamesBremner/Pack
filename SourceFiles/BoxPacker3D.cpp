@@ -370,8 +370,20 @@ bool BoxPacker3D::checkFitsNoConstr( bin_t bin,  item_t item, bin_v_t &bins ) {
         item->setWLocation( bin->getLocationWidth() );
         item->setLLocation( bin->getLocationLength() );
 
+        if( item->side_1()->size() != item->origSide1()->size() ||
+           item->side_2()->size() != item->origSide2()->size() ||
+           item->side_3()->size() != item->origSide3()->size() )
+        {
+            if( item->side_1()->size() != item->origSide1()->size() )
+                item->SpinAxis( 1 );
+            else if( item->side_2()->size() != item->origSide2()->size() )
+                item->SpinAxis( 2 );
+            else
+                item->SpinAxis( 3 );
+        }
+        else
+            item->SpinAxis( 0 );
 
-        //if it fits split item and recurse
         splitBinWidth(bin, item);
         splitBinHeight(bin, item);
         splitBinLength(bin, item);

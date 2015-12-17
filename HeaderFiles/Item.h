@@ -54,6 +54,14 @@ public:
         myLLocation = h;
     }
 
+    void SpinAxis( int axis )
+    {
+        mySpinAxis = axis;
+    }
+    int SpinAxis()
+    {
+        return mySpinAxis;
+    }
     bool getSpinLocation()  { return mySpinLocation; }
     void setSpinLocation( bool s ) { mySpinLocation = s; }
         string getSpin() { return ""; }
@@ -71,6 +79,7 @@ private:
 
     int     constraints_;
     int     myBinProgID;
+    int     mySpinAxis;         // zero means in original orientation
 };
 
 #endif	/* ITEM_H */

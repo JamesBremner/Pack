@@ -298,12 +298,9 @@ double Bin3D::binUtilizationRating()
 
 bool  Bin3D:: operator <( Shape &b)
 {
-
     Bin3D *bin = dynamic_cast<Bin3D*>(&b);
 
-	unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
-	unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
-    return u_a < u_b;
+    return this->binUtilizationRating() < bin->binUtilizationRating();
 
 }
 
