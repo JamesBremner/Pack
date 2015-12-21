@@ -1,7 +1,154 @@
 
 #include "stdafx.h"
+#include <boost/program_options.hpp>
+#include <boost/algorithm/string.hpp>
 
 cWorld theWorld;
+
+bool ParseOriginalOptions( vector< string >& argv,
+                           string& bin,
+                           string& item,
+                           string& shape,
+                           string& out_file)
+{
+    for( int i=1; i < argv.size() ; ++i )
+    {
+        cout << argv[i] << "\n";
+
+        if( strcmp(argv[i].c_str(), "-b") == 0 )
+        {
+
+            bin = argv[i+1];
+
+        }
+
+        if( strcmp(argv[i].c_str(), "-i") == 0 )
+        {
+            item = argv[i+1];
+        }
+
+
+        if( strcmp(argv[i].c_str(), "-s") == 0 )
+        {
+            shape = argv[i+1];
+        }
+
+        if( strcmp(argv[i].c_str(), "-o") == 0 )
+        {
+            out_file = argv[i+1];
+        }
+
+    }
+
+    if( ! bin.length() )
+    {
+
+        cout << "did not get bin in args. pass in using -b" << endl;
+        return false;
+    }
+
+    if( ! item.length()  )
+    {
+
+        cout << "did not get item in args. pass in using -i" << endl;
+        return false;
+    }
+
+
+    if( ! shape.length() )
+    {
+
+        cout << "did not get bin shape. pass in using -s" << endl;
+        return false;
+
+    }
+    else if ( shape != "b" && shape != "t" )
+    {
+        cout << "-s switch can only be used with 'b' or 't'" << endl;
+        return false;
+
+
+    }
+
+    return true;
+
+}
+
+
+// parse user options
+
+bool ParseNewOptions( int argc, char *argv[],
+                      string& bin,
+                      string& item,
+                      string& shape,
+                      string& out_file)
+{
+
+    namespace po = boost::program_options;
+
+    // Declare the supported options.
+    po::options_description desc("Allowed options");
+    desc.add_options()
+    ("help", "produce help message")
+    ("original",po::value<std::string>(),"Using original command line options")
+    ("bins", po::value<std::string>(),"bin sizes (format: {id}::{dim_unit}:{quantity}:{size1}x{size2}x{size3}). comma dil multiple\n"
+     "A quantity of -1 indicates an endless supply of bins")
+    ("items",po::value<std::string>(),"item sizes (format: {id}:{dim_unit}:{constraints}:{quantity}:{size1}x{size2}x{size3}) comma dil multiple" )
+    ("o", po::value<std::string>(), "output file. the output (json) are written to this file.  prints to stdo if left out")
+    ;
+
+    // parse the command line
+    po::variables_map vm;
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::notify(vm);
+
+    if( vm.count("original"))
+    {
+        vector< string > av;
+        boost::split( av,
+                      vm["original"].as<std::string>(),
+                      boost::is_any_of(" ") );
+        return ParseOriginalOptions(
+                   av,
+                   bin, item, shape, out_file );
+    }
+
+    // extract the parameter values
+    if (vm.count("help"))
+    {
+        cout << desc << "\n";
+        Utils::displayHelp();
+        exit(1);
+    }
+
+    if( vm.count("bins") )
+    {
+        bin = vm["bins"].as<std::string>();
+    }
+    else
+    {
+        cout << "did not get bin in args. pass in using --bins" << endl;
+        return false;
+    }
+    if( vm.count("items") )
+    {
+        item = vm["items"].as<std::string>();
+    }
+    else
+    {
+        cout << "did not get items in args. pass in using --items" << endl;
+        return false;
+    }
+            if( vm.count("o") )
+    {
+        out_file = vm["o"].as<std::string>();
+    }
+
+
+
+    return true;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -13,99 +160,18 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    char *bin = NULL;
-    char *item = NULL;
-    char *shape = NULL;
-    char *out_file = NULL;
+    string bin;
+    string item;
+    string shape;
+    string out_file;
 
-    for( int i=1; i < argc ; ++i )
-    {
-
-        if( strcmp(argv[i], "-help") == 0 )
-        {
-            Utils::displayHelp();
-            return 0;
-        }
-
-        if( strcmp(argv[i], "-b") == 0 )
-        {
-            if ( ( i+1 ) <= ( argc -1 ) )
-                bin = argv[i+1];
-            else
-            {
-                cout << "no bin found with -b" << endl;
-                return 1;
-            }
-
-        }
-
-        if( strcmp(argv[i], "-i") == 0 )
-        {
-            if ( ( i+1 ) <= ( argc -1 ) )
-                item = argv[i+1];
-            else
-            {
-                cout << "no item found with -i" << endl;
-                return 1;
-            }
-        }
-
-
-        if( strcmp(argv[i], "-s") == 0 )
-        {
-            if ( ( i+1 ) <= ( argc -1 ) )
-                shape = argv[i+1];
-            else
-            {
-                cout << "no shape found with -s" << endl;
-                return 1;
-            }
-        }
-
-        if( strcmp(argv[i], "-o") == 0 )
-        {
-            if ( ( i+1 ) <= ( argc -1 ) )
-                out_file = argv[i+1];
-            else
-            {
-                cout << "no output file found with -o" << endl;
-                return 1;
-            }
-        }
-
-    }
-
-    if( bin == NULL )
-    {
-
-        cout << "did not get bin in args. pass in using -b" << endl;
-        return 1;
-    }
-
-    if( item == NULL )
-    {
-
-        cout << "did not get item in args. pass in using -i" << endl;
-        return 1;
-    }
-
-
-    if( shape == NULL )
-    {
-
-        cout << "did not get bin shape. pass in using -s" << endl;
-        return 1;
-
-    }
-    else if ( (strcmp(shape, "b") != 0) && (strcmp(shape, "t") != 0) )
-    {
-        cout << "-s switch can only be used with 'b' or 't'" << endl;
+    if( ! ParseNewOptions(
+                argc, argv,
+                bin, item, shape, out_file ) )
         return 1;
 
 
-    }
-
-    if( theWorld.Build( bin, item ) != 0 )
+    if( theWorld.Build( bin.c_str(), item.c_str() ) != 0 )
     {
         cout << "ERROR: could not build bins and items" << endl;
         return 1;
@@ -123,7 +189,7 @@ int main(int argc, char *argv[])
     }
 
 
-    if ( out_file == NULL )
+    if ( ! out_file.length() )
     {
         cout << json_s << endl;
         cout << cutlist_s;
