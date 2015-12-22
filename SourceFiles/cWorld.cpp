@@ -73,10 +73,10 @@ string cWorld::getJson()
     copy(json.begin(), json.end(), s_buffer);
     s_buffer[json.size()] = '\0';
 
-    for( auto i : Items )
-    {
-        i->Print();
-    }
+//    for( auto i : Items )
+//    {
+//        i->Print();
+//    }
 
     return string( s_buffer );
 }

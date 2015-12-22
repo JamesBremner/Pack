@@ -99,7 +99,7 @@ bool BoxPacker2D::packIt( bin_t bin, item_t item, bin_v_t &bins )
 
     //cout << "BoxPacker2D::packIt\n";
 
-    int constraints = item->constraints();
+//    int constraints = item->constraints();
 
 //    if ( constraints == Item2D::CONSTRAINT_WIDTH)
 //        return checkFitsConstrWidth(bin, item, bins);

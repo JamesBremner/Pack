@@ -43,7 +43,7 @@ void Utils::displayHelp()
 	cout << endl;
 	cout << "packit4me v1.0.0, open source bin packing algorithm based on classic bin packing best fit" << endl;
 	cout << "Copyright (C) 2012 by Arash Sharif under MIT license" << endl;
-	cout << "Copyright (C) 2013 by James Bremner under MIT license" << endl << endl;
+	cout << "Copyright (C) 2015 by James Bremner under MIT license" << endl << endl;
 	cout << "use: packit4me [options] " << "example: packit4me -b 0:ft:1:5x5x5 -i 0:ft:0:1:1x1x1 -s b -o result" << endl << endl;
 	cout << "\t-b\t- bin or bins size (format: {id}::{dim_unit}:{quantity}:{size1}x{size2}x{size3}). comma dil multiple" << endl;
 	cout << "\t\t A quantity of -1 indicates an endless supply of bins" << endl << endl;
