@@ -45,8 +45,12 @@ public:
 
     void Clear();
 
+    /// True if user wants all items packed into one bin
+    bool myfOneBin;
+
 private:
     int BuildBins(  vector<string>& bin_v );
     int BuildItems(  vector<string>& item_v );
     bool isDimError( int dim );
+    void RemoveBinsTooSmallForAllItems();
 };

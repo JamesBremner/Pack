@@ -29,12 +29,12 @@ int   cWorld::Build(
     return BuildItems( item_v );
 }
 
-    void cWorld::Clear()
-    {
-        Bins.clear();
-        Items.clear();
-        Dimension = 0;
-    }
+void cWorld::Clear()
+{
+    Bins.clear();
+    Items.clear();
+    Dimension = 0;
+}
 
 void cWorld::Pack()
 {
@@ -46,6 +46,7 @@ void cWorld::Pack()
 
     if( Dimension == 3 )
     {
+        RemoveBinsTooSmallForAllItems();
         BoxPacker3D packer;
         packer.BoxPacker2D::packThem( Bins, Items );
     }
@@ -80,17 +81,17 @@ string cWorld::getJson()
     return string( s_buffer );
 }
 
-    string cWorld::getCutList()
+string cWorld::getCutList()
+{
+    stringstream ss;
+    for( auto b : Bins )
     {
-        stringstream ss;
-        for( auto b : Bins )
-        {
-            cCutList L;
-            b->CreateCutList( L );
-            ss << L.get();
-        }
-        return ss.str();
+        cCutList L;
+        b->CreateCutList( L );
+        ss << L.get();
     }
+    return ss.str();
+}
 
 int cWorld::BuildBins( vector<string>& bin_v )
 {
@@ -236,6 +237,41 @@ float cWorld::DimensionUnitScale( const string& unit_string )
         return 39.3701f;
     }
     return 1.0f;
+}
+
+void cWorld::RemoveBinsTooSmallForAllItems()
+{
+    // check that this is wanted
+    if( ! myfOneBin )
+        return;
+
+    // calculate total voulme of all items
+    double totalVolumeAllItems = 0;
+    for( auto& i : Items )
+    {
+        totalVolumeAllItems += i->volume();
+    }
+
+    // remove bins that are too small
+    Bins.erase(
+        remove_if(
+            Bins.begin(),
+            Bins.end(),
+            [ totalVolumeAllItems ] ( bin_t b )
+    {
+        return b->volume() < totalVolumeAllItems;
+    } ),
+    Bins.end() );
+
+
+
+    // check we still have at least one bin
+    if( ! Bins.size())
+    {
+        cout << "No bins big enough to contain all items" << endl;
+        exit(1);
+    }
+
 }
 
 Bin* Bin::Build(  bin_build_instructions& instructions )
