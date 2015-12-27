@@ -268,8 +268,7 @@ void cWorld::RemoveBinsTooSmallForAllItems()
     // check we still have at least one bin
     if( ! Bins.size())
     {
-        cout << "No bins big enough to contain all items" << endl;
-        exit(1);
+        throw std::runtime_error("No bins big enough to contain all items");
     }
 
 }

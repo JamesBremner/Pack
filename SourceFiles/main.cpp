@@ -11,7 +11,7 @@ bool ParseOriginalOptions( vector< string >& argv,
                            string& shape,
                            string& out_file)
 {
-    for( int i=1; i < argv.size() ; ++i )
+    for( int i=1; i < (int)argv.size() ; ++i )
     {
         cout << argv[i] << "\n";
 
@@ -140,7 +140,7 @@ bool ParseNewOptions( int argc, char *argv[],
         cout << "did not get items in args. pass in using --items" << endl;
         return false;
     }
-            if( vm.count("o") )
+    if( vm.count("o") )
     {
         out_file = vm["o"].as<std::string>();
     }
@@ -178,7 +178,24 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    theWorld.Pack();
+    try
+    {
+
+        theWorld.Pack();
+
+    }
+    catch ( std::runtime_error& e )
+    {
+        cout << e.what() << endl;
+        if ( out_file.length() )
+        {
+            fstream file;
+            file.open(out_file, fstream::out);
+            file << "{\"error\":\"" << e.what() << "\"}" << endl;
+            file.close();
+        }
+        return 1;
+    }
 
     string json_s = theWorld.getJson();
     string cutlist_s = theWorld.getCutList();
