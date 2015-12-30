@@ -1,9 +1,3 @@
-/*
- * File:   Item.cpp
- * Author: arash
- *
- * Created on June 14, 2012, 1:16 PM
- */
 
 #include "stdafx.h"
 
@@ -30,5 +24,10 @@ void Item::set_constraints( int value )
 void Item::Print()
 {
     cout << "Item " << id() << " " << progid() << " in " << myBinProgID <<
-        " location " << myWLocation << "," << myHLocation << endl;
+        " location " << myWLocation << "," << myHLocation
+        << " sides " << side_1()->size() <<" " << side_2()->size() <<" "<< side_3()->size()
+        << " orig " << origSide1()->size() <<" "<< origSide2()->size() <<" "<< origSide3()->size()
+        << " os " << side_1()->orig_side() <<" "<< side_2()->orig_side() <<" "<< side_3()->orig_side()
+        << " spin " << mySpinAxis
+        << endl;
 }

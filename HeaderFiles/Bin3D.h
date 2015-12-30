@@ -36,6 +36,8 @@ public:
     double binSpaceUsed();
     double remSpaceAvail();
 
+    bool Fit( item_t item );
+
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
 
     bool operator <( Shape &b);

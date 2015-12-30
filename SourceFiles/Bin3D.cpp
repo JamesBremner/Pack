@@ -184,6 +184,12 @@ double Bin3D:: remSpaceAvail()
 
 }
 
+bool Bin3D::Fit( item_t item )
+{
+    return (item->side_1()->size() <= side_1()->size() &&
+            item->side_2()->size() <= side_2()->size() &&
+            item->side_3()->size() <= side_3()->size());
+}
 
 void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 {
@@ -283,7 +289,7 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
         }
     }
 
-    jsonStr << "}";
+    jsonStr << "}\n";
 
 }
 

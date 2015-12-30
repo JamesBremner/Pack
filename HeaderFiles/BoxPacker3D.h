@@ -39,6 +39,8 @@ protected:
     bool checkFitsNoConstr(bin_t bin,  item_t item, bin_v_t &bins );
     map<string, double> findSubBinSizes( bin_t bin, item_t item);
 
+    bool Fit( bin_t bin,  item_t item, bin_v_t &bins );
+
 };
 
 #endif	/* BOXPACKER3D_H */

@@ -24,6 +24,8 @@ class Item3D : public Shape3D, public Item {
 		Item3D(const Item3D& orig);
 		virtual ~Item3D();
 
+		void Spin( int axis );
+
 		void encodeAsJSON(stringstream &jsonStr);
 
     virtual double getWLocation()

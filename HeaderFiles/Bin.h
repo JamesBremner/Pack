@@ -29,7 +29,7 @@ public:
     Bin(const Bin& orig);
     virtual ~Bin();
 
-
+    virtual bool Fit( item_t item ) { return false; }
 
 
     bin_t parent_bin();
@@ -100,6 +100,8 @@ public:
     static Bin* Build(  bin_build_instructions& instructions );
 
     virtual void CreateCutList( cCutList& l ) {}
+
+    void Print();
 
 protected:
 

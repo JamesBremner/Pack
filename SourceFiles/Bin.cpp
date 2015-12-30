@@ -108,4 +108,11 @@ bin_t Bin::Root( bin_t bin )
 
 }
 
+void Bin::Print()
+{
+    cout << "Bin " << id() << " " << progid()
+        << " sides " << side_1()->size() <<" " << side_2()->size() <<" "<< side_3()->size()
+        << endl;
+}
+
 

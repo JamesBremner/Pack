@@ -25,6 +25,9 @@ public:
         myBinProgID = id;
     }
     int getBin() { return myBinProgID; }
+
+    virtual void Spin( int axis ) { }
+
     void Print();
 
     virtual void encodeAsJSON(stringstream &jsonStr) = 0;
