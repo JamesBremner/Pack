@@ -46,9 +46,39 @@ void cWorld::Pack()
 
     if( Dimension == 3 )
     {
+        /*
+            if one bin is requested
+            there is no need to look at bins that are too small to hold every item
+        */
         RemoveBinsTooSmallForAllItems();
+
+        /*
+            Save the bins
+            in case we need to try again with the original list
+        */
+        std::vector< bin_t > Bins_saved( Bins );
+
+        /*
+            Pack
+        */
         BoxPacker3D packer;
-        packer.BoxPacker2D::packThem( Bins, Items );
+        packer.packThem( Bins, Items );
+
+        /*
+            loop while the packer used more than one bin
+            when one bin was reuested
+        */
+        while ( myfOneBin && Bins.size() > 1 )
+        {
+            /*
+                try again with saved bins
+                without the smallest
+            */
+            Bins = Bins_saved;
+            RemoveSmallestBin();
+            Bins_saved = Bins;
+            packer.packThem( Bins, Items );
+        }
     }
 }
 
@@ -268,9 +298,23 @@ void cWorld::RemoveBinsTooSmallForAllItems()
     // check we still have at least one bin
     if( ! Bins.size())
     {
+//        cout << "totalVolumeAllItems = " << totalVolumeAllItems
+//            << endl;
         throw std::runtime_error("No bins big enough to contain all items");
     }
 
+}
+
+void cWorld::RemoveSmallestBin()
+{
+    if( Bins.size() <= 1 )
+    {
+        throw std::runtime_error("No bins big enough to contain all items");
+    }
+
+    sort(Bins.begin(), Bins.end(), Utils::compareAscShape);
+
+    Bins.erase( Bins.begin() );
 }
 
 Bin* Bin::Build(  bin_build_instructions& instructions )

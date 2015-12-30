@@ -53,4 +53,5 @@ private:
     int BuildItems(  vector<string>& item_v );
     bool isDimError( int dim );
     void RemoveBinsTooSmallForAllItems();
+    void RemoveSmallestBin();
 };
