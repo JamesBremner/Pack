@@ -7,6 +7,7 @@
 using namespace std;
 
 Bin3D::Bin3D():Bin1D(), Bin2D(), Shape3D() {
+    myLOffsetFromRoot = 0;
 }
 
 Bin3D::Bin3D(const Bin3D& orig) {
