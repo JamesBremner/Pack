@@ -23,10 +23,12 @@ Item3D::~Item3D() {
 
 void Item3D::Spin( int axis )
 {
+    if( ! IsSpinAllowed( axis ) )
+        return;
+
     Side *tmps;
     switch( axis )
     {
-
     case 1:
         tmps = side_2();
         set_side_2(side_3());

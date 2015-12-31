@@ -80,7 +80,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
         else
         {
             // this item would not fit in any of the bins we have available
-            //int dbg = 1;
+            theWorld.myUnpackedItems.push_back( items[k] );
         }
     }
 

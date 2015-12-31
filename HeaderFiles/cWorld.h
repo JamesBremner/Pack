@@ -11,7 +11,10 @@ public:
     std::vector< bin_t > Bins;
 
     /// the items which can be packed into bins
-    std::vector< item_t > Items;
+    item_v_t Items;
+
+    /// the items that could not find a place in a bin
+    item_v_t myUnpackedItems;
 
     /// The dimensionality of the world
     int Dimension;
@@ -55,3 +58,5 @@ private:
     void RemoveBinsTooSmallForAllItems();
     void RemoveSmallestBin();
 };
+
+extern cWorld theWorld;

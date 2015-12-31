@@ -14,12 +14,24 @@ Item::~Item() {
 
 int Item::constraints()
 {
-	    return constraints_;
+    return myConstraints;
 }
 
 void Item::set_constraints( int value )
 {
-	    constraints_ = value;
+	    myConstraints = value;
+}
+bool Item::IsSpinAllowed( int axis )
+{
+    if( myConstraints == 7 )
+        return false;
+    switch( axis )
+    {
+    case 1:
+        break;
+    }
+
+    return true;
 }
 void Item::Print()
 {

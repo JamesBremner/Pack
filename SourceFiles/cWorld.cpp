@@ -66,7 +66,7 @@ void cWorld::Pack()
 
         /*
             loop while the packer used more than one bin
-            when one bin was reuested
+            when one bin was requested
         */
         while ( myfOneBin && Bins.size() > 1 )
         {
@@ -74,6 +74,7 @@ void cWorld::Pack()
                 try again with saved bins
                 without the smallest
             */
+            myUnpackedItems.clear();
             Bins = Bins_saved;
             RemoveSmallestBin();
             Bins_saved = Bins;
@@ -85,7 +86,7 @@ void cWorld::Pack()
 string cWorld::getJson()
 {
     stringstream jsonStr;
-    jsonStr << "[";
+    jsonStr << "{\"packed\":[";
     for( unsigned i=0; i < Bins.size(); ++i )
     {
         Bins[i]->encodeAsJSON(jsonStr, false);
@@ -93,8 +94,18 @@ string cWorld::getJson()
             jsonStr << ",";
     }
 
-    jsonStr << "]";
+    jsonStr << "],\n";
 
+    jsonStr << "\"unpacked\":[\n";
+    bool first = true;
+    for( auto unpacked_item : myUnpackedItems )
+    {
+        if( ! first )
+            jsonStr << ",";
+        first = false;
+        unpacked_item->encodeAsJSON( jsonStr );
+    }
+    jsonStr << "]}";
 
 
     string json = jsonStr.str();

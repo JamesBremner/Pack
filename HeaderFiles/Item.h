@@ -26,7 +26,15 @@ public:
     }
     int getBin() { return myBinProgID; }
 
+    /** Spin around axis
+
+    Only makes sense for 3D items
+    */
     virtual void Spin( int axis ) { }
+
+    /** true if spin is allowd according to constraints
+    */
+    bool IsSpinAllowed( int axis );
 
     void Print();
 
@@ -73,6 +81,7 @@ public:
 static Item* Build(  item_build_instructions& instructions );
 
 protected:
+    int     myConstraints;
     double  myWLocation;
     double  myHLocation;
     double  myLLocation;
@@ -80,7 +89,7 @@ protected:
 
 private:
 
-    int     constraints_;
+
     int     myBinProgID;
     int     mySpinAxis;         // zero means in original orientation
 };
