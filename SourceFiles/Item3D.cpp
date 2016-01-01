@@ -60,7 +60,7 @@ void Item3D::encodeAsJSON(stringstream &jsonStr)
     jsonStr << "\"W\": " << getWLocation() << ",";
     jsonStr << "\"H\": " << getHLocation() << ",";
     jsonStr << "\"L\": " << getLLocation();
-    jsonStr << "}\n";
+    jsonStr << "}";
 
 }
 
