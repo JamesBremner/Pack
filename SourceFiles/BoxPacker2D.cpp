@@ -36,58 +36,81 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
     sort( items.begin(), items.end(), Utils::compareDescShape );
 
-    for( unsigned k=0; k < items.size(); ++k )
+    for( int kPositionPass = 0; kPositionPass < 3; kPositionPass++ )
     {
 
-        //cout << "items: " <<  ((Item3D*)items[k])->volume() << endl;
-
-        sort(bins.begin(), bins.end(), Utils::compareAscShape);
-
-        bool is_bin_found = false;
-        int bin_found_index = 0;
-        for( auto member : bins )
+        // loop over items
+        for( unsigned k=0; k < items.size(); ++k )
         {
-            //cout << "bins: "  << dynamic_cast<Bin3D*>(*member)->volume() <<  endl;
-            if ( packIt( member, items[k], bins ) == true)
+            switch( kPositionPass )
             {
-
-                is_bin_found = true;
+            case 0:
+                // first pack the bottom only items
+                if( items[k]->PositionConstraints() != 1 )
+                    continue;
+                break;
+            case 1:
+                // now pack the any position items
+                if( items[k]->PositionConstraints() != 0 )
+                    continue;
+                break;
+            case 2:
+                // finally pack the top items
+                if( items[k]->PositionConstraints() != 2 )
+                    continue;
                 break;
             }
-            bin_found_index++;
-        }
+            //cout << "items: " <<  ((Item3D*)items[k])->volume() << endl;
 
-        if ( is_bin_found == true )
-        {
+            sort(bins.begin(), bins.end(), Utils::compareAscShape);
 
-            bin_t used = *(bins.begin() + bin_found_index);
-            bins.erase( bins.begin() + bin_found_index );
-
-             if( ! used->parent_bin() )
+            bool is_bin_found = false;
+            int bin_found_index = 0;
+            for( auto member : bins )
             {
-                // about to pack an item in an unused bin
-                if( used->CanCopy() )
+                //cout << "bins: "  << dynamic_cast<Bin3D*>(*member)->volume() <<  endl;
+                if ( packIt( member, items[k], bins ) == true)
                 {
-                    // we have an endless supply of there
-                    // get a new bin ready for future use
-                    bin_t new_bin( used->CreateNewEmptyCopy() );
-                    bins.push_back( new_bin );
-                    ref_bins.push_back( new_bin );
+
+                    is_bin_found = true;
+                    break;
                 }
+                bin_found_index++;
             }
 
-        }
-        else
-        {
-            // this item would not fit in any of the bins we have available
-            theWorld.myUnpackedItems.push_back( items[k] );
-        }
-    }
+            if ( is_bin_found == true )
+            {
 
-    // delete unused extra bins
-    ref_bins.erase( remove_if( ref_bins.begin(), ref_bins.end(),
-                               functors::IsUnusedExtraBin ),
-                    ref_bins.end() );
+                bin_t used = *(bins.begin() + bin_found_index);
+                bins.erase( bins.begin() + bin_found_index );
+
+                if( ! used->parent_bin() )
+                {
+                    // about to pack an item in an unused bin
+                    if( used->CanCopy() )
+                    {
+                        // we have an endless supply of there
+                        // get a new bin ready for future use
+                        bin_t new_bin( used->CreateNewEmptyCopy() );
+                        bins.push_back( new_bin );
+                        ref_bins.push_back( new_bin );
+                    }
+                }
+
+            }
+            else
+            {
+                // this item would not fit in any of the bins we have available
+                theWorld.myUnpackedItems.push_back( items[k] );
+            }
+        }
+
+        // delete unused extra bins
+        ref_bins.erase( remove_if( ref_bins.begin(), ref_bins.end(),
+                                   functors::IsUnusedExtraBin ),
+                        ref_bins.end() );
+
+    }
 
 
 }
@@ -106,7 +129,7 @@ bool BoxPacker2D::packIt( bin_t bin, item_t item, bin_v_t &bins )
 //    else if ( constraints == Item2D::CONSTRAINT_HEIGHT )
 //        return checkFitsConstrHeight(bin, item, bins);
 //    else
-        return checkFitsNoConstr(bin, item, bins );
+    return checkFitsNoConstr(bin, item, bins );
 
 
 
@@ -184,7 +207,7 @@ bool BoxPacker2D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
 bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
 {
 
-     //rotate both bin and item so side1 is longer than side2
+    //rotate both bin and item so side1 is longer than side2
     if ( bin->side_1()->size() < bin->side_2()->size() )
     {
 
@@ -203,15 +226,18 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
         item->set_side_1( item->side_2() );
         item->set_side_2( tmps );
         //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
-   }
+    }
 
 
     if( item->side_1()->size() <= bin->side_1()->size() && item->side_2()->size() <= bin->side_2()->size() )
     {
         item->setSpinLocation( false );
-        if( item->IsSpun() && ( ! bin->IsSpun() ) ) {
+        if( item->IsSpun() && ( ! bin->IsSpun() ) )
+        {
             item->setSpinLocation( true );
-        } else if( ( ! item->IsSpun() ) && bin->IsSpun() ) {
+        }
+        else if( ( ! item->IsSpun() ) && bin->IsSpun() )
+        {
             item->setSpinLocation( true );
         }
 //        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
@@ -263,9 +289,11 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
             if( ! merger( bin, bin->get_y_sub_bin(), bins ) )
             {
 
-            bins.push_back( bin->get_y_sub_bin() );
+                bins.push_back( bin->get_y_sub_bin() );
 
-            } else {
+            }
+            else
+            {
                 bin->set_y_sub_bin( NULL );
             }
         }
@@ -308,7 +336,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             else if ( bin->getLocationHeight() + bin->side_2()->size() ==
                       newbin->getLocationHeight() )
             {
-               //cout << "merge!" << endl;
+                //cout << "merge!" << endl;
                 bin->side_2()->set_size( newbin->side_2()->size() + bin->side_2()->size() );
                 return true;
             }

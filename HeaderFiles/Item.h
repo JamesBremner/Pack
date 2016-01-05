@@ -19,6 +19,7 @@ public:
     virtual ~Item();
 
     int RotationConstraints();
+    int PositionConstraints();
     void set_constraints( int value );
     void setBin( int id )
     {

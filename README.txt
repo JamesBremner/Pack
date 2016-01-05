@@ -45,19 +45,28 @@ The items passed like so:
 
 id could be a stock or order number.
 
-example: 
+example:
 
 53443:5x5x5
 
 constraints are for each item and if the item can be rotated:
 
-0=NO_CONSTRAINTS
-1=CONSTRAINT_WIDTH
-2=CONSTRAINT_HEIGHT
-3=CONSTRAINT_LENGTH
-4=CONSTRAINT_WIDTH_HEIGHT
-5=CONSTRAINT_WIDTH_LENGTH
-6=CONSTRAINT_HEIGHT_LENGTH
+constraint = position_constraint + rotation_constraint
+
+position constraint
+
+0     :  anywhere
+100   :  bottom only
+200   :  top only
+
+rotation constraint
+
+0     :  Any
+1     :  Length axis only
+2     :  Width axis only
+3     :  Height axis only
+7     :  No ratiation allowed
+
 
 Dependencies:
 1.  To compile the algorithm you need to make sure you have boost for c++ installed

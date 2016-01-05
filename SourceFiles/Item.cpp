@@ -16,6 +16,10 @@ int Item::RotationConstraints()
 {
     return myRotationConstraints;
 }
+int Item::PositionConstraints()
+{
+    return myPositionConstraints;
+}
 
 void Item::set_constraints( int value )
 {
