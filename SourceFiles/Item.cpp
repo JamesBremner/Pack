@@ -12,18 +12,19 @@ Item::Item(const Item& orig) {
 Item::~Item() {
 }
 
-int Item::constraints()
+int Item::RotationConstraints()
 {
-    return myConstraints;
+    return myRotationConstraints;
 }
 
 void Item::set_constraints( int value )
 {
-	    myConstraints = value;
+    myRotationConstraints = value % 100;
+    myPositionConstraints =  value  / 100;
 }
 bool Item::IsSpinAllowed( int axis )
 {
-    if( myConstraints == 7 )
+    if( myRotationConstraints == 7 )
         return false;
     switch( axis )
     {

@@ -30,7 +30,7 @@ void Item2D::encodeAsJSON(stringstream &jsonStr)
     jsonStr << "\"prog_id\": \"" << myID << "\",";
 //    jsonStr << "\"size_1\": " << origSide1()->size() << ",";
 //    jsonStr << "\"size_2\": " << origSide2()->size() << ",";
-    jsonStr << "\"constraints\": " << constraints() << ",";
+    jsonStr << "\"constraints\": " << RotationConstraints() << ",";
     jsonStr << "\"bin\": " << getBin() << ",";
     if( getSpinLocation() )
         jsonStr << "\"rotation\" : \"yes\",";

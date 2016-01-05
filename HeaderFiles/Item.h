@@ -18,7 +18,7 @@ public:
     Item(const Item& orig);
     virtual ~Item();
 
-    int constraints();
+    int RotationConstraints();
     void set_constraints( int value );
     void setBin( int id )
     {
@@ -81,7 +81,8 @@ public:
 static Item* Build(  item_build_instructions& instructions );
 
 protected:
-    int     myConstraints;
+    int     myRotationConstraints;
+    int     myPositionConstraints;
     double  myWLocation;
     double  myHLocation;
     double  myLLocation;
