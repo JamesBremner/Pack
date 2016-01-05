@@ -1,4 +1,4 @@
-Copyright (c) 2015 by James Bremner
+Copyright (c) 2016 by James Bremner
 Copyright (C) 2012 by Arash Sharif
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,6 +28,8 @@ I have modified the modified Sharif's code to:
 - merge fragmented unused space in the bins
 - record locations of items in bins
 - output 2D cutting list
+- optional limit to exactly one bin
+- positional constraints
 
 ------------------------------------------------------------------------------------------------
 
