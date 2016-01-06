@@ -8,6 +8,7 @@ struct item_build_instructions
     vector<string> size_v;
     string dimension_units;
     int constraints;
+    float weight;
 };
 
 int   cWorld::Build(
@@ -51,6 +52,8 @@ void cWorld::Pack()
             there is no need to look at bins that are too small to hold every item
         */
         RemoveBinsTooSmallForAllItems();
+
+        RemoveBinsTooLightForAllItems();
 
         /*
             Save the bins
@@ -143,11 +146,11 @@ int cWorld::BuildBins( vector<string>& bin_v )
         vector<string> id_bin;
         boost::split(id_bin, bin_str, boost::is_any_of(":"));
 
-        const int expected_field_count = 4;
+        const int expected_field_count = 5;
 
-        if( id_bin.size() < expected_field_count || id_bin.size() > expected_field_count )
+        if( id_bin.size() != expected_field_count )
         {
-            return 1;
+            throw std::runtime_error("Unexpected bin field count");
         }
         Bin::bin_build_instructions instructions;
         instructions.bin_id = id_bin[0];
@@ -160,6 +163,7 @@ int cWorld::BuildBins( vector<string>& bin_v )
         string bin_size = id_bin[3];
 
         id_bin.clear();
+        instructions.maxWeight = atof( id_bin[4].c_str() );
 
         vector<string> bin_size_v;
         boost::split(bin_size_v, bin_size, boost::is_any_of("x"));
@@ -168,6 +172,7 @@ int cWorld::BuildBins( vector<string>& bin_v )
         {
             return 2;
         }
+
 
 
         instructions.size_v = bin_size_v;
@@ -193,11 +198,11 @@ int cWorld::BuildItems(  vector<string>& item_v )
         vector<string> id_item;
         boost::split(id_item, item_str, boost::is_any_of(":"));
 
-        const int expected_field_count = 5;
+        const int expected_field_count = 6;
 
         if( id_item.size() < expected_field_count || id_item.size() > expected_field_count )
         {
-            return 1;
+            throw std::runtime_error("Unexpected item field count");
         }
 
         //string item_id = id_item[0];
@@ -206,7 +211,7 @@ int cWorld::BuildItems(  vector<string>& item_v )
         instructions.constraints = (int) atof( id_item[2].c_str() );
         int quantity = (int) atof( id_item[3].c_str() );
         string item_size = id_item[4];
-
+        instructions.weight = atof( id_item[5].c_str() );
 
         id_item.clear();
 
@@ -286,7 +291,7 @@ void cWorld::RemoveBinsTooSmallForAllItems()
     if( ! myfOneBin )
         return;
 
-    // calculate total voulme of all items
+    // calculate total volume of all items
     double totalVolumeAllItems = 0;
     for( auto& i : Items )
     {
@@ -314,6 +319,38 @@ void cWorld::RemoveBinsTooSmallForAllItems()
         throw std::runtime_error("No bins big enough to contain all items");
     }
 
+}
+
+void cWorld::RemoveBinsTooLightForAllItems()
+{
+    // check that this is wanted
+    if( ! myfOneBin )
+        return;
+
+        // calculate total weight of all items
+    double totalWeightAllItems = 0;
+    for( auto& i : Items )
+    {
+        totalWeightAllItems += i->Weight();
+    }
+
+
+    // remove bins that cannot carry the total weight
+    Bins.erase(
+        remove_if(
+            Bins.begin(),
+            Bins.end(),
+            [ totalWeightAllItems ] ( bin_t b )
+    {
+        return b->MaxWeight() < totalWeightAllItems;
+    } ),
+    Bins.end() );
+
+    // check we still have at least one bin
+    if( ! Bins.size())
+    {
+        throw std::runtime_error("No bins strong enough to contain all items");
+    }
 }
 
 void cWorld::RemoveSmallestBin()
@@ -371,6 +408,7 @@ Bin* Bin::Build(  bin_build_instructions& instructions )
 
     bin->setCanCopy( instructions.can_copy );
 
+    bin->MaxWeight( instructions.maxWeight );
 
     return bin;
 
@@ -414,6 +452,8 @@ Item* Item::Build(  item_build_instructions& instructions )
     item->set_constraints( instructions.constraints );
 
     item->ScaleSize( cWorld::DimensionUnitScale( instructions.dimension_units ) );
+
+    item->Weight( instructions.weight );
 
     return item;
 }

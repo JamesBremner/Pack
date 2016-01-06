@@ -66,6 +66,15 @@ public:
         myLLocation = h;
     }
 
+    void Weight( float w )
+    {
+        myWeight = w;
+    }
+    float Weight()
+    {
+        return myWeight;
+    }
+
     void SpinAxis( int axis )
     {
         mySpinAxis = axis;
@@ -88,6 +97,7 @@ protected:
     double  myHLocation;
     double  myLLocation;
     bool    mySpinLocation;
+    float   myWeight;
 
 private:
 

@@ -171,15 +171,13 @@ int main(int argc, char *argv[])
                 bin, item, shape, out_file ) )
         return 1;
 
-
-    if( theWorld.Build( bin.c_str(), item.c_str() ) != 0 )
-    {
-        cout << "ERROR: could not build bins and items" << endl;
-        return 1;
-    }
-
     try
     {
+
+        if( theWorld.Build( bin.c_str(), item.c_str() ) != 0 )
+        {
+            throw std::runtime_error( "ERROR: could not build bins and items" );
+        }
 
         theWorld.Pack();
 

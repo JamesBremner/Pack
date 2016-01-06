@@ -34,8 +34,10 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
     bin_v_t bins( ref_bins );
 
+    // pack items starting with largest
     sort( items.begin(), items.end(), Utils::compareDescShape );
 
+    // three passes, one for each positional constraint
     for( int kPositionPass = 0; kPositionPass < 3; kPositionPass++ )
     {
 

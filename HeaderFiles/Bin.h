@@ -23,6 +23,7 @@ public:
         vector<string> size_v;
         string dimension_units;
         bool can_copy;
+        float maxWeight;
     };
 
     Bin();
@@ -103,6 +104,15 @@ public:
 
     void Print();
 
+    float MaxWeight()
+    {
+        return myMaxWeight;
+    }
+    void MaxWeight( float w )
+    {
+        myMaxWeight = w;
+    }
+
 protected:
 
 
@@ -115,6 +125,7 @@ protected:
     double myHOffsetFromRoot;
     double myWOffsetFromRoot;
     double myLOffsetFromRoot;
+    float myMaxWeight;
 };
 
 #endif	/* BIN_H */

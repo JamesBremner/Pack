@@ -57,6 +57,7 @@ private:
     bool isDimError( int dim );
     void RemoveBinsTooSmallForAllItems();
     void RemoveSmallestBin();
+    void RemoveBinsTooLightForAllItems();
 };
 
 extern cWorld theWorld;

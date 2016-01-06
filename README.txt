@@ -39,11 +39,11 @@ native call and it will figure out the best way to pack 1d, 2d or 3d bin(s) with
 
 The bins should be passed in the following format:
 
-"id:size1xsize2xsize3"
+"id:dim_unit:quantity:size1xsize2xsize3:weight"
 
 The items passed like so:
 
-"id:constraints:size1xsize2xsize3"
+"id:dim_unit:constraints:quantity:size1xsize2xsize3:weight"
 
 id could be a stock or order number.
 
