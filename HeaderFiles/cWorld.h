@@ -58,6 +58,7 @@ private:
     void RemoveBinsTooSmallForAllItems();
     void RemoveSmallestBin();
     void RemoveBinsTooLightForAllItems();
+    int CountBinsUsed();
 };
 
 extern cWorld theWorld;

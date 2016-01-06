@@ -88,6 +88,11 @@ public:
         string getSpin() { return ""; }
     virtual void AddToCutList( cCutList& l ) {}
 
+    bool IsPacked()
+    {
+        return ( myBinProgID != -1 );
+    }
+
 static Item* Build(  item_build_instructions& instructions );
 
 protected:

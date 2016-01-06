@@ -31,7 +31,6 @@ bool IsUnusedExtraBin( bin_t b )
 
 void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 {
-
     bin_v_t bins( ref_bins );
 
     // pack items starting with largest
@@ -44,6 +43,9 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
         // loop over items
         for( unsigned k=0; k < items.size(); ++k )
         {
+            if( items[k]->IsPacked() )
+                continue;
+
             switch( kPositionPass )
             {
             case 0:
@@ -62,7 +64,6 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                     continue;
                 break;
             }
-            //cout << "items: " <<  ((Item3D*)items[k])->volume() << endl;
 
             sort(bins.begin(), bins.end(), Utils::compareAscShape);
 
@@ -70,7 +71,6 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             int bin_found_index = 0;
             for( auto member : bins )
             {
-                //cout << "bins: "  << dynamic_cast<Bin3D*>(*member)->volume() <<  endl;
                 if ( packIt( member, items[k], bins ) == true)
                 {
 
@@ -105,6 +105,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 // this item would not fit in any of the bins we have available
                 theWorld.myUnpackedItems.push_back( items[k] );
             }
+
         }
 
         // delete unused extra bins

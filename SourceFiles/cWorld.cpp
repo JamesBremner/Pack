@@ -71,7 +71,7 @@ void cWorld::Pack()
             loop while the packer used more than one bin
             when one bin was requested
         */
-        while ( myfOneBin && Bins.size() > 1 )
+        while ( myfOneBin && CountBinsUsed() > 1 )
         {
             /*
                 try again with saved bins
@@ -161,9 +161,10 @@ int cWorld::BuildBins( vector<string>& bin_v )
         else
             instructions.can_copy = false;
         string bin_size = id_bin[3];
+        instructions.maxWeight = atof( id_bin[4].c_str() );
 
         id_bin.clear();
-        instructions.maxWeight = atof( id_bin[4].c_str() );
+
 
         vector<string> bin_size_v;
         boost::split(bin_size_v, bin_size, boost::is_any_of("x"));
@@ -256,7 +257,7 @@ bool cWorld::isDimError( int dim )
 }
 
 /**
-
+cWorld
   Scale according to input dimension units into inches
 
 	param[in] unit_string  The dimensional unit string input e.g. ft, in
@@ -364,6 +365,17 @@ void cWorld::RemoveSmallestBin()
 
     Bins.erase( Bins.begin() );
 }
+
+    int cWorld::CountBinsUsed()
+    {
+        int count = 0;
+        for( auto b : Bins )
+        {
+            if( b->itemsInBinCount() )
+                count++;
+        }
+        return count;
+    }
 
 Bin* Bin::Build(  bin_build_instructions& instructions )
 {
