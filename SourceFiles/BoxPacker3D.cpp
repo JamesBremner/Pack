@@ -318,17 +318,23 @@ bool BoxPacker3D::checkFitsConstrLength(Bin *bin, Item *item, vector<Bin*> &bins
 
 bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
 {
-    bool success = false;
+//    cout << "BoxPacker3D::Fit\n";
+//    bin->Print();
+//    item->Print();
+
     if( bin->Fit( item ) )
     {
-        success = true;
+        // item fits without rotation
     }
     else
     {
+        // item does not fit
+        // try rotating it
+
         item->Spin( 1 );
         if( bin->Fit( item ) )
         {
-            success = true;
+            //cout << "spin 1";
         }
         else
         {
@@ -336,7 +342,7 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
             item->Spin( 2 );
             if( bin->Fit( item ) )
             {
-                success = true;
+                //cout << "spin 2";
             }
             else
             {
@@ -344,13 +350,18 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
                 item->Spin( 3 );
                 if( bin->Fit( item ) )
                 {
-                    success = true;
+                    //cout << "spin 3";
+                }
+                else
+                {
+                    // Does not fit in any orientation
+                    // spin back to original and give up
+                    item->Spin( 3 );
+                    return false;
                 }
             }
         }
     }
-    if( ! success )
-        return false;
 
     // packing item
 
@@ -359,17 +370,9 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
     item->setHLocation( bin->getLocationHeight() );
     item->setWLocation( bin->getLocationWidth() );
     item->setLLocation( bin->getLocationLength() );
+    item->SpinAxisCalculate();
 
-    if( item->side_1()->orig_side() == 'w' &&
-        item->side_2()->orig_side() == 'h' &&
-        item->side_3()->orig_side() == 'l' )
-            item->SpinAxis( 0 );
-    else if( item->side_1()->orig_side() == 'w' )
-        item->SpinAxis( 1 );
-    else  if( item->side_2()->orig_side() == 'h' )
-        item->SpinAxis( 2 );
-    else
-        item->SpinAxis( 3 );
+    //item->Print();
 
     splitBinWidth(bin, item);
     splitBinHeight(bin, item);

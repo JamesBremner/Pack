@@ -10,23 +10,29 @@
 using namespace std;
 //#pragma warning( disable : 4250 )
 
-class Item3D : public Shape3D, public Item {
-	public:
+class Item3D : public Shape3D, public Item
+{
+public:
 
-		static const int NO_CONSTRAINTS = 0;
-		static const int CONSTRAINT_WIDTH = 1;
-		static const int CONSTRAINT_HEIGHT = 2;
-		static const int CONSTRAINT_LENGTH = 3;
-		static const int CONSTRAINT_WIDTH_HEIGHT = 4;
-		static const int CONSTRAINT_WIDTH_LENGTH = 5;
-		static const int CONSTRAINT_HEIGHT_LENGTH = 6;
-		Item3D();
-		Item3D(const Item3D& orig);
-		virtual ~Item3D();
+    static const int NO_CONSTRAINTS = 0;
+    static const int CONSTRAINT_WIDTH = 1;
+    static const int CONSTRAINT_HEIGHT = 2;
+    static const int CONSTRAINT_LENGTH = 3;
+    static const int CONSTRAINT_WIDTH_HEIGHT = 4;
+    static const int CONSTRAINT_WIDTH_LENGTH = 5;
+    static const int CONSTRAINT_HEIGHT_LENGTH = 6;
+    Item3D();
+    Item3D(const Item3D& orig);
+    virtual ~Item3D();
 
-		void Spin( int axis );
+    void Spin( int axis );
 
-		void encodeAsJSON(stringstream &jsonStr);
+    /** Claculate spin axis compared to original orientation
+    */
+
+    virtual void SpinAxisCalculate();
+
+    void encodeAsJSON(stringstream &jsonStr);
 
     virtual double getWLocation()
     {
@@ -45,7 +51,7 @@ class Item3D : public Shape3D, public Item {
         myHLocation = h;
     }
 
-	private:
+private:
 
 };
 

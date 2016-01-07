@@ -9,16 +9,19 @@
  */
 using namespace std;
 
-Item3D::Item3D() {
+Item3D::Item3D()
+{
     set_side_1( new Side(0,'w'));
     set_side_2( new Side(0,'h'));
     set_side_3( new Side(0,'l'));
 }
 
-Item3D::Item3D(const Item3D& orig) {
+Item3D::Item3D(const Item3D& orig)
+{
 }
 
-Item3D::~Item3D() {
+Item3D::~Item3D()
+{
 }
 
 void Item3D::Spin( int axis )
@@ -46,6 +49,28 @@ void Item3D::Spin( int axis )
         break;
     }
 }
+
+/** Claculate spin axis compared to original orientation
+*/
+
+void Item3D::SpinAxisCalculate()
+{
+    // check if the item remains unrotated
+    if( side_1()->orig_side() == 'w' &&
+        side_2()->orig_side() == 'h' &&
+        side_3()->orig_side() == 'l' )
+            SpinAxis( 0 );
+
+    else if( side_1()->orig_side() == 'w' )
+        SpinAxis( 1 );
+
+    else  if( side_2()->orig_side() == 'h' )
+        SpinAxis( 2 );
+
+    else
+        SpinAxis( 3 );
+}
+
 void Item3D::encodeAsJSON(stringstream &jsonStr)
 {
 

@@ -33,9 +33,14 @@ public:
     */
     virtual void Spin( int axis ) { }
 
-    /** true if spin is allowd according to constraints
+    /** true if spin is allowed according to constraints
     */
     bool IsSpinAllowed( int axis );
+
+    /** Claculate spin axis compared to original orientation
+    */
+
+    virtual void SpinAxisCalculate() {}
 
     void Print();
 
