@@ -83,6 +83,8 @@ bool ParseNewOptions( int argc, char *argv[],
                       string& shape,
                       string& out_file)
 {
+//    for( int k = 1; k < argc; k++ )
+//        cout << argv[k] << endl;
 
     namespace po = boost::program_options;
 

@@ -28,15 +28,33 @@ void Item::set_constraints( int value )
 }
 bool Item::IsSpinAllowed( int axis )
 {
+    // chack for any rotation constraint
+    if( ! myRotationConstraints )
+        return true;
+
+    // check for no rotation constraint
     if( myRotationConstraints == 7 )
         return false;
+
+    // check for single axis rotation constraint
     switch( axis )
     {
     case 1:
+        if( myRotationConstraints == 2 )
+            return true;
         break;
+    case 2:
+         if( myRotationConstraints == 3 )
+            return true;
+        break;
+    case 3:
+         if( myRotationConstraints == 1 )
+            return true;
+        break;
+
     }
 
-    return true;
+    return false;
 }
 void Item::Print()
 {
