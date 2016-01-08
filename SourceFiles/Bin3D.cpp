@@ -109,6 +109,30 @@ void Bin3D::itemsInBin(item_v_t &items)
 
 }
 
+void Bin3D::itemsInPackOrder( item_v_t &items )
+{
+    itemsInBin( items );
+
+    // sort by increasing length
+    stable_sort( items.begin(), items.end(),
+         []( item_t a, item_t b ){
+            return a->getLLocation() < b->getLLocation();
+         });
+
+     // sort by increasing width
+    stable_sort( items.begin(), items.end(),
+         []( item_t a, item_t b ){
+            return a->getWLocation() < b->getWLocation();
+         });
+
+    // sort by increasing height
+    stable_sort( items.begin(), items.end(),
+         []( item_t a, item_t b ){
+            return a->getHLocation() < b->getHLocation();
+         });
+
+}
+
 void Bin3D::binRemSpace( bin_v_t &bins)
 {
 
@@ -205,7 +229,7 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
     jsonStr << "\"total_size\": " << volume() << ",";
 
     item_v_t items;
-    itemsInBin(items);
+    itemsInPackOrder(items);
 
     jsonStr << "\"items\": [";
     for(unsigned i=0; i < items.size(); ++i)
