@@ -79,6 +79,11 @@ void cWorld::Pack()
             */
             myUnpackedItems.clear();
             Bins = Bins_saved;
+
+            // reset items to unpacked status
+            for( auto i : Items )
+                i->setBin( -1 );
+
             RemoveSmallestBin();
             Bins_saved = Bins;
             packer.packThem( Bins, Items );
