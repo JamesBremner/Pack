@@ -2,12 +2,13 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="dxfv_wxWidgets" />
+		<Option title="PackPlot" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../bin/dxfv_wxWidgets" prefix_auto="1" extension_auto="1" />
+				<Option output="../../Packfl9129937/bin/PackPlot" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../Packfl9129937/bin" />
 				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -24,7 +25,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../Release/dxfv_wxWidgets" prefix_auto="1" extension_auto="1" />
+				<Option output="../Packfl9129937/bin/PackPlot" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -43,7 +44,7 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-pipe" />
 			<Add option="-mthreads" />
 			<Add option="-D__GNUWIN32__" />
@@ -61,10 +62,12 @@
 			<Add library="wxmsw30u_core" />
 			<Add directory="$(#wxWidgets.lib)" />
 		</Linker>
-		<Unit filename="dxfv_wxWidgetsApp.cpp" />
-		<Unit filename="dxfv_wxWidgetsApp.h" />
-		<Unit filename="dxfv_wxWidgetsMain.cpp" />
-		<Unit filename="dxfv_wxWidgetsMain.h" />
+		<Unit filename="PackPlotApp.cpp" />
+		<Unit filename="PackPlotApp.h" />
+		<Unit filename="PackPlotMain.cpp" />
+		<Unit filename="PackPlotMain.h" />
+		<Unit filename="mathplot.cpp" />
+		<Unit filename="mathplot.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
