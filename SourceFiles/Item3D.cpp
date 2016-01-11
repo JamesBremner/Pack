@@ -89,3 +89,16 @@ void Item3D::encodeAsJSON(stringstream &jsonStr)
 
 }
 
+string Item3D::getCSV()
+{
+    stringstream s;
+    s << side_1()->size() << ",";
+    s << side_2()->size() << ",";
+    s << side_3()->size() << ",";
+    s  << getWLocation() << ",";
+    s  << getHLocation() << ",";
+    s  << getLLocation() << "\n";
+
+    return s.str();
+}
+

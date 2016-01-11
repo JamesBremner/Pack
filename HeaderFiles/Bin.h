@@ -70,6 +70,7 @@ public:
     virtual void totalChildSpaceUsed( double &used ) = 0;
     virtual void totalRemSpaceAvailable( double &avail) = 0;
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep) = 0;
+    virtual string getCSV() { return string(""); }
 
     double getLocationHeight()
     {

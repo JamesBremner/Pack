@@ -215,6 +215,16 @@ bool Bin3D::Fit( item_t item )
             item->side_3()->size() <= side_3()->size());
 }
 
+string Bin3D::getCSV()
+{
+    stringstream s;
+    item_v_t items;
+    itemsInPackOrder(items);
+    for( auto& i : items )
+        s << i->getCSV();
+    return s.str();
+}
+
 void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 {
     jsonStr << "{\"bin_size\": \"" << origSize() << "\",";

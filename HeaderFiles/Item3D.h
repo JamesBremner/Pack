@@ -33,6 +33,7 @@ public:
     virtual void SpinAxisCalculate();
 
     void encodeAsJSON(stringstream &jsonStr);
+    string getCSV();
 
     virtual double getWLocation()
     {

@@ -45,6 +45,7 @@ public:
     void Print();
 
     virtual void encodeAsJSON(stringstream &jsonStr) = 0;
+    virtual string getCSV() { return string(""); }
 
      double getWLocation()
     {

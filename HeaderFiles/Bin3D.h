@@ -45,6 +45,7 @@ public:
     bool Fit( item_t item );
 
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
+    string getCSV();
 
     bool operator <( Shape &b);
     bool operator >( Shape &b);

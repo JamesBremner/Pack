@@ -199,6 +199,7 @@ int main(int argc, char *argv[])
 
     string json_s = theWorld.getJson();
     string cutlist_s = theWorld.getCutList();
+    string csv = theWorld.getCSV();
 
     if 	( json_s.find("error") != string::npos )
     {
@@ -224,6 +225,10 @@ int main(int argc, char *argv[])
         file.close();
 
     }
+
+    ofstream filecsv("packit4me2.csv");
+    filecsv << csv;
+    filecsv.close();
 
     return 0;
 }

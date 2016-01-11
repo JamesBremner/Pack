@@ -43,6 +43,8 @@ public:
 
     string getCutList();
 
+    string getCSV();
+
     /// Convert feet, cm or m into inches
     static float DimensionUnitScale( const string& unit_string );
 

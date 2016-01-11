@@ -142,6 +142,16 @@ string cWorld::getCutList()
     return ss.str();
 }
 
+string cWorld::getCSV()
+{
+    string s;
+    for( auto& b : Bins )
+    {
+        s += b->getCSV();
+    }
+    return s;
+}
+
 int cWorld::BuildBins( vector<string>& bin_v )
 {
 
