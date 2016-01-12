@@ -31,6 +31,7 @@ bool IsUnusedExtraBin( bin_t b )
 
 void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 {
+
     bin_v_t bins( ref_bins );
 
     // pack items starting with largest
@@ -65,7 +66,13 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 break;
             }
 
-            sort(bins.begin(), bins.end(), Utils::compareAscShape);
+//            sort(bins.begin(), bins.end(), Utils::compareAscShape);
+
+            stable_sort( bins.begin(), bins.end(),
+                         []( bin_t a, bin_t b )
+            {
+                return a->getLocationHeight() < b->getLocationHeight();
+            });
 
             bool is_bin_found = false;
             int bin_found_index = 0;

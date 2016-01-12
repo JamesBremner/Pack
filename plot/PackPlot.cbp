@@ -8,59 +8,75 @@
 		<Build>
 			<Target title="Debug">
 				<Option output="../../Packfl9129937/bin/PackPlot" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../Packfl9129937/bin" />
 				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add option="-D__WXDEBUG__" />
 				</Compiler>
-				<ResourceCompiler>
-					<Add directory="$(#wxwidgets)/lib/gcc_dll/mswd" />
-				</ResourceCompiler>
 				<Linker>
-					<Add directory="$(#wxwidgets)/lib/gcc_dll" />
+					<Add library="wxbase30u" />
+					<Add library="wxmsw30u_core" />
+					<Add directory="$(#wxwidgets.lib)" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../Packfl9129937/bin/PackPlot" prefix_auto="1" extension_auto="1" />
+				<Option output="../bin/Module3Simgraph" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="$(#wxwidgets)/lib/gcc_dll/msw" />
 				</Compiler>
-				<ResourceCompiler>
-					<Add directory="$(#wxwidgets)/lib/gcc_dll/msw" />
-				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="$(#wxwidgets)/lib/gcc_dll" />
+					<Add library="wxbase30u" />
+					<Add library="wxmsw30u_core" />
+					<Add directory="$(#wxwidgets.lib)" />
+				</Linker>
+			</Target>
+			<Target title="Static">
+				<Option output="../../Packfl9129937/bin/PackPlot" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../Packfl9129937/bin/" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="wxmsw30u" />
+					<Add library="wxpng" />
+					<Add library="wxzlib" />
+					<Add library="ole32" />
+					<Add library="Comctl32" />
+					<Add library="uuid" />
+					<Add library="OleAut32" />
+					<Add library="Winspool" />
+					<Add directory="$(#wxwidgets_static.lib)" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++11" />
-			<Add option="-pipe" />
-			<Add option="-mthreads" />
-			<Add option="-D__GNUWIN32__" />
-			<Add option="-D__WXMSW__" />
-			<Add option="-DWXUSINGDLL" />
-			<Add directory="$(#wxwidgets.include)" />
-			<Add directory="$(#wxwidgets.setup)" />
+			<Add option="-D_mingw_" />
+			<Add option="-DM3SimGraph" />
+			<Add directory="$(#wxwidgets_static.include)" />
+			<Add directory="$(#wxwidgets_static.setup)" />
+			<Add directory="$(#boost)" />
+			<Add directory="../src" />
+			<Add directory="." />
+			<Add directory="../module2" />
 		</Compiler>
-		<ResourceCompiler>
-			<Add directory="$(#wxwidgets)/include" />
-		</ResourceCompiler>
 		<Linker>
-			<Add option="-mthreads" />
-			<Add library="wxbase30u" />
-			<Add library="wxmsw30u_core" />
-			<Add directory="$(#wxWidgets.lib)" />
+			<Add library="boost_system-mgw48-mt-1_59" />
+			<Add library="boost_thread-mgw48-mt-1_59" />
+			<Add library="ws2_32" />
+			<Add library="wsock32" />
+			<Add library="wxjpeg" />
+			<Add directory="$(#boost.lib)" />
 		</Linker>
 		<Unit filename="PackPlotApp.cpp" />
 		<Unit filename="PackPlotApp.h" />
@@ -68,14 +84,10 @@
 		<Unit filename="PackPlotMain.h" />
 		<Unit filename="mathplot.cpp" />
 		<Unit filename="mathplot.h" />
-		<Unit filename="resource.rc">
-			<Option compilerVar="WINDRES" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
-			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

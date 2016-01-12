@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--bins PACK-X-SMALL:in:-1:190x120x325:15,PACK-SMALL:in:-1:370x190x520:30,PACK-LARGE:in:-1:370x380x520:50 --items  BKA060EA:in:100:1:162x126x84:0.000476,BKA093YA:in:0:1:165x118x129:0.000796,VBJ004BE:in:0:5:114x72x101:0.000186,VFB10702:in:7:10:36x80x55:0.00011,VNA490E1:in:0:1:144x78x160:0.000518,VNA500E1:in:0:1:175x65x146:0.000458,VNA660E1:in:0:2:136x78x158:0.000418,VNA770E1:in:0:1:153x125x146:0.000931,VVA202K001:in:207:1:170x123x156:0.001052 --onebin --o packit4me.json" />
+				<Option parameters="--bins PACK-SMALL:in:1:100x100x100:30,PACK-LARGE:in:1:500x500x500:30 --items  Anywhere:in:7:4:10x10x10:1.6 --onebin --o packit4me.json" />
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />

@@ -58,7 +58,7 @@ bool Item::IsSpinAllowed( int axis )
 }
 void Item::Print()
 {
-    cout << "Item " << id() << " " << progid() << " in " << myBinProgID <<
+    cout << "Item " << id() << " " << progid() << " in bin " << myBinProgID <<
         " location " << myWLocation << "," << myHLocation
         << " sides " << side_1()->size() <<" " << side_2()->size() <<" "<< side_3()->size()
         << " orig " << origSide1()->size() <<" "<< origSide2()->size() <<" "<< origSide3()->size()

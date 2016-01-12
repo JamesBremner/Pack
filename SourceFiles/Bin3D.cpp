@@ -210,6 +210,9 @@ double Bin3D:: remSpaceAvail()
 
 bool Bin3D::Fit( item_t item )
 {
+//    cout << "Bin3D::Fit " << item->side_1()->size() <<" "<< item->side_2()->size() <<" "<< item->side_3()->size() <<" in "<<
+//        side_1()->size() <<" "<< side_2()->size() <<" " << side_2()->size() << endl;
+
     return (item->side_1()->size() <= side_1()->size() &&
             item->side_2()->size() <= side_2()->size() &&
             item->side_3()->size() <= side_3()->size());

@@ -356,6 +356,7 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
                 {
                     // Does not fit in any orientation
                     // spin back to original and give up
+                    //cout << "No fit\n";
                     item->Spin( 3 );
                     return false;
                 }
@@ -372,7 +373,7 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
     item->setLLocation( bin->getLocationLength() );
     item->SpinAxisCalculate();
 
-    //item->Print();
+ //   item->Print();
 
     splitBinWidth(bin, item);
     splitBinHeight(bin, item);
