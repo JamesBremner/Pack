@@ -65,8 +65,18 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 break;
             }
 
-            sort(bins.begin(), bins.end(), Utils::compareAscShape);
+            //sort(bins.begin(), bins.end(), Utils::compareAscShape);
 
+
+         stable_sort( bins.begin(), bins.end(),
+         []( bin_t a, bin_t b ){
+            return a->side_2()->size() < b->side_2()->size();
+         });
+//        stable_sort( bins.begin(), bins.end(),
+//         []( bin_t a, bin_t b ){
+//            return a->volume() < b->volume();
+//         });
+//
             bool is_bin_found = false;
             int bin_found_index = 0;
             for( auto member : bins )
