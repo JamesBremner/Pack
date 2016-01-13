@@ -113,6 +113,13 @@ string Item3D::getCSV()
         double ol1 = other->getLLocation();
         double ol2 = ow2 + other->side_3()->size();
 
+        // handle special case
+        // where a box lies exactly above another of the same width and length
+        if( fabs( mw1 - ow1) < 1 &&
+           fabs( mw2 - ow2) < 1 &&
+           fabs( ml1 - ol1) < 1 )
+            return true;
+
         if( mw1 < ow1 && ow1 < mw2 &&
            ml1 < ol1 && ol1 < ml2  )
            return true;
