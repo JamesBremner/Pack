@@ -2,14 +2,16 @@
 #include "stdafx.h"
 
 Item::Item()
-: myBinProgID( -1 )
- {
+    : myBinProgID( -1 )
+{
 }
 
-Item::Item(const Item& orig) {
+Item::Item(const Item& orig)
+{
 }
 
-Item::~Item() {
+Item::~Item()
+{
 }
 
 int Item::RotationConstraints()
@@ -40,15 +42,21 @@ bool Item::IsSpinAllowed( int axis )
     switch( axis )
     {
     case 1:
-        if( myRotationConstraints == 2 )
+        if( myRotationConstraints == 2 ||
+                myRotationConstraints == 4 ||
+                myRotationConstraints == 6 )
             return true;
         break;
     case 2:
-         if( myRotationConstraints == 3 )
+        if( myRotationConstraints == 3 ||
+                myRotationConstraints == 5 ||
+                myRotationConstraints == 6 )
             return true;
         break;
     case 3:
-         if( myRotationConstraints == 1 )
+        if( myRotationConstraints == 1 ||
+                myRotationConstraints == 4 ||
+                myRotationConstraints == 5 )
             return true;
         break;
 
@@ -59,10 +67,10 @@ bool Item::IsSpinAllowed( int axis )
 void Item::Print()
 {
     cout << "Item " << id() << " " << progid() << " in bin " << myBinProgID <<
-        " location " << myWLocation << "," << myHLocation
-        << " sides " << side_1()->size() <<" " << side_2()->size() <<" "<< side_3()->size()
-        << " orig " << origSide1()->size() <<" "<< origSide2()->size() <<" "<< origSide3()->size()
-        << " os " << side_1()->orig_side() <<" "<< side_2()->orig_side() <<" "<< side_3()->orig_side()
-        << " spin " << mySpinAxis
-        << endl;
+         " location " << myWLocation << "," << myHLocation
+         << " sides " << side_1()->size() <<" " << side_2()->size() <<" "<< side_3()->size()
+         << " orig " << origSide1()->size() <<" "<< origSide2()->size() <<" "<< origSide3()->size()
+         << " os " << side_1()->orig_side() <<" "<< side_2()->orig_side() <<" "<< side_3()->orig_side()
+         << " spin " << mySpinAxis
+         << endl;
 }
