@@ -114,6 +114,8 @@ public:
         myMaxWeight = w;
     }
 
+    virtual void Ground() {}
+
 protected:
 
 

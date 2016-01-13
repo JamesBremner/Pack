@@ -99,6 +99,8 @@ public:
         return ( myBinProgID != -1 );
     }
 
+    virtual bool IsAboveBelow( std::shared_ptr< Item > other ) { return false; }
+
 static Item* Build(  item_build_instructions& instructions );
 
 protected:

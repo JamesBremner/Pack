@@ -369,3 +369,53 @@ bool  Bin3D:: operator ==( Shape &b)
 
 }
 
+void Bin3D::Ground()
+{
+    item_v_t items;
+    itemsInBin( items );
+
+    bool slide = true;
+
+    while( slide )
+    {
+        slide = false;
+
+     // sort by increasing height
+    stable_sort( items.begin(), items.end(),
+         []( item_t a, item_t b ){
+            return a->getHLocation() < b->getHLocation();
+         });
+
+    for( auto test = items.begin();
+        test != items.end(); test++ )
+    {
+        // no need to test the items that are already grounded
+        if( (*test)->getHLocation() == 0 )
+            continue;
+
+        // find top of highest box below test
+        double highestBelow = 0;
+        for( auto below = items.begin();
+            below != test; below++ )
+            {
+                if( (*below)->IsAboveBelow( *test ) )
+                {
+                    double height = (*below)->getHLocation() + (*below)->side_2()->size();
+                    if( height > highestBelow )
+                        highestBelow = height;
+                }
+            }
+
+        // try sliding down
+        if( highestBelow < (*test)->getHLocation() )
+        {
+            (*test)->setHLocation( highestBelow );
+
+            // a box was moved down, so we will start again
+            slide = true;
+            break;
+        }
+
+    }
+    }
+}

@@ -102,3 +102,29 @@ string Item3D::getCSV()
     return s.str();
 }
 
+    bool Item3D::IsAboveBelow( item_t other )
+    {
+        double mw1 = getWLocation();
+        double mw2 = mw1 + side_1()->size();
+        double ml1 = getLLocation();
+        double ml2 = ml1 + side_3()->size();
+        double ow1 = other->getWLocation();
+        double ow2 = ow1 + other->side_1()->size();
+        double ol1 = other->getLLocation();
+        double ol2 = ow2 + other->side_3()->size();
+
+        if( mw1 < ow1 && ow1 < mw2 &&
+           ml1 < ol1 && ol1 < ml2  )
+           return true;
+        if( mw1 < ow2 && ow2 < mw2 &&
+           ml1 < ol1 && ol1 < ml2  )
+           return true;
+         if( mw1 < ow1 && ow1 < mw2 &&
+           ml1 < ol2 && ol2 < ml2  )
+           return true;
+        if( mw1 < ow2 && ow2 < mw2 &&
+           ml1 < ol2 && ol2 < ml2  )
+           return true;
+
+        return false;
+    }

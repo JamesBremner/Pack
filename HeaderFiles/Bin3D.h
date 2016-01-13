@@ -46,6 +46,7 @@ public:
 
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
     string getCSV();
+    virtual void Ground();
 
     bool operator <( Shape &b);
     bool operator >( Shape &b);

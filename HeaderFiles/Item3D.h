@@ -52,6 +52,8 @@ public:
         myHLocation = h;
     }
 
+    bool IsAboveBelow( std::shared_ptr< Item > other );
+
 private:
 
 };
