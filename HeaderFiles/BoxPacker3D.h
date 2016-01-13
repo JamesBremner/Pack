@@ -41,6 +41,14 @@ protected:
 
     bool Fit( bin_t bin,  item_t item, bin_v_t &bins );
 
+    /** Merge unused space
+@param[in] packbin  the bin we are packing
+@param[in] newbin   the new unused space
+@param[in] bins     all the unused bins
+@return true if the merge took place
+*/
+   bool merger( bin_t packbin, bin_t newbin, bin_v_t &bins );
+
 };
 
 #endif	/* BOXPACKER3D_H */

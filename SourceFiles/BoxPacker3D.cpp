@@ -373,7 +373,7 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
     item->setLLocation( bin->getLocationLength() );
     item->SpinAxisCalculate();
 
- //   item->Print();
+//   item->Print();
 
     splitBinWidth(bin, item);
     splitBinHeight(bin, item);
@@ -382,18 +382,53 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
 
     if (bin->get_x_sub_bin() != NULL)
     {
-        bins.push_back(bin->get_x_sub_bin());
+        // we have created a new bin from the unused space when the item was added to the bin
+        // check if this space could be merged with any previously unused space in the user specified bin
+        if( ! merger( bin, bin->get_x_sub_bin(), bins ) )
+        {
+
+            bins.push_back(bin->get_x_sub_bin());
+        }
+        else
+        {
+            // unused space was merged, so forget about it
+            bin->set_x_sub_bin( NULL );
+        }
 
     }
     if (bin->get_y_sub_bin() != NULL)
     {
+        // we have created a new bin from the unused space when the item was added to the bin
+        // check if this space could be merged with any previously unused space in the user specified bin
+        if( ! merger( bin, bin->get_y_sub_bin(), bins ) )
+        {
 
-        bins.push_back(bin->get_y_sub_bin());
+            bins.push_back(bin->get_y_sub_bin());
+        }
+        else
+        {
+            // unused space was merged, so forget about it
+            bin->set_y_sub_bin( NULL );
+        }
+
+
     }
     if (bin->get_z_sub_bin() != NULL)
     {
+        // we have created a new bin from the unused space when the item was added to the bin
+        // check if this space could be merged with any previously unused space in the user specified bin
+        if( ! merger( bin, bin->get_z_sub_bin(), bins ) )
+        {
 
-        bins.push_back(bin->get_z_sub_bin());
+            bins.push_back(bin->get_z_sub_bin());
+        }
+        else
+        {
+            // unused space was merged, so forget about it
+            bin->set_z_sub_bin( NULL );
+        }
+
+
     }
 
     return true;
@@ -735,5 +770,84 @@ map<string, double> BoxPacker3D::findSubBinSizes( bin_t bin, item_t item)
 
     return sides;
 
+}
 
+bool BoxPacker3D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
+{
+    cout << "\n->3DMerger" << endl;
+    newbin->Print();
+    cout << "candidates:" << endl;
+    bin_t newbinroot = newbin->Root( newbin );
+    // loop over all bins
+    for( auto bin : bins )
+    {
+        // check that this is part of the user specified bin we are adding to
+        if( newbinroot != bin->Root( bin ) )
+            continue;
+        // check that this is not the bin we are packing item into
+        if( packbin == bin )
+            continue;
+        // we have a merge candidate
+        bin->Print();
+
+        if( newbin->side_1()->size() == bin->side_1()->size() &&
+                newbin->side_2()->size() == bin->side_2()->size() )
+        {
+            if( newbin->getLocationLength() + newbin->side_3()->size() ==
+                    bin->getLocationLength() )
+            {
+                cout << "merge!\n";
+                bin->side_3()->set_size(  newbin->side_3()->size() + bin->side_3()->size());
+                bin->setLocationLength(  newbin->getLocationLength() );
+                return true;
+            }
+            if( bin->getLocationLength() + bin->side_3()->size() ==
+                    newbin->getLocationLength() )
+            {
+                cout << "merge!\n";
+                bin->side_3()->set_size(  newbin->side_3()->size() + bin->side_3()->size());
+                return true;
+            }
+        }
+        if( newbin->side_1()->size() == bin->side_1()->size() &&
+                newbin->side_3()->size() == bin->side_3()->size() )
+        {
+            if( newbin->getLocationHeight() + newbin->side_2()->size() ==
+                    bin->getLocationHeight() )
+            {
+                cout << "merge!\n";
+                bin->side_2()->set_size(  newbin->side_2()->size() + bin->side_2()->size());
+                bin->setLocationHeight(  newbin->getLocationHeight() );
+                return true;
+            }
+            if( bin->getLocationHeight() + bin->side_2()->size() ==
+                    newbin->getLocationHeight() )
+            {
+                cout << "merge!\n";
+                bin->side_2()->set_size(  newbin->side_2()->size() + bin->side_2()->size());
+                return true;
+            }
+        }
+        if( newbin->side_2()->size() == bin->side_2()->size() &&
+                newbin->side_3()->size() == bin->side_3()->size() )
+        {
+            if( newbin->getLocationWidth() + newbin->side_1()->size() ==
+                    bin->getLocationWidth() )
+            {
+                cout << "merge!\n";
+                bin->side_1()->set_size(  newbin->side_1()->size() + bin->side_1()->size());
+                bin->setLocationWidth(  newbin->getLocationWidth() );
+                return true;
+            }
+            if( bin->getLocationWidth() + bin->side_1()->size() ==
+                    newbin->getLocationWidth() )
+            {
+                cout << "merge!\n";
+                bin->side_1()->set_size(  newbin->side_1()->size() + bin->side_1()->size());
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

@@ -39,7 +39,7 @@ protected:
 @param[in] bins     all the unused bins
 @return true if the merge took place
 */
-   bool merger( bin_t packbin, bin_t newbin, bin_v_t &bins );
+   virtual bool merger( bin_t packbin, bin_t newbin, bin_v_t &bins );
 
 };
 
