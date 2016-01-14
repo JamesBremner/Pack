@@ -401,15 +401,24 @@ void Bin3D::Ground()
                 if( (*below)->IsAboveBelow( *test ) )
                 {
                     double height = (*below)->getHLocation() + (*below)->side_2()->size();
+                    //cout << "height " << height << "\n";
                     if( height > highestBelow )
                         highestBelow = height;
                 }
             }
 
+        //cout << "highestBelow " << highestBelow << "\n";
+
         // try sliding down
         if( highestBelow < (*test)->getHLocation() )
         {
+            //cout << "slide\nbefore ";
+            //(*test)->Print();
+
             (*test)->setHLocation( highestBelow );
+
+            //cout << "after ";
+            //(*test)->Print();
 
             // a box was moved down, so we will start again
             slide = true;

@@ -57,9 +57,9 @@ void Item3D::SpinAxisCalculate()
 {
     // check if the item remains unrotated
     if( side_1()->orig_side() == 'w' &&
-        side_2()->orig_side() == 'h' &&
-        side_3()->orig_side() == 'l' )
-            SpinAxis( 0 );
+            side_2()->orig_side() == 'h' &&
+            side_3()->orig_side() == 'l' )
+        SpinAxis( 0 );
 
     else if( side_1()->orig_side() == 'w' )
         SpinAxis( 1 );
@@ -89,6 +89,7 @@ void Item3D::encodeAsJSON(stringstream &jsonStr)
 
 }
 
+
 string Item3D::getCSV()
 {
     stringstream s;
@@ -102,36 +103,42 @@ string Item3D::getCSV()
     return s.str();
 }
 
-    bool Item3D::IsAboveBelow( item_t other )
-    {
-        double mw1 = getWLocation();
-        double mw2 = mw1 + side_1()->size();
-        double ml1 = getLLocation();
-        double ml2 = ml1 + side_3()->size();
-        double ow1 = other->getWLocation();
-        double ow2 = ow1 + other->side_1()->size();
-        double ol1 = other->getLLocation();
-        double ol2 = ow2 + other->side_3()->size();
 
-        // handle special case
-        // where a box lies exactly above another of the same width and length
-        if( fabs( mw1 - ow1) < 1 &&
-           fabs( mw2 - ow2) < 1 &&
-           fabs( ml1 - ol1) < 1 )
-            return true;
+static bool valueInRange(double value, double min, double max)
+{
+    return (value >= min) && (value <= max);
+}
 
-        if( mw1 < ow1 && ow1 < mw2 &&
-           ml1 < ol1 && ol1 < ml2  )
-           return true;
-        if( mw1 < ow2 && ow2 < mw2 &&
-           ml1 < ol1 && ol1 < ml2  )
-           return true;
-         if( mw1 < ow1 && ow1 < mw2 &&
-           ml1 < ol2 && ol2 < ml2  )
-           return true;
-        if( mw1 < ow2 && ow2 < mw2 &&
-           ml1 < ol2 && ol2 < ml2  )
-           return true;
+bool Item3D::IsAboveBelow( item_t other )
+{
 
+//        cout << "IsAboveBelow " << progid() <<" "<< other->progid() << "\n";
+
+    // boxes at the same height cannot overlap each other
+    if( getHLocation() == other->getHLocation() )
         return false;
-    }
+
+    double mw1 = getWLocation();
+    double mw2 = mw1 + side_1()->size() - 1;
+    double ml1 = getLLocation();
+    double ml2 = ml1 + side_3()->size() - 1;
+    double ow1 = other->getWLocation();
+    double ow2 = ow1 + other->side_1()->size() - 1;
+    double ol1 = other->getLLocation();
+    double ol2 = ow2 + other->side_3()->size() - 1;
+
+
+//    cout << mw1 <<" "<< mw2 <<" "<< ml1 <<" "<< ml2 <<"\n"<<
+//         ow1 <<" "<< ow2 <<" "<< ol1 <<" "<< ol2 <<"\n";
+
+    // http://stackoverflow.com/a/306379/16582
+
+    bool wOverlap = valueInRange(mw1, ow1, ow2) ||
+                    valueInRange(ow1, mw1, mw2);
+    bool lOverlap = valueInRange(ml1, ol1, ol2) ||
+                    valueInRange(ol1, ml1, ml2);
+
+    return wOverlap && lOverlap;
+
+
+}
