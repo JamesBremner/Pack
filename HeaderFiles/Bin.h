@@ -116,6 +116,7 @@ public:
 
     virtual void Ground() {}
     virtual void Ground( item_t item ) {}
+    virtual void Support( ) {}
 
 protected:
 

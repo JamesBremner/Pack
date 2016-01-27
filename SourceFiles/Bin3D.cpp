@@ -125,7 +125,16 @@ void Bin3D::itemsInPackOrder( item_v_t &items )
         return a->PackSeq() < b->PackSeq();
     });
 }
+void Bin3D::itemsIncHeightOrder( item_v_t &items )
+{
+    itemsInBin( items );
 
+    sort( items.begin(), items.end(),
+          []( item_t a, item_t b )
+    {
+        return a->getHLocation() < b->getHLocation();
+    });
+}
 void Bin3D::binRemSpace( bin_v_t &bins)
 {
 
@@ -430,13 +439,7 @@ void Bin3D::Ground( item_t test )
         return;
 
     item_v_t items;
-    itemsInBin( items );
-    // sort by increasing height
-    stable_sort( items.begin(), items.end(),
-                 []( item_t a, item_t b )
-    {
-        return a->getHLocation() < b->getHLocation();
-    });
+    itemsIncHeightOrder( items );
 
     // find top of highest box below test
     double highestBelow = 0;
@@ -462,5 +465,42 @@ void Bin3D::Ground( item_t test )
 
         test->setHLocation( highestBelow );
 
+    }
+}
+void Bin3D::Support()
+{
+    item_v_t items;
+    itemsIncHeightOrder( items );
+
+    for( auto test : items )
+    {
+        // check if the item is on the ground
+        if( test->getHLocation() == 0 )
+        {
+            test->Support( 100 );
+            continue;
+        }
+
+        double AreaWidthLength = test->AreaWidthLength();
+
+        for( auto below : items )
+        {
+            if( below->getHLocation()  >=  test->getHLocation() )
+                break;
+
+            if( below->IsAboveBelow( test ) )
+            {
+                // found an item below the test
+
+                // check that it is immediatly below
+                if( below->getHLocation() + below->side_2()->size() ==
+                        test->getHLocation() )
+                {
+                    double dbg = below->OverlapArea( test );
+                    test->Support( test->Support() +
+                                 (int) ( 100 *  below->OverlapArea( test ) / AreaWidthLength ) );
+                }
+            }
+        }
     }
 }

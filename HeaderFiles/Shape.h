@@ -10,7 +10,8 @@
 
 using namespace std;
 
-class Shape {
+class Shape
+{
 public:
     Shape();
     Shape(const Shape& orig);
@@ -18,7 +19,10 @@ public:
 
     string id();
     void set_id( string value );
-    int progid() { return myID; }
+    int progid()
+    {
+        return myID;
+    }
 
     virtual void set_side_1(Side *value) {};
     virtual void set_side_2(Side *value) {};
@@ -33,17 +37,60 @@ public:
 
     virtual void ScaleSize( float f ) = 0;
 
-    virtual double volume() { return 0; }
+    virtual double volume()
+    {
+        return 0;
+    }
+    virtual double AreaWidthLength() const
+    {
+        return 0;
+    }
+    virtual double OverlapArea( std::shared_ptr<Shape> b )
+    {
+        return 0;
+    }
+
 
     virtual bool operator <( Shape &b) = 0;
     virtual bool operator >( Shape &b) = 0;
     virtual bool operator ==( Shape &b) = 0;
+
+    double getWLocation() const
+    {
+        return myWLocation;
+    }
+    void setWLocation( double w )
+    {
+        myWLocation = w;
+    }
+    double getHLocation() const
+    {
+        return myHLocation;
+    }
+    void setHLocation( double h )
+    {
+        myHLocation = h;
+    }
+    double getLLocation() const
+    {
+        return myLLocation;
+    }
+    void setLLocation( double h )
+    {
+        myLLocation = h;
+    }
+
+
 
 protected:
 
     string id_;             /// User's ID
     int myID;               /// Unique ID assigned by program
     static int lastID;       /// last used unique ID
+
+    double  myWLocation;
+    double  myHLocation;
+    double  myLLocation;
 
 };
 

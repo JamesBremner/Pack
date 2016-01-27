@@ -104,6 +104,8 @@ void cWorld::Pack()
                 packer.packThem( Bins, Items );
             }
         }
+        Bins[0]->Ground();
+        Bins[0]->Support();
     }
 }
 

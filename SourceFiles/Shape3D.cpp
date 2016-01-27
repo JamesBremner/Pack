@@ -77,6 +77,29 @@ double Shape3D::volume()
     return (side_1_->size() * side_2_->size() * side_3_->size());
 }
 
+double Shape3D::AreaWidthLength() const
+{
+    return (side_1_->size() * side_3_->size());
+}
+
+double Shape3D::OverlapArea( std::shared_ptr<Shape> b )
+{
+    double wA1 = getWLocation();
+    double wA2 = getWLocation() + side_1_->size();
+    double lA1 = getLLocation();
+    double lA2 = getLLocation() + side_3_->size();
+
+    double wB1 = b->getWLocation();
+    double wB2 = b->getWLocation() + b->side_1()->size();
+    double lB1 = b->getLLocation();
+    double lB2 = b->getLLocation() + b->side_3()->size();
+
+    using std::min;
+    using std::max;
+    return ( min( wA2, wB2 ) - max( wA1, wB1 ) ) * ( min( lA2, lB2 ) - max( lA1, lB1 ) );
+
+}
+
 bool  Shape3D:: operator <( Shape &b)
 {
 

@@ -84,7 +84,8 @@ void Item3D::encodeAsJSON(stringstream &jsonStr)
     jsonStr << "\"rotation\": " << SpinAxis() << ",";
     jsonStr << "\"W\": " << getWLocation() << ",";
     jsonStr << "\"H\": " << getHLocation() << ",";
-    jsonStr << "\"L\": " << getLLocation();
+    jsonStr << "\"L\": " << getLLocation() << ",";
+    jsonStr << "\"Support\": " << Support();
     jsonStr << "}";
 
 }

@@ -47,31 +47,6 @@ public:
     virtual void encodeAsJSON(stringstream &jsonStr) = 0;
     virtual string getCSV() { return string(""); }
 
-     double getWLocation()
-    {
-        return myWLocation;
-    }
-     void setWLocation( double w )
-    {
-        myWLocation = w;
-    }
-     double getHLocation()
-    {
-        return myHLocation;
-    }
-     void setHLocation( double h )
-    {
-        myHLocation = h;
-    }
-    double getLLocation()
-    {
-        return myLLocation;
-    }
-     void setLLocation( double h )
-    {
-        myLLocation = h;
-    }
-
     void Weight( float w )
     {
         myWeight = w;
@@ -103,6 +78,15 @@ public:
         myPackSeq = 0;
     }
 
+    int Support()
+    {
+        return mySupport;
+    }
+    void Support( int s )
+    {
+        mySupport = s;
+    }
+
     bool getSpinLocation()  { return mySpinLocation; }
     void setSpinLocation( bool s ) { mySpinLocation = s; }
         string getSpin() { return ""; }
@@ -120,9 +104,6 @@ static Item* Build(  item_build_instructions& instructions );
 protected:
     int     myRotationConstraints;
     int     myPositionConstraints;
-    double  myWLocation;
-    double  myHLocation;
-    double  myLLocation;
     bool    mySpinLocation;
     float   myWeight;
 
@@ -132,6 +113,7 @@ private:
     int     myPackSeq;          // packing sequence number
     int     myBinProgID;
     int     mySpinAxis;         // zero means in original orientation
+    int     mySupport;          // % support by items beneath or the ground
 };
 
 #endif	/* ITEM_H */

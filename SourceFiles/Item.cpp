@@ -5,6 +5,7 @@ int Item::nextPackSeq = 0;
 
 Item::Item()
     : myBinProgID( -1 )
+    , mySupport( 0 )
 {
 }
 

@@ -83,10 +83,10 @@ void Shape2D::ScaleSize( float f )
 
 double Shape2D:: area()
 {
-
     return side_1_->size() * side_2_->size();
-
 }
+
+
 
 bool  Shape2D:: operator <( Shape &b)
 {

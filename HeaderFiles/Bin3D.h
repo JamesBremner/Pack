@@ -34,6 +34,10 @@ public:
     */
     void itemsInPackOrder( item_v_t &items );
 
+    /** The items packed into the bin, in increasing height order
+    */
+    void itemsIncHeightOrder( item_v_t &items );
+
     void binRemSpace(bin_v_t &bins);
     double binUtilizationRating();
     void totalChildSpaceUsed( double &used );
@@ -48,6 +52,10 @@ public:
     string getCSV();
     virtual void Ground();
     void Ground( item_t item );
+
+    /** Calculate item support
+    */
+    void Support();
 
     bool operator <( Shape &b);
     bool operator >( Shape &b);
