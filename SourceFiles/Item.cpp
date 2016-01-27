@@ -1,6 +1,8 @@
 
 #include "stdafx.h"
 
+int Item::nextPackSeq = 0;
+
 Item::Item()
     : myBinProgID( -1 )
 {

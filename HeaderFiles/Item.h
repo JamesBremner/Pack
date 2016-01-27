@@ -89,6 +89,20 @@ public:
     {
         return mySpinAxis;
     }
+
+    int PackSeq()
+    {
+        return myPackSeq;
+    }
+    void setPackSeq()
+    {
+        myPackSeq = nextPackSeq++;
+    }
+    void ClearPackSeq()
+    {
+        myPackSeq = 0;
+    }
+
     bool getSpinLocation()  { return mySpinLocation; }
     void setSpinLocation( bool s ) { mySpinLocation = s; }
         string getSpin() { return ""; }
@@ -114,7 +128,8 @@ protected:
 
 private:
 
-
+    static int nextPackSeq;
+    int     myPackSeq;          // packing sequence number
     int     myBinProgID;
     int     mySpinAxis;         // zero means in original orientation
 };

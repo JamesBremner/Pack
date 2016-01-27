@@ -34,6 +34,8 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
     bin_v_t bins( ref_bins );
 
+    items[0]->ClearPackSeq();
+
     // pack items starting with largest
     sort( items.begin(), items.end(),
          []( item_t a, item_t b ){
@@ -69,8 +71,6 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 break;
             }
 
-//            sort(bins.begin(), bins.end(), Utils::compareAscShape);
-
             stable_sort( bins.begin(), bins.end(),
                          []( bin_t a, bin_t b )
             {
@@ -83,7 +83,6 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             {
                 if ( packIt( member, items[k], bins ) == true)
                 {
-
                     is_bin_found = true;
                     break;
                 }

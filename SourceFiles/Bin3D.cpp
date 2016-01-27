@@ -113,24 +113,10 @@ void Bin3D::itemsInPackOrder( item_v_t &items )
 {
     itemsInBin( items );
 
-    // sort by increasing length
-    stable_sort( items.begin(), items.end(),
+    sort( items.begin(), items.end(),
          []( item_t a, item_t b ){
-            return a->getLLocation() < b->getLLocation();
-         });
-
-     // sort by increasing width
-    stable_sort( items.begin(), items.end(),
-         []( item_t a, item_t b ){
-            return a->getWLocation() < b->getWLocation();
-         });
-
-    // sort by increasing height
-    stable_sort( items.begin(), items.end(),
-         []( item_t a, item_t b ){
-            return a->getHLocation() < b->getHLocation();
-         });
-
+         return a->PackSeq() < b->PackSeq();
+          });
 }
 
 void Bin3D::binRemSpace( bin_v_t &bins)

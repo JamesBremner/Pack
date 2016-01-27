@@ -368,6 +368,7 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
 
     bin->set_item(item);
     item->setBin( bin->Root( bin )->progid() );
+    item->setPackSeq();
     item->setHLocation( bin->getLocationHeight() );
     item->setWLocation( bin->getLocationWidth() );
     item->setLLocation( bin->getLocationLength() );
@@ -774,6 +775,7 @@ map<string, double> BoxPacker3D::findSubBinSizes( bin_t bin, item_t item)
 
 bool BoxPacker3D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
 {
+
 //    cout << "\n->3DMerger" << endl;
 //    newbin->Print();
 //    cout << "candidates:" << endl;
