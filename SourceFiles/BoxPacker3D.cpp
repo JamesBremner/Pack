@@ -366,7 +366,14 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
 
     // packing item
 
+    // add item to bin
     bin->set_item(item);
+
+    // occasionally the item will be hanging in mid-air
+    // this is due to fragmentation of the unsuded space
+    // slide it downwards so that it will be supported
+    bin->Ground( item );
+
     item->setBin( bin->Root( bin )->progid() );
     item->setPackSeq();
     item->setHLocation( bin->getLocationHeight() );

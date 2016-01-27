@@ -6,56 +6,62 @@
 #endif
 using namespace std;
 
-Bin3D::Bin3D():Bin1D(), Bin2D(), Shape3D() {
+Bin3D::Bin3D():Bin1D(), Bin2D(), Shape3D()
+{
     myLOffsetFromRoot = 0;
 }
 
-Bin3D::Bin3D(const Bin3D& orig) {
+Bin3D::Bin3D(const Bin3D& orig)
+{
 }
 
-Bin3D::~Bin3D() {
+Bin3D::~Bin3D()
+{
 }
 
 Bin * Bin3D::CreateNewEmptyCopy()
 {
-	Bin::bin_build_instructions instructions;
-	char buf[20];
+    Bin::bin_build_instructions instructions;
+    char buf[20];
 
-	// identify this as a new copy
-	string sid = id();
-	int p = sid.find("_cpy");
-	if( p == -1 ) {
-		sid += "_cpy2";
-	} else {
-		int cpy = atoi( sid.substr(p+4).c_str() );
-		snprintf(buf,9,"%d",cpy+1);
-		sid = sid.substr(0,p+4) + buf;
-	}
-	instructions.bin_id = sid;
+    // identify this as a new copy
+    string sid = id();
+    int p = sid.find("_cpy");
+    if( p == -1 )
+    {
+        sid += "_cpy2";
+    }
+    else
+    {
+        int cpy = atoi( sid.substr(p+4).c_str() );
+        snprintf(buf,9,"%d",cpy+1);
+        sid = sid.substr(0,p+4) + buf;
+    }
+    instructions.bin_id = sid;
 
-	// copy the dimensions
-	snprintf(buf,19,"%9f",side_1_->size() );
-	instructions.size_v.push_back( string( buf ) );
-	snprintf(buf,19,"%9f",side_2_->size() );
-	instructions.size_v.push_back( string( buf ) );
-	snprintf(buf,19,"%9f",side_3_->size() );
-	instructions.size_v.push_back( string( buf ) );
+    // copy the dimensions
+    snprintf(buf,19,"%9f",side_1_->size() );
+    instructions.size_v.push_back( string( buf ) );
+    snprintf(buf,19,"%9f",side_2_->size() );
+    instructions.size_v.push_back( string( buf ) );
+    snprintf(buf,19,"%9f",side_3_->size() );
+    instructions.size_v.push_back( string( buf ) );
 
-	// we should always be using the defaultyunits internally
-	instructions.dimension_units = "in";
+    // we should always be using the defaultyunits internally
+    instructions.dimension_units = "in";
 
-	// we would never come here unless we have an endless supply of these
-	instructions.can_copy = true;
+    // we would never come here unless we have an endless supply of these
+    instructions.can_copy = true;
 
-	return Bin::Build( instructions );
+    return Bin::Build( instructions );
 
 }
 
 void Bin3D::Dumper()
 {
-	printf("%s items %d, ",
-		id().c_str(),
-		itemsInBinCount() );
+    printf("%s items %d, ",
+           id().c_str(),
+           itemsInBinCount() );
 }
 
 
@@ -114,9 +120,10 @@ void Bin3D::itemsInPackOrder( item_v_t &items )
     itemsInBin( items );
 
     sort( items.begin(), items.end(),
-         []( item_t a, item_t b ){
-         return a->PackSeq() < b->PackSeq();
-          });
+          []( item_t a, item_t b )
+    {
+        return a->PackSeq() < b->PackSeq();
+    });
 }
 
 void Bin3D::binRemSpace( bin_v_t &bins)
@@ -139,9 +146,10 @@ void Bin3D::binRemSpace( bin_v_t &bins)
 void Bin3D::totalChildSpaceUsed( double &used )
 {
 
-    if ( Bin2D::item_ != NULL ) {
+    if ( Bin2D::item_ != NULL )
+    {
 
-	used += item_->volume();
+        used += item_->volume();
 
     }
 
@@ -233,7 +241,7 @@ void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
     jsonStr << "\"items\": [";
     for(unsigned i=0; i < items.size(); ++i)
     {
-         items[i]->encodeAsJSON(jsonStr);
+        items[i]->encodeAsJSON(jsonStr);
 
         if( i != items.size() - 1)
             jsonStr << ",";
@@ -321,7 +329,7 @@ double Bin3D::binUtilizationRating()
     bin_t root = Root(shared_from_this());
 
     if ( root->binSpaceUsed() != 0)
-     	return root->binSpaceUsed() * volume();
+        return root->binSpaceUsed() * volume();
     else
         return volume();
 }
@@ -338,8 +346,8 @@ bool  Bin3D:: operator >( Shape &b)
 {
     Bin3D *bin = dynamic_cast<Bin3D*>(&b);
 
-	unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
-	unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
+    unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
+    unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
     return u_a > u_b;
 
 
@@ -349,8 +357,8 @@ bool  Bin3D:: operator ==( Shape &b)
 {
     Bin3D *bin = dynamic_cast<Bin3D*>(&b);
 
-	unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
-	unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
+    unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
+    unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
     return u_a == u_b;
 
 }
@@ -366,23 +374,24 @@ void Bin3D::Ground()
     {
         slide = false;
 
-     // sort by increasing height
-    stable_sort( items.begin(), items.end(),
-         []( item_t a, item_t b ){
+        // sort by increasing height
+        stable_sort( items.begin(), items.end(),
+                     []( item_t a, item_t b )
+        {
             return a->getHLocation() < b->getHLocation();
-         });
+        });
 
-    for( auto test = items.begin();
-        test != items.end(); test++ )
-    {
-        // no need to test the items that are already grounded
-        if( (*test)->getHLocation() == 0 )
-            continue;
+        for( auto test = items.begin();
+                test != items.end(); test++ )
+        {
+            // no need to test the items that are already grounded
+            if( (*test)->getHLocation() == 0 )
+                continue;
 
-        // find top of highest box below test
-        double highestBelow = 0;
-        for( auto below = items.begin();
-            below != test; below++ )
+            // find top of highest box below test
+            double highestBelow = 0;
+            for( auto below = items.begin();
+                    below != test; below++ )
             {
                 if( (*below)->IsAboveBelow( *test ) )
                 {
@@ -393,24 +402,65 @@ void Bin3D::Ground()
                 }
             }
 
-        //cout << "highestBelow " << highestBelow << "\n";
+            //cout << "highestBelow " << highestBelow << "\n";
 
-        // try sliding down
-        if( highestBelow < (*test)->getHLocation() )
-        {
-            //cout << "slide\nbefore ";
-            //(*test)->Print();
+            // try sliding down
+            if( highestBelow < (*test)->getHLocation() )
+            {
+                //cout << "slide\nbefore ";
+                //(*test)->Print();
 
-            (*test)->setHLocation( highestBelow );
+                (*test)->setHLocation( highestBelow );
 
-            //cout << "after ";
-            //(*test)->Print();
+                //cout << "after ";
+                //(*test)->Print();
 
-            // a box was moved down, so we will start again
-            slide = true;
-            break;
+                // a box was moved down, so we will start again
+                slide = true;
+                break;
+            }
+
         }
-
     }
+}
+void Bin3D::Ground( item_t test )
+{
+    // check if the item is already on the ground
+    if( test->getHLocation() == 0 )
+        return;
+
+    item_v_t items;
+    itemsInBin( items );
+    // sort by increasing height
+    stable_sort( items.begin(), items.end(),
+                 []( item_t a, item_t b )
+    {
+        return a->getHLocation() < b->getHLocation();
+    });
+
+    // find top of highest box below test
+    double highestBelow = 0;
+    for( auto below = items.begin();
+            below != items.end(); below++ )
+    {
+        if( (*below)->getHLocation()  >=  test->getHLocation() )
+            break;
+
+        if( (*below)->IsAboveBelow( test ) )
+        {
+            double height = (*below)->getHLocation() + (*below)->side_2()->size();
+            //cout << "height " << height << "\n";
+            if( height > highestBelow )
+                highestBelow = height;
+        }
+    }
+
+    if( highestBelow < test->getHLocation() )
+    {
+        //cout << "slide\nbefore ";
+        //(*test)->Print();
+
+        test->setHLocation( highestBelow );
+
     }
 }

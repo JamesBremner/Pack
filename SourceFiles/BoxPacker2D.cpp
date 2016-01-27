@@ -122,8 +122,6 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                                    functors::IsUnusedExtraBin ),
                         ref_bins.end() );
 
-        ref_bins[0]->Ground();
-
     }
 
 
