@@ -56,6 +56,7 @@ public:
     /** Calculate item support
     */
     void Support();
+    double Support( item_t test, item_v_t& items );
 
     bool operator <( Shape &b);
     bool operator >( Shape &b);

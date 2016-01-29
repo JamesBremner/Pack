@@ -34,8 +34,13 @@ public:
     virtual void ScaleSize( float f );
 
     double volume();
+
+    /** Area in width and length
+    */
     double AreaWidthLength() const;
-   // static double OverlapArea( std::shared_ptr<Shape3D> a, std::shared_ptr<Shape3D> b );
+
+    /** Overlap in width and length
+    */
     double OverlapArea( std::shared_ptr<Shape> b );
 
     virtual bool operator <( Shape &b);

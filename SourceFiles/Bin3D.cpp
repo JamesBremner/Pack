@@ -216,9 +216,13 @@ bool Bin3D::Fit( item_t item )
 //    cout << "Bin3D::Fit " << item->side_1()->size() <<" "<< item->side_2()->size() <<" "<< item->side_3()->size() <<" in "<<
 //        side_1()->size() <<" "<< side_2()->size() <<" " << side_2()->size() << endl;
 
-    return (item->side_1()->size() <= side_1()->size() &&
+    if( ! (item->side_1()->size() <= side_1()->size() &&
             item->side_2()->size() <= side_2()->size() &&
-            item->side_3()->size() <= side_3()->size());
+            item->side_3()->size() <= side_3()->size()) )
+        return false;
+
+
+    return true;
 }
 
 string Bin3D::getCSV()
@@ -481,26 +485,34 @@ void Bin3D::Support()
             continue;
         }
 
-        double AreaWidthLength = test->AreaWidthLength();
+        // calculate area of iems supporting test item
+        double s = Support( test, items );
 
-        for( auto below : items )
+        test->Support( (int) ( 100 * s / test->AreaWidthLength() ) );
+
+    }
+}
+double Bin3D::Support( item_t test, item_v_t& items )
+{
+    double s = 0;
+
+    for( auto below : items )
+    {
+        if( below->getHLocation()  >=  test->getHLocation() )
+            return s;
+
+        if( below->IsAboveBelow( test ) )
         {
-            if( below->getHLocation()  >=  test->getHLocation() )
-                break;
+            // found an item below the test
 
-            if( below->IsAboveBelow( test ) )
+            // check that it is immediatly below
+            if( below->getHLocation() + below->side_2()->size() ==
+                    test->getHLocation() )
             {
-                // found an item below the test
-
-                // check that it is immediatly below
-                if( below->getHLocation() + below->side_2()->size() ==
-                        test->getHLocation() )
-                {
-                    double dbg = below->OverlapArea( test );
-                    test->Support( test->Support() +
-                                 (int) ( 100 *  below->OverlapArea( test ) / AreaWidthLength ) );
-                }
+                s += below->OverlapArea( test );
             }
         }
     }
+    return s;
+
 }
