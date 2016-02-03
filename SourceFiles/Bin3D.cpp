@@ -436,11 +436,11 @@ void Bin3D::Ground()
         }
     }
 }
-void Bin3D::Ground( item_t test )
+bool Bin3D::Ground( item_t test )
 {
     // check if the item is already on the ground
     if( test->getHLocation() == 0 )
-        return;
+        return false;
 
     item_v_t items;
     itemsIncHeightOrder( items );
@@ -468,8 +468,9 @@ void Bin3D::Ground( item_t test )
         //(*test)->Print();
 
         test->setHLocation( highestBelow );
-
+        return true;
     }
+    return false;
 }
 void Bin3D::Support()
 {
@@ -485,7 +486,7 @@ void Bin3D::Support()
             continue;
         }
 
-        // calculate area of iems supporting test item
+        // calculate area of items supporting test item
         double s = Support( test, items );
 
         test->Support( (int) ( 100 * s / test->AreaWidthLength() ) );

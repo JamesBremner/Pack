@@ -115,8 +115,10 @@ public:
     }
 
     virtual void Ground() {}
-    virtual void Ground( item_t item ) {}
+    virtual bool Ground( item_t item ) { return false; }
     virtual void Support( ) {}
+    virtual void itemsIncHeightOrder( item_v_t &items ) {}
+    virtual double Support( item_t test, item_v_t& items ) { return 0.0; }
 
 protected:
 

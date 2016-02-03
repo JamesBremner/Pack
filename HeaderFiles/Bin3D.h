@@ -51,11 +51,27 @@ public:
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
     string getCSV();
     virtual void Ground();
-    void Ground( item_t item );
 
-    /** Calculate item support
+    /** if item has no support slide down until supported
+
+    @param[in] item to test
+
+    @return true if slide occurred
+    */
+    bool Ground( item_t item );
+
+    /** Calculate item support for all items in bin
     */
     void Support();
+
+    /** Calculate support for a single item
+
+    @param[in] test calculate suppirt for this item
+    @param[in] items in bin in height order
+
+    @return area supported
+
+    */
     double Support( item_t test, item_v_t& items );
 
     bool operator <( Shape &b);
