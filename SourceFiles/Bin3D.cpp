@@ -235,6 +235,16 @@ string Bin3D::getCSV()
     return s.str();
 }
 
+string Bin3D::getSTL()
+{
+     stringstream s;
+    item_v_t items;
+    itemsInPackOrder(items);
+    for( auto& i : items )
+        s << i->getSTL();
+    return s.str();
+}
+
 void Bin3D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 {
     jsonStr << "{\"bin_size\": \"" << origSize() << "\",";

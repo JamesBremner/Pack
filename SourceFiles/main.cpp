@@ -226,9 +226,15 @@ int main(int argc, char *argv[])
 
     }
 
-    ofstream filecsv("packit4me2.csv");
-    filecsv << csv;
-    filecsv.close();
+//    ofstream filecsv("packit4me2.csv");
+//    filecsv << csv;
+//    filecsv.close();
+
+
+    string stl = theWorld.getSTL();
+    ofstream filestl("packit4me2.stl");
+    filestl << stl;
+    filestl.close();
 
     return 0;
 }

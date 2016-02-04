@@ -396,7 +396,7 @@ bool BoxPacker3D::Fit( bin_t bin,  item_t item, bin_v_t &bins )
 //    }
 
 
-    //item->Print();
+//    item->Print();
 
     splitBinWidth(bin, item);
     splitBinHeight(bin, item);

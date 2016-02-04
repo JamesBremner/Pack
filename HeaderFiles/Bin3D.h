@@ -50,6 +50,7 @@ public:
 
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
     string getCSV();
+    string getSTL();
     virtual void Ground();
 
     /** if item has no support slide down until supported

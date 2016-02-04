@@ -46,6 +46,7 @@ public:
 
     virtual void encodeAsJSON(stringstream &jsonStr) = 0;
     virtual string getCSV() { return string(""); }
+    virtual string getSTL() { return string(""); }
 
     void Weight( float w )
     {

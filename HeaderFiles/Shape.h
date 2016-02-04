@@ -79,6 +79,18 @@ public:
     {
         myLLocation = h;
     }
+    double getWLocation2()
+    {
+        return myWLocation + side_1()->size();
+    }
+    double getHLocation2()
+    {
+        return myHLocation + side_2()->size();
+    }
+    double getLLocation2()
+    {
+        return myLLocation + side_3()->size();
+    }
 
 
 

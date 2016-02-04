@@ -171,6 +171,16 @@ string cWorld::getCSV()
     return s;
 }
 
+ string cWorld::getSTL()
+ {
+     string s;
+     for( auto& b : Bins )
+    {
+        s += b->getSTL();
+    }
+    return s;
+ }
+
 int cWorld::BuildBins( vector<string>& bin_v )
 {
 

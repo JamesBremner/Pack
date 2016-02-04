@@ -71,6 +71,7 @@ public:
     virtual void totalRemSpaceAvailable( double &avail) = 0;
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep) = 0;
     virtual string getCSV() { return string(""); }
+    virtual string getSTL() { return string(""); }
 
     double getLocationHeight()
     {

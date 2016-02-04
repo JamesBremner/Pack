@@ -104,6 +104,45 @@ string Item3D::getCSV()
     return s.str();
 }
 
+string Item3D::getSTL()
+{
+    stringstream s;
+    s << "solid " << id() << "\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  -1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation()  <<" "<< getLLocation() <<" "<< getHLocation() << "\n";
+    s << "vertex " << getWLocation2() <<" "<< getLLocation() <<" "<< getHLocation() << "\n";
+    s << "vertex " << getWLocation()  <<" "<< getLLocation2()<<" "<< getHLocation() << "\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  -1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation() + side_1()->size() <<" "<< getLLocation() <<" "                   << getHLocation() << "\n";
+    s << "vertex " << getWLocation() + side_1()->size() <<" "<< getLLocation() + side_3()->size() <<" "<< getHLocation() << "\n";
+    s << "vertex " << getWLocation() <<" "                   << getLLocation() + side_3()->size() <<" "<< getHLocation() << "\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  +1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation() + side_1()->size() <<" "<< getLLocation() + side_3()->size()<<" "   << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation()                    <<" "<< getLLocation() + side_3()->size() <<" "  << getHLocation2()<<"\n";
+    s << "vertex " << getWLocation() + side_1()->size() <<" "<< getLLocation() <<" "                     << getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  +1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation() <<" "                   << getLLocation() <<" "                   << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation() + side_1()->size() <<" "<< getLLocation() <<" "                   << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation() <<" "                   << getLLocation() + side_3()->size() <<" "<< getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+
+    s << "facet normal  -1 0 0\n   outer loop\n";
+    s << "vertex " << getWLocation()  <<" "<< getLLocation()  <<" " << getHLocation() <<"\n";
+    s << "vertex " << getWLocation2() <<" "<< getLLocation() <<" "  << getHLocation()<<"\n";
+    s << "vertex " << getWLocation()  <<" "<< getLLocation() <<" "  << getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  -1 0 0 \n   outer loop\n";
+    s << "vertex " << getWLocation2() <<" " << getLLocation() <<" " << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation()  <<" "<< getLLocation() <<" "  << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation2() <<" " << getLLocation()  <<" "<< getHLocation() <<"\n";
+    s << "endloop\nendfacet\n";
+
+    s << "endsolid "<< id() << "\n";
+    return s.str();
+}
 
 static bool valueInRange(double value, double min, double max)
 {

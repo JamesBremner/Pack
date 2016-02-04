@@ -34,6 +34,7 @@ public:
 
     void encodeAsJSON(stringstream &jsonStr);
     string getCSV();
+    string getSTL();
 
     virtual double getWLocation()
     {
