@@ -235,13 +235,14 @@ string Bin3D::getCSV()
     return s.str();
 }
 
-string Bin3D::getSTL()
+string Bin3D::getSTL( int offset )
 {
      stringstream s;
     item_v_t items;
     itemsInPackOrder(items);
     for( auto& i : items )
-        s << i->getSTL();
+        s << i->getSTL( offset );
+    s << Shape3D::getSTL( offset );
     return s.str();
 }
 

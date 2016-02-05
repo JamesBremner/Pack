@@ -45,8 +45,23 @@ void cWorld::Pack()
         packer.packThem( Bins, Items );
     }
 
-    if( Dimension == 3 )
+    else if( Dimension == 3 )
     {
+        /*
+        Save the bins
+        in case we need to try again with the original list
+        */
+        BinsOriginal = Bins;
+
+        bool fOneBin_saved = myfOneBin;
+        bool packOK = false;
+
+        if( ! myfOneBin )
+        {
+            // the one bin option was not selected
+            // but lets try packing just one bin anyway
+            myfOneBin = true;
+        }
         /*
             if one bin is requested
             there is no need to look at bins that are too small to hold every item
@@ -55,58 +70,90 @@ void cWorld::Pack()
 
         RemoveBinsTooLightForAllItems();
 
-        /*
-            Save the bins
-            in case we need to try again with the original list
-        */
-        std::vector< bin_t > Bins_saved( Bins );
-
-        sort( Bins.begin(), Bins.end(),
-              []( bin_t a, bin_t b )
+        if( Bins.size() )
         {
-            return a->volume() < b->volume();
-        });
-
-        bin_t smallest_bin = Bins[0];
-        Bins.clear();
-        Bins.push_back( smallest_bin );
 
 
-        /*
-            Pack
-        */
-        BoxPacker3D packer;
-        packer.packThem( Bins, Items );
+            // sort bins into increasing size
+            sort( Bins.begin(), Bins.end(),
+                  []( bin_t a, bin_t b )
+            {
+                return a->volume() < b->volume();
+            });
 
-        while ( myUnpackedItems.size() )
-        {
-            // there were some unpacked items
+            bin_v_t Bins_saved( Bins );
 
-            if( Bins_saved.size() <= 1 )
-                break;
+            if( myfOneBin )
+            {
+                // try smallest
+                bin_t smallest_bin = Bins[0];
+                Bins.clear();
+                Bins.push_back( smallest_bin );
+            }
+            else
+            {
+                bin_t smallest_bin = SmallestBinForAllItems();
+                Bins.clear();
+                Bins.push_back( smallest_bin );
+            }
 
             /*
-                try again with saved bins
-                without the smallest
+                Pack
             */
-            myUnpackedItems.clear();
-            Bins = Bins_saved;
+            BoxPacker3D packer;
+            packer.packThem( Bins, Items );
 
+            while ( myUnpackedItems.size() )
+            {
+                // there were some unpacked items
+
+                if( Bins_saved.size() <= 1 )
+                    break;
+
+                /*
+                    try again with saved bins
+                    without the smallest
+                */
+                myUnpackedItems.clear();
+                Bins = Bins_saved;
+
+                // reset items to unpacked status
+                for( auto i : Items )
+                    i->setBin( -1 );
+
+                RemoveSmallestBin();
+                Bins_saved = Bins;
+                bin_t smallest_bin = Bins[0];
+                Bins.clear();
+                Bins.push_back( smallest_bin );
+
+                packer.packThem( Bins, Items );
+
+            }
+            Bins[0]->Ground();
+            Bins[0]->Support();
+
+            if( ! myUnpackedItems.size() )
+                packOK = true;
+        }
+
+        if( ( ! packOK ) && ( ! fOneBin_saved ) )
+        {
+
+            // one bin packing failed
+            // but it was not explicitly requested
+            // so try packing into multiple bins
+            cout << "Trying multiple bins\n";
+            myfOneBin = false;
+            Bins = BinsOriginal;
+            myUnpackedItems.clear();
             // reset items to unpacked status
             for( auto i : Items )
                 i->setBin( -1 );
 
-            RemoveSmallestBin();
-            Bins_saved = Bins;
-            bin_t smallest_bin = Bins[0];
-            Bins.clear();
-            Bins.push_back( smallest_bin );
-
+            BoxPacker3D packer;
             packer.packThem( Bins, Items );
-
         }
-        Bins[0]->Ground();
-        Bins[0]->Support();
     }
 }
 
@@ -171,15 +218,17 @@ string cWorld::getCSV()
     return s;
 }
 
- string cWorld::getSTL()
- {
-     string s;
-     for( auto& b : Bins )
+string cWorld::getSTL()
+{
+    string s;
+    int offset = 0;
+    for( auto& b : Bins )
     {
-        s += b->getSTL();
+        s += b->getSTL( offset );
+        offset += 400;
     }
     return s;
- }
+}
 
 int cWorld::BuildBins( vector<string>& bin_v )
 {
@@ -354,16 +403,25 @@ void cWorld::RemoveBinsTooSmallForAllItems()
     } ),
     Bins.end() );
 
+}
 
-
-    // check we still have at least one bin
-    if( ! Bins.size())
+bin_t cWorld::SmallestBinForAllItems()
+{
+    // calculate total volume of all items
+    double totalVolumeAllItems = 0;
+    double totalWeightAllItems = 0;
+    for( auto& i : Items )
     {
-//        cout << "totalVolumeAllItems = " << totalVolumeAllItems
-//            << endl;
-        throw std::runtime_error("No bins big enough to contain all items");
+        totalVolumeAllItems += i->volume();
+        totalWeightAllItems += i->Weight();
     }
-
+    for( auto b : Bins )
+    {
+        if( b->volume() >= totalVolumeAllItems &&
+                b->MaxWeight() >= totalWeightAllItems )
+            return b;
+    }
+    return Bins.back();
 }
 
 void cWorld::RemoveBinsTooLightForAllItems()
@@ -391,11 +449,6 @@ void cWorld::RemoveBinsTooLightForAllItems()
     } ),
     Bins.end() );
 
-    // check we still have at least one bin
-    if( ! Bins.size())
-    {
-        throw std::runtime_error("No bins strong enough to contain all items");
-    }
 }
 
 void cWorld::RemoveSmallestBin()

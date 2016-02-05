@@ -8,7 +8,10 @@ class cWorld
 public:
 
     /// the bins into which items can be packed
-    std::vector< bin_t > Bins;
+    bin_v_t Bins;
+
+    /// the original bins into which items can be packed, used to reset if pack fails
+    bin_v_t BinsOriginal;
 
     /// the items which can be packed into bins
     item_v_t Items;
@@ -69,6 +72,7 @@ private:
     void RemoveBinsTooSmallForAllItems();
     void RemoveSmallestBin();
     void RemoveBinsTooLightForAllItems();
+    bin_t SmallestBinForAllItems();
     int CountBinsUsed();
 };
 

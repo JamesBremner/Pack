@@ -43,6 +43,8 @@ public:
     */
     double OverlapArea( std::shared_ptr<Shape> b );
 
+    string getSTL( int offset );
+
     virtual bool operator <( Shape &b);
     virtual bool operator >( Shape &b);
     virtual bool operator ==( Shape &b);

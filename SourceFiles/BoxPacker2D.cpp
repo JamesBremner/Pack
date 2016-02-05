@@ -74,15 +74,26 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             stable_sort( bins.begin(), bins.end(),
                          []( bin_t a, bin_t b )
             {
-                return a->getLocationHeight() < b->getLocationHeight();
+                if( theWorld.myfOneBin )
+                    return a->getLocationHeight() < b->getLocationHeight();
+                else
+                    return a->volume() < b->volume();
             });
+
+            for( auto member : bins )
+            {
+                cout << member->Root( member )->id() << " ";
+            }
+            cout << "\n";
 
             bool is_bin_found = false;
             int bin_found_index = 0;
             for( auto member : bins )
             {
+                cout << "try in "<< member->id() << "\n";
                 if ( packIt( member, items[k], bins ) == true)
                 {
+                    cout << "added item to bin " << member->id() << "\n";
                     is_bin_found = true;
                     break;
                 }

@@ -134,4 +134,77 @@ bool  Shape3D:: operator ==( Shape &b)
 
 }
 
+string Shape3D::getSTL( int offset )
+{
+    stringstream s;
+    s << "solid " << id() << "\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  -1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation() + offset  <<" "<< getLLocation() <<" "<< getHLocation() << "\n";
+    s << "vertex " << getWLocation2() + offset <<" "<< getLLocation() <<" "<< getHLocation() << "\n";
+    s << "vertex " << getWLocation() + offset  <<" "<< getLLocation2()<<" "<< getHLocation() << "\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  -1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation() + side_1()->size() + offset <<" "<< getLLocation() <<" "                   << getHLocation() << "\n";
+    s << "vertex " << getWLocation() + side_1()->size() + offset <<" "<< getLLocation() + side_3()->size() <<" "<< getHLocation() << "\n";
+    s << "vertex " << getWLocation() + offset <<" "                   << getLLocation() + side_3()->size() <<" "<< getHLocation() << "\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  +1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation() + side_1()->size() + offset <<" "<< getLLocation() + side_3()->size()<<" "   << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation()  + offset                   <<" "<< getLLocation() + side_3()->size() <<" "  << getHLocation2()<<"\n";
+    s << "vertex " << getWLocation() + side_1()->size() + offset <<" "<< getLLocation() <<" "                     << getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0.000000e+000 0.000000e+000  +1.000000e+000\n   outer loop\n";
+    s << "vertex " << getWLocation() + offset <<" "                   << getLLocation() <<" "                   << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation() + side_1()->size() + offset <<" "<< getLLocation() <<" "                   << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation()  + offset <<" "                   << getLLocation() + side_3()->size() <<" "<< getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+
+    s << "facet normal  -1 0 0\n   outer loop\n";
+    s << "vertex " << getWLocation()  + offset <<" "<< getLLocation()  <<" " << getHLocation() <<"\n";
+    s << "vertex " << getWLocation2()  + offset<<" "<< getLLocation() <<" "  << getHLocation()<<"\n";
+    s << "vertex " << getWLocation()  + offset <<" "<< getLLocation() <<" "  << getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  -1 0 0 \n   outer loop\n";
+    s << "vertex " << getWLocation2()  + offset<<" " << getLLocation() <<" " << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation()   + offset<<" "<< getLLocation() <<" "  << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation2()  + offset <<" " << getLLocation()  <<" "<< getHLocation() <<"\n";
+    s << "endloop\nendfacet\n";
+
+    s << "facet normal  1 0 0\n   outer loop\n";
+    s << "vertex " << getWLocation()  + offset <<" "<< getLLocation2()  <<" " << getHLocation() <<"\n";
+    s << "vertex " << getWLocation()  + offset <<" "<< getLLocation2() <<" "  << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation2()  + offset<<" "<< getLLocation2() <<" "  << getHLocation()<<"\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  1 0 0 \n   outer loop\n";
+    s << "vertex " << getWLocation2()  + offset<<" " << getLLocation2() <<" " << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation2()  + offset <<" " << getLLocation2()  <<" "<< getHLocation() <<"\n";
+    s << "vertex " << getWLocation()   + offset<<" "<< getLLocation2() <<" "  << getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+
+    s << "facet normal  0 -1 0\n   outer loop\n";
+    s << "vertex " << getWLocation()  + offset <<" "<< getLLocation()  <<" " << getHLocation() <<"\n";
+    s << "vertex " << getWLocation()  + offset <<" "<< getLLocation2() <<" "  << getHLocation() <<"\n";
+    s << "vertex " << getWLocation()  + offset<<" "<< getLLocation() <<" "  << getHLocation2()<<"\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0 -1 0\n   outer loop\n";
+    s << "vertex " << getWLocation()  + offset<<" " << getLLocation2() <<" " << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation()  + offset <<" " << getLLocation()  <<" "<< getHLocation2() <<"\n";
+    s << "vertex " << getWLocation()   + offset<<" "<< getLLocation2() <<" "  << getHLocation() <<"\n";
+    s << "endloop\nendfacet\n";
+
+    s << "facet normal  0 1 0\n   outer loop\n";
+    s << "vertex " << getWLocation2()  + offset <<" "<< getLLocation()  <<" " << getHLocation() <<"\n";
+    s << "vertex " << getWLocation2()  + offset<<" "<< getLLocation() <<" "  << getHLocation2()<<"\n";
+    s << "vertex " << getWLocation2()  + offset <<" "<< getLLocation2() <<" "  << getHLocation() <<"\n";
+    s << "endloop\nendfacet\n";
+    s << "facet normal  0 1 0\n   outer loop\n";
+    s << "vertex " << getWLocation2()  + offset<<" " << getLLocation2() <<" " << getHLocation2() <<"\n";
+    s << "vertex " << getWLocation2()   + offset<<" "<< getLLocation2() <<" "  << getHLocation() <<"\n";
+    s << "vertex " << getWLocation2()  + offset <<" " << getLLocation()  <<" "<< getHLocation2() <<"\n";
+    s << "endloop\nendfacet\n";
+
+
+    s << "endsolid "<< id() << "\n";
+    return s.str();
+}
 

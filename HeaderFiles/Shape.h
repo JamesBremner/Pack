@@ -92,7 +92,7 @@ public:
         return myLLocation + side_3()->size();
     }
 
-
+    virtual string getSTL( int offset ) { return string(""); }
 
 protected:
 
