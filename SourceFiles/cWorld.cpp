@@ -68,7 +68,19 @@ void cWorld::Pack()
         */
         RemoveBinsTooSmallForAllItems();
 
+        /*
+          need not look at bins that are not strong enough
+          to hold the weight of all the items
+        */
         RemoveBinsTooLightForAllItems();
+
+        /*
+          check that requested one bin pack is feasible
+        */
+        if( ( ! Bins.size() ) && fOneBin_saved )
+        {
+            throw std::runtime_error("No bin capable of holding all items");
+        }
 
         if( Bins.size() )
         {
