@@ -117,10 +117,10 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             int bin_found_index = 0;
             for( auto member : bins )
             {
-                cout << "try in "<< member->id() << "\n";
+                //cout << "try in "<< member->id() << "\n";
                 if ( packIt( member, items[k], bins ) == true)
                 {
-                    cout << "added item to bin " << member->id() << "\n";
+                    //cout << "added item to bin " << member->id() << "\n";
                     is_bin_found = true;
                     break;
                 }
@@ -155,7 +155,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
         }
 
-        // delete unused bins
+        // delete unused extra bins
 
         ref_bins.erase(
             remove_if(
@@ -163,7 +163,8 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 ref_bins.end(),
                 [ ] ( bin_t b )
         {
-            return b->itemsInBinCount() == 0;
+            return (int)b->id().find("_cpy") != -1 &&
+             b->itemsInBinCount() == 0 ;
         } ),
         ref_bins.end() );
 

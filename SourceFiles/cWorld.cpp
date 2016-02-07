@@ -165,8 +165,24 @@ void cWorld::Pack()
 
             BoxPacker3D packer;
             packer.packThem( Bins, Items );
+
+            // Slide unsupported bins downwards
+            for( auto b : Bins )
+                b->Ground();
         }
     }
+
+    // delete unused  bins
+
+    Bins.erase(
+        remove_if(
+            Bins.begin(),
+            Bins.end(),
+            [ ] ( bin_t b )
+    {
+        return b->itemsInBinCount() == 0 ;
+    } ),
+    Bins.end() );
 }
 
 string cWorld::getJson()
