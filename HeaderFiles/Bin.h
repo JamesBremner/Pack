@@ -120,6 +120,7 @@ public:
     virtual void Support( ) {}
     virtual void itemsIncHeightOrder( item_v_t &items ) {}
     virtual double Support( item_t test, item_v_t& items ) { return 0.0; }
+    virtual bool IsUnusedBin() { return false; }
 
 protected:
 

@@ -75,6 +75,8 @@ public:
     */
     double Support( item_t test, item_v_t& items );
 
+    bool IsUnusedBin();
+
     bool operator <( Shape &b);
     bool operator >( Shape &b);
     bool operator ==( Shape &b);

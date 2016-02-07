@@ -115,6 +115,17 @@ void Bin3D::itemsInBin(item_v_t &items)
 
 }
 
+bool Bin3D::IsUnusedBin()
+{
+    // check for uunused space in a bigger bin
+    if( parent_bin() != NULL )
+        return false;
+
+    item_v_t iv;
+    itemsInBin( iv );
+    return ( ! iv.size() );
+}
+
 void Bin3D::itemsInPackOrder( item_v_t &items )
 {
     itemsInBin( items );

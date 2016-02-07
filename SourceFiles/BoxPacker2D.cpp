@@ -20,13 +20,45 @@ BoxPacker2D::~BoxPacker2D()
 
 }
 
-namespace functors
+void BoxPacker2D::Sort( bin_v_t& bins )
 {
-bool IsUnusedExtraBin( bin_t b )
-{
-    return ( (int)b->id().find("_cpy") != -1 &&
-             ! b->itemsInBinCount() );
-}
+    stable_sort( bins.begin(), bins.end(),
+                 []( bin_t a, bin_t b )
+    {
+        // for a onebin pack, we want to work our way up from the bottom
+        if( theWorld.myfOneBin )
+        {
+            return a->getLocationHeight() < b->getLocationHeight();
+        }
+        else
+        {
+            /*
+              for multiple bin packing
+              we try the unused spaces in partially packed bins
+              smallest first
+              then we try the largest unused bin
+            */
+
+            if( ! a->IsUnusedBin() )
+            {
+                if( ! b->IsUnusedBin() )
+                    return a->volume() < b->volume();   // smaller spaces first
+                else
+                    return true;        // spaces before empty bins
+            }
+            if( ! b->IsUnusedBin() )
+                return false;            // spaces before empty bins, so this is in wrong order
+
+            return a->volume() >= b->volume();      // bigger empty bins first
+
+        }
+    });
+
+//    for( auto member : bins )
+//    {
+//        cout << member->Root( member )->id() << " ";
+//    }
+//    cout << "\n";
 }
 
 void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
@@ -38,9 +70,10 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
     // pack items starting with largest
     sort( items.begin(), items.end(),
-         []( item_t a, item_t b ){
-            return a->volume() > b->volume();
-         });
+          []( item_t a, item_t b )
+    {
+        return a->volume() > b->volume();
+    });
 
     // three passes, one for each positional constraint
     for( int kPositionPass = 0; kPositionPass < 3; kPositionPass++ )
@@ -71,20 +104,14 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 break;
             }
 
-            stable_sort( bins.begin(), bins.end(),
-                         []( bin_t a, bin_t b )
-            {
-                if( theWorld.myfOneBin )
-                    return a->getLocationHeight() < b->getLocationHeight();
-                else
-                    return a->volume() < b->volume();
-            });
+            /*
+             sort unused spaces and empty bins
+             into order to try fitting the item into
+            */
 
-            for( auto member : bins )
-            {
-                cout << member->Root( member )->id() << " ";
-            }
-            cout << "\n";
+            Sort( bins );
+
+            // loop over bins until a fit is found
 
             bool is_bin_found = false;
             int bin_found_index = 0;
@@ -128,10 +155,17 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
         }
 
-        // delete unused extra bins
-        ref_bins.erase( remove_if( ref_bins.begin(), ref_bins.end(),
-                                   functors::IsUnusedExtraBin ),
-                        ref_bins.end() );
+        // delete unused bins
+
+        ref_bins.erase(
+            remove_if(
+                ref_bins.begin(),
+                ref_bins.end(),
+                [ ] ( bin_t b )
+        {
+            return b->itemsInBinCount() == 0;
+        } ),
+        ref_bins.end() );
 
     }
 
