@@ -67,7 +67,7 @@ TEST( Bin3DQuantity1 )
 {
 
     char *bins = "0:ft:1:2x2x1:100";
-    char *items = "0:ft:0:125:1x1x1:1";
+    char *items = "0:ft:0:4:1x1x1:1";
 
     cWorld W;
     W.Build( bins, items );
@@ -76,7 +76,7 @@ TEST( Bin3DQuantity1 )
     CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
 
     bins = "0:ft:1:2x2x2:100";
-    items = "0:ft:0:125:1x1x1:1";
+    items = "0:ft:0:8:1x1x1:1";
 
     W.Clear();
     W.Build( bins, items );
@@ -109,11 +109,12 @@ TEST( BinQuantityEndless )
     char* items = "0:ft:0:125:1x1x1:1";
 
     cWorld W;
+    W.myfOneBin = false;
     W.Build( bins, items );
     W.Pack();
-    CHECK_EQUAL( 32, W.Bins.size() );
-    CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
-    CHECK_EQUAL( 4, W.Bins[1]->itemsInBinCount() );
+    CHECK_EQUAL( 16, W.Bins.size() );
+    CHECK_EQUAL( 8, W.Bins[0]->itemsInBinCount() );
+    CHECK_EQUAL( 8, W.Bins[1]->itemsInBinCount() );
 
 
 }

@@ -814,8 +814,11 @@ bool BoxPacker3D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
         // we have a merge candidate
         // bin->Print();
 
+        // try merging along length
         if( newbin->side_1()->size() == bin->side_1()->size() &&
-                newbin->side_2()->size() == bin->side_2()->size() )
+                newbin->side_2()->size() == bin->side_2()->size() &&
+                newbin->getLocationWidth() == bin->getLocationWidth() &&
+                newbin->getLocationHeight() == bin->getLocationHeight()  )
         {
             if( newbin->getLocationLength() + newbin->side_3()->size() ==
                     bin->getLocationLength() )
@@ -834,7 +837,10 @@ bool BoxPacker3D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             }
         }
         if( newbin->side_1()->size() == bin->side_1()->size() &&
-                newbin->side_3()->size() == bin->side_3()->size() )
+                newbin->side_3()->size() == bin->side_3()->size() &&
+                newbin->getLocationWidth() == bin->getLocationWidth() &&
+                newbin->getLocationLength() == bin->getLocationLength()  )
+
         {
             if( newbin->getLocationHeight() + newbin->side_2()->size() ==
                     bin->getLocationHeight() )
@@ -853,7 +859,10 @@ bool BoxPacker3D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             }
         }
         if( newbin->side_2()->size() == bin->side_2()->size() &&
-                newbin->side_3()->size() == bin->side_3()->size() )
+                newbin->side_3()->size() == bin->side_3()->size() &&
+                newbin->getLocationLength() == bin->getLocationLength() &&
+                newbin->getLocationHeight() == bin->getLocationHeight()  )
+
         {
             if( newbin->getLocationWidth() + newbin->side_1()->size() ==
                     bin->getLocationWidth() )
