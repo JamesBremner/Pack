@@ -98,6 +98,7 @@ bool ParseNewOptions( int argc, char *argv[],
     ("items",po::value<std::string>(),"item sizes (format: {id}:{dim_unit}:{constraints}:{quantity}:{size1}x{size2}x{size3}) comma dil multiple" )
     ("o", po::value<std::string>(), "output file. the output (json) are written to this file.  prints to stdo if left out")
     ("onebin",po::bool_switch( &theWorld.myfOneBin ),"Pack all items into one bin")
+    ("random",po::bool_switch( &theWorld.myfRandom ),"Disable heuristics, use random pack")
     ;
 
     // parse the command line

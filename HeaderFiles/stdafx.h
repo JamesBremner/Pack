@@ -11,6 +11,8 @@
 #include <functional>
 #include <sstream>
 #include <memory>
+#include <random>
+#include <chrono>
 
 class Bin;
    using bin_t = std::shared_ptr< Bin >;

@@ -25,6 +25,7 @@ public:
     /// Construct a new empty world
     cWorld()
         : Dimension( 0 )
+        , myfRandom( false )
     {
     }
     /**  Build world from input strings
@@ -64,6 +65,9 @@ public:
 
     /// True if user wants all items packed into one bin
     bool myfOneBin;
+
+    /// True if user wants to disable heuristics and do a random pack
+    bool myfRandom;
 
 private:
     int BuildBins(  vector<string>& bin_v );

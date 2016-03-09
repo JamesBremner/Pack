@@ -68,12 +68,23 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
     items[0]->ClearPackSeq();
 
-    // pack items starting with largest
-    sort( items.begin(), items.end(),
-          []( item_t a, item_t b )
+    if( ! theWorld.myfRandom )
     {
-        return a->volume() > b->volume();
-    });
+        // pack items starting with largest
+        sort( items.begin(), items.end(),
+              []( item_t a, item_t b )
+        {
+            return a->volume() > b->volume();
+        });
+    }
+    else
+    {
+        // randomize
+        std::default_random_engine engine
+        {
+            std::chrono::system_clock::now().time_since_epoch().count() };
+        std::shuffle(items.begin(), items.end(), engine);
+    }
 
     // three passes, one for each positional constraint
     for( int kPositionPass = 0; kPositionPass < 3; kPositionPass++ )
@@ -164,7 +175,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 [ ] ( bin_t b )
         {
             return (int)b->id().find("_cpy") != -1 &&
-             b->itemsInBinCount() == 0 ;
+                   b->itemsInBinCount() == 0 ;
         } ),
         ref_bins.end() );
 
