@@ -246,8 +246,11 @@ string cWorld::getCSV()
     return s;
 }
 
-string cWorld::getSTL()
+void cWorld::getSTL()
 {
+    if( myfRandom )
+        return;
+
     string s;
     int offset = 0;
     for( auto& b : Bins )
@@ -255,7 +258,10 @@ string cWorld::getSTL()
         s += b->getSTL( offset );
         offset += 400;
     }
-    return s;
+
+    ofstream filestl("packit4me2.stl");
+    filestl << s;
+    filestl.close();
 }
 
 int cWorld::BuildBins( vector<string>& bin_v )

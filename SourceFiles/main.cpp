@@ -232,10 +232,7 @@ int main(int argc, char *argv[])
 //    filecsv.close();
 
 
-    string stl = theWorld.getSTL();
-    ofstream filestl("packit4me2.stl");
-    filestl << stl;
-    filestl.close();
+    theWorld.getSTL();
 
     return 0;
 }

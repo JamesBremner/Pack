@@ -56,7 +56,7 @@ public:
     http://www.fabbers.com/tech/STL_Format
 
     */
-    string getSTL();
+    void getSTL();
 
     /// Convert feet, cm or m into inches
     static float DimensionUnitScale( const string& unit_string );
