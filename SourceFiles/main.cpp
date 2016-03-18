@@ -92,11 +92,14 @@ bool ParseNewOptions( int argc, char *argv[],
     po::options_description desc("Allowed options");
     desc.add_options()
     ("help", "produce help message")
-    ("original",po::value<std::string>(),"Using original command line options")
-    ("bins", po::value<std::string>(),"bin sizes (format: {id}::{dim_unit}:{quantity}:{size1}x{size2}x{size3}). comma dil multiple\n"
-     "A quantity of -1 indicates an endless supply of bins")
-    ("items",po::value<std::string>(),"item sizes (format: {id}:{dim_unit}:{constraints}:{quantity}:{size1}x{size2}x{size3}) comma dil multiple" )
-    ("o", po::value<std::string>(), "output file. the output (json) are written to this file.  prints to stdo if left out")
+    ("original",po::value<std::string>(),"Using original command line options\n")
+    ("bins", po::value<std::string>(),"bin specification. Comma separate multiple bins. format:\n"
+        "{id}:{unit}:{quantity}:{size1}x{size2}x{size3}:{weight}\n"
+        "unit can be in, ft, or cm\n"
+        "A quantity of -1 indicates an endless supply of bins\n")
+    ("items",po::value<std::string>(),"item specification. Comma separate multiple items. format:\n"
+        "{id}:{unit}:{constraints}:{quantity}:{size1}x{size2}x{size3}:{weight}\n" )
+    ("o", po::value<std::string>(), "output file. the output (json) are written to this file.  prints to stdout if left out")
     ("onebin",po::bool_switch( &theWorld.myfOneBin ),"Pack all items into one bin")
     ("random",po::bool_switch( &theWorld.myfRandom ),"Disable heuristics, use random pack")
     ;
