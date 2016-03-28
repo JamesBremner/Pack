@@ -42,7 +42,7 @@
 			<Add directory="HeaderFiles" />
 		</Compiler>
 		<Linker>
-			<Add library="boost_program_options-mgw48-mt-1_59" />
+			<Add library="boost_program_options-mgw49-mt-1_60" />
 			<Add directory="$(#boost.lib)" />
 		</Linker>
 		<Unit filename="HeaderFiles/Bin.h" />

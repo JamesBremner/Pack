@@ -106,9 +106,19 @@ bool ParseNewOptions( int argc, char *argv[],
 
     // parse the command line
     po::variables_map vm;
+    try {
+
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
+    }
+    catch ( std::exception& e )
+    {
+        cout <<"\n" << e.what() << endl;
+        cout <<"\n" << desc << "\n";
+        Utils::displayHelp();
+        exit(1);
 
+    }
     if( vm.count("original"))
     {
         vector< string > av;
