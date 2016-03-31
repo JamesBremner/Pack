@@ -2,14 +2,20 @@
 
 int Shape::lastID = 0;
 
-Shape::Shape() {
+Shape::Shape()
+    : myWLocation( 0 )
+    , myHLocation( 0 )
+    , myLLocation( 0 )
+{
     myID = lastID++;
 }
 
-Shape::Shape(const Shape& orig) {
+Shape::Shape(const Shape& orig)
+{
 }
 
-Shape::~Shape() {
+Shape::~Shape()
+{
 }
 
 
