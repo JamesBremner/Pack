@@ -79,7 +79,12 @@ void cWorld::Pack()
         */
         if( ( ! Bins.size() ) && fOneBin_saved )
         {
-            throw std::runtime_error("No bin capable of holding all items");
+            myError = "No bin capable of holding all items";
+
+            // Do the best we can
+            // by packing as much as possible into the largest bin
+            Bins = BinsOriginal;
+            RemoveAllButLargestBin();
         }
 
         if( Bins.size() )
@@ -188,7 +193,15 @@ void cWorld::Pack()
 string cWorld::getJson()
 {
     stringstream jsonStr;
-    jsonStr << "{\"packed\":[";
+    if( myError.length() )
+    {
+        jsonStr << "{\"error\":\"" << myError << "\",\n";
+    }
+    else
+    {
+        jsonStr << "{";
+    }
+    jsonStr << "\"packed\":[";
     for( unsigned i=0; i < Bins.size(); ++i )
     {
         Bins[i]->encodeAsJSON(jsonStr, false);
@@ -495,6 +508,17 @@ void cWorld::RemoveSmallestBin()
     sort(Bins.begin(), Bins.end(), Utils::compareAscShape);
 
     Bins.erase( Bins.begin() );
+}
+
+void cWorld::RemoveAllButLargestBin()
+{
+    if( Bins.size() <= 1 )
+        return;
+    sort( Bins.begin(), Bins.end(), Utils::compareAscShape);
+    auto iter_last_but_one = Bins.end();
+    iter_last_but_one--;
+    iter_last_but_one--;
+    Bins.erase( Bins.begin(), iter_last_but_one );
 }
 
 int cWorld::CountBinsUsed()

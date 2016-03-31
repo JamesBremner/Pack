@@ -70,12 +70,15 @@ public:
     bool myfRandom;
 
 private:
+    std::string myError;
+
     int BuildBins(  vector<string>& bin_v );
     int BuildItems(  vector<string>& item_v );
     bool isDimError( int dim );
     void RemoveBinsTooSmallForAllItems();
     void RemoveSmallestBin();
     void RemoveBinsTooLightForAllItems();
+    void RemoveAllButLargestBin();
     bin_t SmallestBinForAllItems();
     int CountBinsUsed();
 };

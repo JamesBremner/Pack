@@ -215,11 +215,14 @@ int main(int argc, char *argv[])
     string cutlist_s = theWorld.getCutList();
     string csv = theWorld.getCSV();
 
-    if 	( json_s.find("error") != string::npos )
-    {
-        cout << json_s << endl;
-        return 1;
-    }
+//    if 	( json_s.find("error") != string::npos )
+//    {
+//        if( myError != "No bin capable of holding all items" )
+//        {
+//            cout << json_s << endl;
+//            return 1;
+//        }
+//    }
 
 
     if ( ! out_file.length() )
