@@ -9,30 +9,48 @@
 
 
 
-Bin::Bin():Shape2D() {
+Bin::Bin():Shape2D()
+{
 
-    parent_bin_ = NULL;
     item_ = NULL;
 }
 
-Bin::Bin(const Bin& orig) {
+Bin::Bin(const Bin& orig)
+{
 
     Shape2D();
 }
 
-Bin::~Bin() {
+Bin::~Bin()
+{
 
 
 }
 
 void Bin::set_parent_bin(bin_t value)
 {
-    parent_bin_ = value;
+    myParentBin = value;
 };
 
 bin_t Bin::parent_bin()
 {
-    return parent_bin_;
+    if( myParentBin )
+        return myParentBin;
+    else
+        return shared_from_this();
+}
+
+void Bin::set_original_parent_bin( bin_t value )
+{
+    myOriginalParentBin = value;
+}
+
+bin_t Bin::original_parent_bin()
+{
+    if( myOriginalParentBin )
+        return myOriginalParentBin;
+    else
+        return shared_from_this();
 }
 
 void Bin:: set_item ( item_t item )
@@ -101,10 +119,7 @@ double Bin:: adjBinSpaceUsed( )
 
 bin_t Bin::Root( bin_t bin )
 {
-    if(bin->parent_bin() != NULL)
-        return Root( bin->parent_bin() );
-    else
-        return bin;
+    return original_parent_bin();
 
 }
 
@@ -113,8 +128,8 @@ bin_t Bin::Root( bin_t bin )
 void Bin::Print()
 {
     cout << "Bin " << id() << " " << progid()
-        << " sides " << side_1()->size() <<" " << side_2()->size() <<" "<< side_3()->size()
-        << endl;
+         << " sides " << side_1()->size() <<" " << side_2()->size() <<" "<< side_3()->size()
+         << endl;
 }
 
 
