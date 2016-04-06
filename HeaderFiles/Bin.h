@@ -30,11 +30,16 @@ public:
     Bin(const Bin& orig);
     virtual ~Bin();
 
+    /** Will item fit geometrically into bin */
     virtual bool Fit( item_t item ) { return false; }
 
+    /** Can bin take weight of another item */
+    virtual bool FitWeight( item_t item ) { return false; };
 
     bin_t parent_bin();
+    bin_t original_parent_bin();
     void set_parent_bin( bin_t value );
+    void set_original_parent_bin( bin_t value );
     void set_item ( item_t item2D );
     virtual bin_t Root( bin_t bin );
 
@@ -125,7 +130,8 @@ public:
 protected:
 
 
-    bin_t parent_bin_;
+    bin_t myParentBin;
+    bin_t myOriginalParentBin;
     bin_t y_sub_bin_;
     bin_t x_sub_bin_;
     bin_t z_sub_bin_;

@@ -96,7 +96,8 @@ bool ParseNewOptions( int argc, char *argv[],
     ("bins", po::value<std::string>(),"bin specification. Comma separate multiple bins. format:\n"
         "{id}:{unit}:{quantity}:{size1}x{size2}x{size3}:{weight}\n"
         "unit can be in, ft, or cm\n"
-        "A quantity of -1 indicates an endless supply of bins\n")
+        "A quantity of -1 indicates an endless supply of bins\n"
+        "A weight of 0 indicates ignore weight constraints\n")
     ("items",po::value<std::string>(),"item specification. Comma separate multiple items. format:\n"
         "{id}:{unit}:{constraints}:{quantity}:{size1}x{size2}x{size3}:{weight}\n" )
     ("o", po::value<std::string>(), "output file. the output (json) are written to this file.  prints to stdout if left out")

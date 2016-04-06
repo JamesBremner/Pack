@@ -49,6 +49,8 @@ protected:
 */
    bool merger( bin_t packbin, bin_t newbin, bin_v_t &bins );
 
+   void Split( bin_t sub_bin, bin_t bin );
+
 };
 
 #endif	/* BOXPACKER3D_H */

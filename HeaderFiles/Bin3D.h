@@ -14,6 +14,7 @@ class Bin3D : public Bin1D, public Bin2D, public Shape3D
 
 public:
     Bin3D();
+
     Bin3D(const Bin3D& orig);
 
 	Bin * CreateNewEmptyCopy();
@@ -47,6 +48,7 @@ public:
     double remSpaceAvail();
 
     bool Fit( item_t item );
+    bool FitWeight( item_t item );
 
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
     string getCSV();

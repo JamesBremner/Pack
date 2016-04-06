@@ -236,6 +236,25 @@ bool Bin3D::Fit( item_t item )
     return true;
 }
 
+bool Bin3D::FitWeight( item_t item )
+{
+    //cout << "FitWeight " << progid() <<" "<< original_parent_bin()->progid() << "\n";
+
+    if( original_parent_bin()->MaxWeight() <= 0 )
+        return true;
+
+    float curWeight = 0;
+    item_v_t items;
+    original_parent_bin()->itemsInBin( items );
+    for( auto i : items )
+        curWeight += i->Weight();
+    if( curWeight + item->Weight() > original_parent_bin()->MaxWeight() )
+        return false;
+
+    return true;
+
+}
+
 string Bin3D::getCSV()
 {
     stringstream s;

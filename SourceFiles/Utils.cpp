@@ -46,7 +46,7 @@ void Utils::displayHelp()
 	cout << "Copyright (C) 2015 by James Bremner under MIT license" << endl << endl;
 	cout << "use: packit4me [options] " << "example: packit4me -b 0:ft:1:5x5x5 -i 0:ft:0:1:1x1x1 -s b -o result" << endl << endl;
 	cout << "\t-b\t- bin or bins size (format: {id}::{dim_unit}:{quantity}:{size1}x{size2}x{size3}). comma dil multiple" << endl;
-	cout << "\t\t A quantity of -1 indicates an endless supply of bins" << endl << endl;
+	cout << "\t\t A quantity of -1 indicates an endless supply of bins xxxx" << endl << endl;
 	cout << "\t-i\t- item or items size (format: {id}:{dim_unit}:{constraints}:{quantity}:{size1}x{size2}x{size3}) comma dil multiple" << endl << endl;
 	cout << "\t-s\t- shape. Either 'b' for box or 't' for any tube or round" << endl << endl;
 	cout << "\t-o\t- output file. the output (json) are written to this file.  prints to stdo if left out" << endl << endl;

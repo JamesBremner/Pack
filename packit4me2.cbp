@@ -35,6 +35,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-march=i686" />
 			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
