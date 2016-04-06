@@ -36,10 +36,12 @@ public:
     /** Can bin take weight of another item */
     virtual bool FitWeight( item_t item ) { return false; };
 
+    bool HasParent();
     bin_t parent_bin();
     bin_t original_parent_bin();
     void set_parent_bin( bin_t value );
     void set_original_parent_bin( bin_t value );
+
     void set_item ( item_t item2D );
     virtual bin_t Root( bin_t bin );
 

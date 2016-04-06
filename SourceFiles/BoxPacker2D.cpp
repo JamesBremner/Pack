@@ -144,7 +144,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 bin_t used = *(bins.begin() + bin_found_index);
                 bins.erase( bins.begin() + bin_found_index );
 
-                if( ! used->parent_bin() )
+                if( ! used->HasParent() )
                 {
                     // about to pack an item in an unused bin
                     if( used->CanCopy() )

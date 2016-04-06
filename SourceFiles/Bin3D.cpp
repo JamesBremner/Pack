@@ -47,6 +47,8 @@ Bin * Bin3D::CreateNewEmptyCopy()
     snprintf(buf,19,"%9f",side_3_->size() );
     instructions.size_v.push_back( string( buf ) );
 
+    instructions.maxWeight=myMaxWeight;
+
     // we should always be using the defaultyunits internally
     instructions.dimension_units = "in";
 

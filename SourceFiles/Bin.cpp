@@ -39,6 +39,10 @@ bin_t Bin::parent_bin()
     else
         return shared_from_this();
 }
+bool Bin::HasParent()
+{
+    return (bool)myParentBin;
+}
 
 void Bin::set_original_parent_bin( bin_t value )
 {
