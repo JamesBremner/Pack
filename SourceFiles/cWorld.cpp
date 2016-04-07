@@ -160,7 +160,7 @@ void cWorld::Pack()
             // one bin packing failed
             // but it was not explicitly requested
             // so try packing into multiple bins
-            cout << "Trying multiple bins\n";
+            //cout << "Trying multiple bins\n";
             myfOneBin = false;
             Bins = BinsOriginal;
             myUnpackedItems.clear();

@@ -116,21 +116,36 @@ TEST( BinQuantityEndless )
     CHECK_EQUAL( 8, W.Bins[0]->itemsInBinCount() );
     CHECK_EQUAL( 8, W.Bins[1]->itemsInBinCount() );
 
-
 }
 
-TEST( Defragment )
+TEST( weight )
 {
-    char* bins = "0:ft:0:3x3:100";
-    char* items = "0:ft:0:125:1x2:1";
+
+    char* bins = "0:ft:1:2x2x2:7";
+    char* items = "0:ft:0:125:1x1x1:1";
 
     cWorld W;
+    W.myfOneBin = false;
     W.Build( bins, items );
     W.Pack();
     CHECK_EQUAL( 1, W.Bins.size() );
-    CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
+    CHECK_EQUAL( 7, W.Bins[0]->itemsInBinCount() );
 
 }
+
+//
+//TEST( Defragment )
+//{
+//    char* bins = "0:ft:0:3x3:100";
+//    char* items = "0:ft:0:125:1x2:1";
+//
+//    cWorld W;
+//    W.Build( bins, items );
+//    W.Pack();
+//    CHECK_EQUAL( 1, W.Bins.size() );
+//    CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
+//
+//}
 
 TEST( CutList )
 {
@@ -162,7 +177,7 @@ TEST( BinCutList )
     W.Bins[0]->CreateCutList( L );
     CHECK_EQUAL( 4, L.size());
 
-    cout << L.get();
+   // cout << L.get();
 
 }
 TEST( BinCutList2 )
@@ -177,7 +192,7 @@ TEST( BinCutList2 )
     W.Bins[0]->CreateCutList( L );
     CHECK_EQUAL( 5, L.size());
 
-    cout << L.get();
+    //cout << L.get();
 
 }
 
