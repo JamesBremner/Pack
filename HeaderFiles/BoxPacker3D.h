@@ -15,10 +15,6 @@ public:
 
 
 
-    BoxPacker3D();
-    BoxPacker3D(const BoxPacker3D& orig);
-    virtual ~BoxPacker3D();
-
     bool packIt( bin_t bin,  item_t item, bin_v_t &bins );
 
 
@@ -29,13 +25,6 @@ public:
 
 protected:
 
-
-    bool checkFitsConstrWidth(Bin *bin, Item *item, vector<Bin*> &bins);
-    bool checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins);
-    bool checkFitsConstrLength(Bin *bin, Item *item, vector<Bin*> &bins);
-    bool checkFitsConstrWidthHeight(Bin *bin, Item *item, vector<Bin*> &bins);
-    bool checkFitsConstrWidthLength(Bin *bin, Item *item, vector<Bin*> &bins);
-    bool checkFitsConstrHeightLength(Bin *bin, Item *item, vector<Bin*> &bins);
     bool checkFitsNoConstr(bin_t bin,  item_t item, bin_v_t &bins );
     map<string, double> findSubBinSizes( bin_t bin, item_t item);
 

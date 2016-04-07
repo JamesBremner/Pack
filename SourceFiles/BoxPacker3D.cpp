@@ -6,17 +6,17 @@
 
 using namespace std;
 
-BoxPacker3D::BoxPacker3D()
-{
-}
-
-BoxPacker3D::BoxPacker3D(const BoxPacker3D& orig)
-{
-}
-
-BoxPacker3D::~BoxPacker3D()
-{
-}
+//BoxPacker3D::BoxPacker3D()
+//{
+//}
+//
+//BoxPacker3D::BoxPacker3D(const BoxPacker3D& orig)
+//{
+//}
+//
+//BoxPacker3D::~BoxPacker3D()
+//{
+//}
 
 
 bool BoxPacker3D::packIt( bin_t bin,  item_t item, bin_v_t &bins)
@@ -145,186 +145,6 @@ void BoxPacker3D::splitBinLength(bin_t bin, item_t item)
         bin->set_z_sub_bin(sub_binZ);
 
     }
-
-}
-
-bool BoxPacker3D::checkFitsConstrWidth( Bin* bin, Item *item, vector<Bin*> &bins)
-{
-//    Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
-//    Item3D *item3d = (Item3D*) item;
-//
-//
-//    if (bin3d->side_2()->size() < bin3d->side_3()->size()) {
-//
-//        Side *tmps;
-//        tmps = bin3d->side_2();
-//        bin3d->set_side_2(bin3d->side_3());
-//        bin3d->set_side_3(tmps);
-//    }
-//
-//
-//    if (item3d->side_2()->size() < item3d->side_3()->size()) {
-//
-//        Side *tmps;
-//        tmps = item3d->side_2();
-//        item3d->set_side_2(item3d->side_3());
-//        item3d->set_side_3(tmps);
-//    }
-//
-//         Split( sub_binZ, bin );
-//    if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
-//            item3d->side_2()->size() <= bin3d->side_2()->size() &&
-//            item3d->side_3()->size() <= bin3d->side_3()->size()) {
-//
-//        bin->set_item(item);
-//
-//        //if it fits split item and recurse
-//        splitBinWidth(bin, item);
-//        splitBinHeight(bin, item);
-//        splitBinLength(bin, item);
-//
-//
-//
-//        if (bin3d->x_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->x_sub_bin());
-//
-//        }
-//        if (bin3d->y_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->y_sub_bin());
-//        }
-//        if (bin3d->z_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->z_sub_bin());
-//        }
-//
-//        return true;
-//
-//    }
-
-    return false;
-
-}
-
-bool BoxPacker3D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins)
-{
-//    Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
-//    Item3D *item3d = (Item3D*) item;
-//
-//
-//    if (bin3d->side_1()->size() < bin3d->side_3()->size()) {
-//
-//        Side *tmps;
-//        tmps = bin3d->side_1();
-//        bin3d->set_side_1(bin3d->side_3());
-//        bin3d->set_side_3(tmps);
-//    }
-//
-//
-//
-//    if (item3d->side_1()->size() < item3d->side_3()->size()) {
-//
-//        Side *tmps;
-//        tmps = item3d->side_1();
-//        item3d->set_side_1(item3d->side_3());
-//        item3d->set_side_3(tmps);
-//    }
-//
-//
-//
-//    if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
-//            item3d->side_2()->size() <= bin3d->side_2()->size() &&
-//            item3d->side_3()->size() <= bin3d->side_3()->size()) {
-//
-//        bin->set_item(item);
-//
-//        //if it fits split item and recurse
-//        splitBinWidth(bin, item);
-//        splitBinHeight(bin, item);
-//        splitBinLength(bin, item);
-//
-//        //Bin2D * bin2d = dynamic_cast<Bin2D*> (bin);
-//
-//        if (bin3d->x_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->x_sub_bin());
-//
-//        }
-//        if (bin3d->y_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->y_sub_bin());
-//        }
-//        if (bin3d->z_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->z_sub_bin());
-//        }
-//
-//        return true;
-//
-//    }
-
-    return false;
-
-}
-
-bool BoxPacker3D::checkFitsConstrLength(Bin *bin, Item *item, vector<Bin*> &bins)
-{
-//    Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
-//    Item3D *item3d = (Item3D*) item;
-//
-//    //sort both bin and item
-//    if (bin3d->side_1()->size() < bin3d->side_2()->size()) {
-//
-//        Side *tmps;
-//        tmps = bin3d->side_1();
-//        bin3d->set_side_1(bin3d->side_2());
-//        bin3d->set_side_2(tmps);
-//    }
-//
-//
-//    if (item3d->side_1()->size() < item3d->side_2()->size()) {
-//
-//        Side *tmps;
-//        tmps = item3d->side_1();
-//        item3d->set_side_1(item3d->side_2());
-//        item3d->set_side_2(tmps);
-//    }
-//
-//
-//    if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
-//            item3d->side_2()->size() <= bin3d->side_2()->size() &&
-//            item3d->side_3()->size() <= bin3d->side_3()->size()) {
-//
-//        bin->set_item(item);
-//
-//        //if it fits split item and recurse
-//        splitBinWidth(bin, item);
-//        splitBinHeight(bin, item);
-//        splitBinLength(bin, item);
-//
-//        //Bin2D * bin2d = dynamic_cast<Bin2D*> (bin);
-//
-//        if (bin3d->x_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->x_sub_bin());
-//
-//        }
-//        if (bin3d->y_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->y_sub_bin());
-//        }
-//        if (bin3d->z_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->z_sub_bin());
-//        }
-//
-//
-//        return true;
-//
-//    }
-//
-    return false;
 
 }
 
@@ -597,95 +417,7 @@ bool BoxPacker3D::checkFitsNoConstr( bin_t bin,  item_t item, bin_v_t &bins )
 
 }
 
-bool BoxPacker3D::checkFitsConstrWidthHeight(Bin *bin, Item *item, vector<Bin*> &bins)
-{
-//    Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
-//    Item3D *item3d = (Item3D*) item;
-//
-//    if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
-//            item3d->side_2()->size() <= bin3d->side_2()->size() &&
-//            item3d->side_3()->size() <= bin3d->side_3()->size()) {
-//
-//        bin->set_item(item);
-//
-//        //if it fits split item and recurse
-//        splitBinWidth(bin, item);
-//        splitBinHeight(bin, item);
-//        splitBinLength(bin, item);
-//
-//
-//        if (bin3d->z_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->z_sub_bin());
-//        }
-//
-//        return true;
-//
-//    }
-//
-    return false;
 
-}
-
-bool BoxPacker3D::checkFitsConstrWidthLength(Bin *bin, Item *item, vector<Bin*> &bins)
-{
-//    Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
-//    Item3D *item3d = (Item3D*) item;
-//
-//    if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
-//            item3d->side_2()->size() <= bin3d->side_2()->size() &&
-//            item3d->side_3()->size() <= bin3d->side_3()->size()) {
-//
-//        bin->set_item(item);
-//
-//        //if it fits split item and recurse
-//        splitBinWidth(bin, item);
-//        splitBinHeight(bin, item);
-//        splitBinLength(bin, item);
-//
-//
-//        if (bin3d->y_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->y_sub_bin());
-//        }
-//
-//        return true;
-//
-//    }
-
-    return false;
-
-}
-
-bool BoxPacker3D::checkFitsConstrHeightLength(Bin *bin, Item *item, vector<Bin*> &bins)
-{
-//    Bin3D * bin3d = dynamic_cast<Bin3D*> (bin);
-//    Item3D *item3d = (Item3D*) item;
-//
-//    if (item3d->side_1()->size() <= bin3d->side_1()->size() &&
-//            item3d->side_2()->size() <= bin3d->side_2()->size() &&
-//            item3d->side_3()->size() <= bin3d->side_3()->size()) {
-//
-//        bin->set_item(item);
-//
-//        //if it fits split item and recurse
-//        splitBinWidth(bin, item);
-//        splitBinHeight(bin, item);
-//        splitBinLength(bin, item);
-//
-//
-//        if (bin3d->x_sub_bin() != NULL) {
-//
-//            bins.push_back(bin3d->x_sub_bin());
-//        }
-//
-//        return true;
-//
-//    }
-
-    return false;
-
-}
 
 map<string, double> BoxPacker3D::findSubBinSizes( bin_t bin, item_t item)
 {
