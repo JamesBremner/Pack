@@ -81,8 +81,8 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
     {
         // randomize
         std::default_random_engine engine
-        {
-            std::chrono::system_clock::now().time_since_epoch().count() };
+        (
+            std::chrono::system_clock::now().time_since_epoch().count() );
         std::shuffle(items.begin(), items.end(), engine);
     }
 
