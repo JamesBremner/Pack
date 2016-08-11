@@ -269,7 +269,7 @@ void cWorld::getSTL()
     for( auto& b : Bins )
     {
         s += b->getSTL( offset );
-        offset += 400;
+        offset += b->side_1()->size() * 1.5;
     }
 
     ofstream filestl("packit4me2.stl");
