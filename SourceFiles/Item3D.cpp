@@ -126,7 +126,7 @@ bool Item3D::IsAboveBelow( item_t other )
     double ow1 = other->getWLocation();
     double ow2 = ow1 + other->side_1()->size() - 1;
     double ol1 = other->getLLocation();
-    double ol2 = ow2 + other->side_3()->size() - 1;
+    double ol2 = ol1 + other->side_3()->size() - 1;
 
 
 //    cout << mw1 <<" "<< mw2 <<" "<< ml1 <<" "<< ml2 <<"\n"<<
