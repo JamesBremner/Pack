@@ -269,6 +269,27 @@ TEST( OverlapArea )
      CHECK_CLOSE( i3->AreaWidthLength() / 2, i3->OverlapArea( i2 ), 0.1 );
 
 }
+
+TEST(AboveBelowBug)
+{
+	std::shared_ptr<Item> i1(new Item3D());
+	i1->set_side_1(new Side(1, 'w'));
+	i1->set_side_2(new Side(2, 'h'));
+	i1->set_side_3(new Side(3, 'l'));
+	i1->setWLocation(0);
+	i1->setHLocation(0);
+	i1->setLLocation(7);
+	std::shared_ptr<Item> i2(new Item3D());
+	i2->set_side_1(new Side(1, 'w'));
+	i2->set_side_2(new Side(2, 'h'));
+	i2->set_side_3(new Side(3, 'l'));
+	i2->setWLocation(0);
+	i2->setHLocation(200);
+	i2->setLLocation(5);
+
+	CHECK(i1->IsAboveBelow(i2));
+}
+
 int main(int argc, char *argv[])
 {
     return raven::set::UnitTest::RunAllTests();
