@@ -31,6 +31,19 @@ I have modified the modified Sharif's code to:
 - optional limit to exactly one bin
 - positional constraints
 
+
+An approximation algorithmis used, called first-fit decreasing
+(FFD). The elements are sorted in decreasing order of
+size, and the bins are kept in a fixed order. Each element
+is placed into the first bin that it fits into, without exceeding
+the bin capacity. How good is the approximation?  The algorithm is guaranteed
+to return a solution that uses no more than 11/9 of the optimal number of bins
+(Johnson 1973).  For example, on problems of 90 items, where
+the items are uniformly distributed from zero to one million,
+and the bin capacity is one million, the algorith uses an average
+of 47.732 bins. On these same problem instances, the optimal solution
+averages 47.680 bins. The FFD solution is optimal 94.694%
+of the time on these problem instances. (Korf 2002 http://www.aaai.org/Papers/AAAI/2002/AAAI02-110.pdf)
 ------------------------------------------------------------------------------------------------
 
 
