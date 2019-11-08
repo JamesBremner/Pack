@@ -72,3 +72,52 @@ void Item2D::AddToCutList( cCutList& l )
            ));
 }
 
+void Item2D::DrawList( std::stringstream& ss )
+{
+    const float scale = 4;
+    int left = getWLocation() / scale;
+    int top  = getHLocation() / scale;
+    int w, h;
+    if( ! SpinAxis() )
+    {
+        w = side_1()->size();
+        h = side_2()->size();
+    }
+    else
+    {
+        w = side_2()->size();
+        h = side_1()->size();
+    }
+    w /= scale;
+    h /= scale;
+
+    ss << "S.rectangle( { "
+       << left <<", "
+       << top << ", "
+       << w << ", "
+       << h << " } );\n";
+    ss << "S.text(\"" << id() <<"\", {"
+       << left+5 <<", "
+       << top+5 <<", 50,30 } );\n";
+//    ss << "S.line( { "
+//        << left <<", "
+//        << top << ", "
+//        << left << ", "
+//        << bottom << " } );\n";
+//    ss << "S.line( { "
+//        << left <<", "
+//        << bottom << ", "
+//        << right << ", "
+//        << bottom << " } );\n";
+//    ss << "S.line( { "
+//        << right <<", "
+//        << bottom << ", "
+//        << right << ", "
+//        << top << " } );\n";
+//    ss << "S.line( { "
+//        << right <<", "
+//        << top << ", "
+//        << left << ", "
+//        << top << " } );\n";
+}
+

@@ -214,6 +214,7 @@ int main(int argc, char *argv[])
 
     string json_s = theWorld.getJson();
     string cutlist_s = theWorld.getCutList();
+    string drawlist_s = theWorld.DrawList();
     string csv = theWorld.getCSV();
 
 //    if 	( json_s.find("error") != string::npos )
@@ -230,6 +231,7 @@ int main(int argc, char *argv[])
     {
         cout << json_s << endl;
         cout << cutlist_s;
+        cout << drawlist_s;
     }
     else
     {
@@ -240,6 +242,7 @@ int main(int argc, char *argv[])
         file << json_s;
         file << endl;
         file << cutlist_s;
+        file << drawlist_s;
         file.close();
 
     }

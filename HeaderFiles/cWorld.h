@@ -47,6 +47,8 @@ public:
 
     string getCutList();
 
+    string DrawList();
+
     string getCSV();
 
     /** STL format packing results
@@ -54,8 +56,8 @@ public:
     This is a 3D graphics format read by many 3D viewers
 
     http://www.fabbers.com/tech/STL_Format
-    
-    There is a specialized STL-Viewer ( https://github.com/JamesBremner/STL-Viewer ) 
+
+    There is a specialized STL-Viewer ( https://github.com/JamesBremner/STL-Viewer )
     which animates the packing when the mousewheel is rotated
     in addition to the usual pan, zoom, etc viewing optiions.
 

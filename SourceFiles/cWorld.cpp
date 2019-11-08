@@ -245,9 +245,21 @@ string cWorld::getCutList()
         cCutList L;
         b->CreateCutList( L );
         ss << L.get();
+        ss << "\n==================\n";
     }
     return ss.str();
 }
+
+string cWorld::DrawList()
+{
+     stringstream ss;
+    for( auto b : Bins )
+    {
+        b->DrawList( ss );
+    }
+    return ss.str();
+}
+
 
 string cWorld::getCSV()
 {
@@ -343,7 +355,7 @@ int cWorld::BuildItems(  vector<string>& item_v )
 
         if( id_item.size() < expected_field_count || id_item.size() > expected_field_count )
         {
-            throw std::runtime_error("Unexpected item field count");
+            throw std::runtime_error("Unexpected item field count "+item_str);
         }
 
         //string item_id = id_item[0];

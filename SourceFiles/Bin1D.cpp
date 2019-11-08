@@ -126,7 +126,9 @@ void Bin1D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
         jsonStr << "{";
         jsonStr << "\"rem_size\": \"" << bins[i]->origSize() << "\",";
         jsonStr << "\"size_1\": " << bins[i]->origSide1()->size() << ",";
-        jsonStr << "\"size_2\": " << bins[i]->origSide2()->size();
+        jsonStr << "\"size_2\": " << bins[i]->origSide2()->size() << ",";
+        jsonStr << "\"W\": " << bins[i]->getLocationWidth() << ",";
+        jsonStr << "\"W\": " << bins[i]->getLocationHeight();
         jsonStr << "}";
 
         if( i != bins.size() - 1)

@@ -92,6 +92,8 @@ public:
     void setSpinLocation( bool s ) { mySpinLocation = s; }
         string getSpin() { return ""; }
     virtual void AddToCutList( cCutList& l ) {}
+    virtual void DrawList( std::stringstream& ss) {}
+
 
     bool IsPacked()
     {
@@ -107,12 +109,12 @@ protected:
     int     myPositionConstraints;
     bool    mySpinLocation;
     float   myWeight;
+    int     myBinProgID;
 
 private:
 
     static int nextPackSeq;
     int     myPackSeq;          // packing sequence number
-    int     myBinProgID;
     int     mySpinAxis;         // zero means in original orientation
     int     mySupport;          // % support by items beneath or the ground
 };

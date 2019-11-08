@@ -32,6 +32,7 @@ public:
     virtual void Dumper();
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
     virtual void CreateCutList( cCutList& l );
+    virtual void DrawList( std::stringstream& ss );
 
     virtual bool operator <( Shape &b);
     virtual bool operator >( Shape &b);

@@ -6,7 +6,8 @@
 #endif
 using namespace std;
 
-Bin2D::Bin2D():Bin() {
+Bin2D::Bin2D():Bin()
+{
 
     x_sub_bin_ = NULL;
     y_sub_bin_ = NULL;
@@ -14,7 +15,8 @@ Bin2D::Bin2D():Bin() {
     myHOffsetFromRoot = 0;
 }
 
-Bin2D::Bin2D(const Bin2D& orig) {
+Bin2D::Bin2D(const Bin2D& orig)
+{
 
 
 }
@@ -63,7 +65,7 @@ void Bin2D:: itemsInBin( item_v_t &items)
 
 void Bin2D:: binRemSpace( bin_v_t &bins)
 {
-     if ( item_ == NULL )
+    if ( item_ == NULL )
         bins.push_back( shared_from_this() );
 
     if ( x_sub_bin_ != NULL )
@@ -107,43 +109,46 @@ void Bin2D:: totalRemSpaceAvailable(double& avail)
 
 Bin * Bin2D::CreateNewEmptyCopy()
 {
-	Bin::bin_build_instructions instructions;
-	char buf[20];
+    Bin::bin_build_instructions instructions;
+    char buf[20];
 
-	// identify this as a new copy
-	string sid = id();
-	int p = sid.find("_cpy");
-	if( p == -1 ) {
-		sid += "_cpy2";
-	} else {
-		int cpy = atoi( sid.substr(p+4).c_str() );
-		snprintf(buf,9,"%d",cpy+1);
-		sid = sid.substr(0,p+4) + buf;
-	}
-	instructions.bin_id = sid;
+    // identify this as a new copy
+    string sid = id();
+    int p = sid.find("_cpy");
+    if( p == -1 )
+    {
+        sid += "_cpy2";
+    }
+    else
+    {
+        int cpy = atoi( sid.substr(p+4).c_str() );
+        snprintf(buf,9,"%d",cpy+1);
+        sid = sid.substr(0,p+4) + buf;
+    }
+    instructions.bin_id = sid;
 
-	// copy the dimensions
-	snprintf(buf,19,"%9f",side_1_->size() );
-	instructions.size_v.push_back( string( buf ) );
-	snprintf(buf,19,"%9f",side_2_->size() );
-	instructions.size_v.push_back( string( buf ) );
+    // copy the dimensions
+    snprintf(buf,19,"%9f",side_1_->size() );
+    instructions.size_v.push_back( string( buf ) );
+    snprintf(buf,19,"%9f",side_2_->size() );
+    instructions.size_v.push_back( string( buf ) );
 
-	// we should always be using the defaultyunits internally
-	instructions.dimension_units = "in";
+    // we should always be using the defaultyunits internally
+    instructions.dimension_units = "in";
 
-	// we would never come here unless we have an endless supply of these
-	instructions.can_copy = true;
+    // we would never come here unless we have an endless supply of these
+    instructions.can_copy = true;
 
-	return Bin::Build( instructions );
+    return Bin::Build( instructions );
 
 }
 
 
-     void Bin2D::Dumper()
-     {
-         cout << progid() << " " << side_1()->size() << "," << side_2()->size() <<
-            " at " << getLocationHeight() << "," << getLocationWidth() << endl;
-     }
+void Bin2D::Dumper()
+{
+    cout << progid() << " " << side_1()->size() << "," << side_2()->size() <<
+         " at " << getLocationHeight() << "," << getLocationWidth() << endl;
+}
 void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 {
     jsonStr << "{\"bin_size\": \"" << origSize() << "\",";
@@ -181,7 +186,9 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
         jsonStr << "{";
         jsonStr << "\"rem_size\": \"" << bins[i]->origSize() << "\",";
         jsonStr << "\"size_1\": " << bins[i]->origSide1()->size() << ",";
-        jsonStr << "\"size_2\": " << bins[i]->origSide2()->size();
+        jsonStr << "\"size_2\": " << bins[i]->origSide2()->size() << ",";
+        jsonStr << "\"W\": " << bins[i]->getLocationWidth() << ",";
+        jsonStr << "\"H\": " << bins[i]->getLocationHeight();
         jsonStr << "}";
 
         if( i != bins.size() - 1)
@@ -228,25 +235,41 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 
 }
 
-     void Bin2D::CreateCutList( cCutList& l )
+void Bin2D::CreateCutList( cCutList& l )
+{
+    l.clear();
+    item_v_t items;
+    itemsInBin(items);
+    for( auto i : items )
     {
-        l.clear();
-        item_v_t items;
-        itemsInBin(items);
-        for( auto i : items )
-        {
-            i->AddToCutList( l );
-        }
-        l.Join();
-
+        i->AddToCutList( l );
     }
+    l.Join();
+
+}
+
+void Bin2D::DrawList( std::stringstream& ss )
+{
+    item_v_t items;
+    itemsInBin(items);
+    ss << "S.color( 0xFF0000 );\n";
+    ss << "S.rectangle( { "
+       << 0 <<", "
+       << 0 << ", "
+       << (int)( side_1()->size() / 4 )  << ", "
+       << (int)(side_2()->size() / 4 ) << " } );\n";
+    ss << "S.color( 0x00FF );\n";
+    for( auto i : items )
+        i->DrawList( ss );
+    ss << "\n===================\n";
+}
 
 bool  Bin2D:: operator <( Shape &b)
 {
     Bin2D *bin = dynamic_cast<Bin2D*>(&b);
 
-	unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
-	unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
+    unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
+    unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
     return u_a < u_b;
 
 
@@ -256,8 +279,8 @@ bool  Bin2D:: operator >( Shape &b)
 {
     Bin2D *bin = dynamic_cast<Bin2D*>(&b);
 
-	unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
-	unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
+    unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
+    unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
     return u_a > u_b;
 
 }
@@ -266,8 +289,8 @@ bool  Bin2D:: operator ==( Shape &b)
 {
     Bin2D *bin = dynamic_cast<Bin2D*>(&b);
 
-	unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
-	unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
+    unsigned u_a = (unsigned) (this->binUtilizationRating() * 1000);
+    unsigned u_b = (unsigned) (bin->binUtilizationRating() * 1000);
     return u_a == u_b;
 
 

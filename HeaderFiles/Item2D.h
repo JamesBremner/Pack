@@ -29,6 +29,7 @@ public:
     return ss.str();
     }
     virtual void AddToCutList( cCutList& l );
+    virtual void DrawList( std::stringstream& ss);
 
 
 private:
