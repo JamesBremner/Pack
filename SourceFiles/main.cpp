@@ -230,7 +230,7 @@ int main(int argc, char *argv[])
     if ( ! out_file.length() )
     {
         cout << json_s << endl;
-        cout << cutlist_s;
+        //cout << cutlist_s;
         cout << drawlist_s;
     }
     else

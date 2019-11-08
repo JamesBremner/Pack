@@ -33,6 +33,7 @@ public:
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
     virtual void CreateCutList( cCutList& l );
     virtual void DrawList( std::stringstream& ss );
+    bool IsUnusedBin();
 
     virtual bool operator <( Shape &b);
     virtual bool operator >( Shape &b);

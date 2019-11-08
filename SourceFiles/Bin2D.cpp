@@ -48,7 +48,7 @@ void Bin2D::set_y_sub_bin( bin_t value)
         x_sub_bin_ = value;
 };
 
-void Bin2D:: itemsInBin( item_v_t &items)
+void Bin2D::itemsInBin( item_v_t &items)
 {
     if ( item_ != NULL)
         items.push_back( item_ );
@@ -59,6 +59,7 @@ void Bin2D:: itemsInBin( item_v_t &items)
     if ( y_sub_bin_ != NULL )
         y_sub_bin_->itemsInBin( items );
 
+    cout << "Bin2D::itemsInBin " << id() <<" " << items.size() << "\n";
 }
 
 
@@ -262,6 +263,12 @@ void Bin2D::DrawList( std::stringstream& ss )
     for( auto i : items )
         i->DrawList( ss );
     ss << "\n===================\n";
+}
+
+bool Bin2D::IsUnusedBin()
+{
+    cout << "bin " << id() << " has " << original_parent_bin()->itemsInBinCount() << "\n";
+    return ( original_parent_bin()->itemsInBinCount() == 0 );
 }
 
 bool  Bin2D:: operator <( Shape &b)

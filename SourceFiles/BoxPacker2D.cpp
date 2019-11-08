@@ -39,6 +39,18 @@ void BoxPacker2D::Sort( bin_v_t& bins )
               then we try the largest unused bin
             */
 
+            bool Aused = ! a->IsUnusedBin();
+            bool Bused = ! b->IsUnusedBin();
+
+            if( ( ! Aused ) && Bused  )
+            {
+                cout << "swap " << a->id() << " " << b->id() << "\n";
+                // move used bin before unused
+                return true;
+            }
+
+            return false;
+
             if( ! a->IsUnusedBin() )
             {
                 if( ! b->IsUnusedBin() )
@@ -54,11 +66,12 @@ void BoxPacker2D::Sort( bin_v_t& bins )
         }
     });
 
-//    for( auto member : bins )
-//    {
-//        cout << member->Root( member )->id() << " ";
-//    }
-//    cout << "\n";
+    cout << "avalable bins: ";
+    for( auto member : bins )
+    {
+        cout << member->id() << " in " << member->Root( member )->id() << ", ";
+    }
+    cout << "\n";
 }
 
 void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
@@ -128,10 +141,10 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             int bin_found_index = 0;
             for( auto member : bins )
             {
-                //cout << "try in "<< member->id() << "\n";
+                cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
                 if ( packIt( member, items[k], bins ) == true)
                 {
-                    //cout << "added item to bin " << member->id() << "\n";
+                    cout << "added item to bin " << member->id() << "\n";
                     is_bin_found = true;
                     break;
                 }
