@@ -101,11 +101,11 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
         std::shuffle(items.begin(), items.end(), engine);
     }
 
-    cout << "packthem items\n";
-    for( auto i : items )
-    {
-        cout << i->id() <<" "<< i->side_1()->size() << " x " << i->side_2()->size() << "\n";
-    }
+//    cout << "packthem items\n";
+//    for( auto i : items )
+//    {
+//        cout << i->id() <<" "<< i->side_1()->size() << " x " << i->side_2()->size() << "\n";
+//    }
 
     // three passes, one for each positional constraint
     for( int kPositionPass = 0; kPositionPass < 3; kPositionPass++ )
@@ -149,10 +149,10 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             int bin_found_index = 0;
             for( auto member : bins )
             {
-                //cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
+               // cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
                 if ( packIt( member, items[k], bins ) == true)
                 {
-                    cout << "added item to bin " << member->id() << "\n";
+                    //cout << "added item to bin " << member->id() << "\n";
                     is_bin_found = true;
                     break;
                 }
@@ -293,30 +293,30 @@ bool BoxPacker2D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
 
 bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
 {
-    if( item->IsSpinAllowed( 1 )) {
+    //if( item->IsSpinAllowed( 1 )) {
 
     //rotate both bin and item so side1 is longer than side2
-    if ( bin->side_1()->size() < bin->side_2()->size() )
-    {
+//    if ( bin->side_1()->size() < bin->side_2()->size() )
+//    {
+//
+//        Side *tmps;
+//        tmps = bin->side_1();
+//        bin->set_side_1( bin->side_2() );
+//        bin->set_side_2( tmps );
+//    }
+//
+//
+//    if ( item->side_1()->size() < item->side_2()->size() )
+//    {
+//        //cout << "item rotating " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
+//        Side *tmps;
+//        tmps = item->side_1();
+//        item->set_side_1( item->side_2() );
+//        item->set_side_2( tmps );
+//        //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
+//    }
 
-        Side *tmps;
-        tmps = bin->side_1();
-        bin->set_side_1( bin->side_2() );
-        bin->set_side_2( tmps );
-    }
-
-
-    if ( item->side_1()->size() < item->side_2()->size() )
-    {
-        //cout << "item rotating " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
-        Side *tmps;
-        tmps = item->side_1();
-        item->set_side_1( item->side_2() );
-        item->set_side_2( tmps );
-        //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
-    }
-
-    }
+    //}
 
     if( item->side_1()->size() <= bin->side_1()->size() && item->side_2()->size() <= bin->side_2()->size() )
     {
@@ -329,11 +329,12 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
         {
             item->setSpinLocation( true );
         }
-        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
-        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
-        //if( bin_rotated ) cout << "bin rotated ";
-        if( item->getSpinLocation()  ) cout << "item rotated ";
-        cout << endl;
+//        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
+//        cout << " "<< bin->side_1()->size() <<" x "<< bin->side_2()->size();
+//        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
+//        //if( bin_rotated ) cout << "bin rotated ";
+//        if( item->getSpinLocation()  ) cout << "item rotated ";
+//        cout << endl;
 
         bin->set_item( item );
         item->setBin( bin->Root( bin )->progid() );

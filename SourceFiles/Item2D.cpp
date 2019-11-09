@@ -74,7 +74,7 @@ void Item2D::AddToCutList( cCutList& l )
 
 void Item2D::DrawList( std::stringstream& ss )
 {
-    const float scale = 4;
+    const float scale = 2;
     int left = getWLocation() / scale;
     int top  = getHLocation() / scale;
     int w, h;
