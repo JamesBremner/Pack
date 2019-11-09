@@ -59,7 +59,7 @@ void Bin2D::itemsInBin( item_v_t &items)
     if ( y_sub_bin_ != NULL )
         y_sub_bin_->itemsInBin( items );
 
-    cout << "Bin2D::itemsInBin " << id() <<" " << items.size() << "\n";
+    //cout << "Bin2D::itemsInBin " << id() <<" " << items.size() << "\n";
 }
 
 
@@ -148,7 +148,8 @@ Bin * Bin2D::CreateNewEmptyCopy()
 void Bin2D::Dumper()
 {
     cout << progid() << " " << side_1()->size() << "," << side_2()->size() <<
-         " at " << getLocationHeight() << "," << getLocationWidth() << endl;
+         " at " << getLocationHeight() << "," << getLocationWidth()
+         << " root " << original_parent_bin()->id() << endl;
 }
 void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 {
@@ -267,7 +268,7 @@ void Bin2D::DrawList( std::stringstream& ss )
 
 bool Bin2D::IsUnusedBin()
 {
-    cout << "bin " << id() << " has " << original_parent_bin()->itemsInBinCount() << "\n";
+//    cout << "\nbin " << id() << " has " << original_parent_bin()->itemsInBinCount() << "\n";
     return ( original_parent_bin()->itemsInBinCount() == 0 );
 }
 

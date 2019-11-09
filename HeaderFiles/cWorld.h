@@ -75,6 +75,8 @@ public:
     /// True if user wants to disable heuristics and do a random pack
     bool myfRandom;
 
+    void PrintAllBins();
+
 private:
     std::string myError;
 

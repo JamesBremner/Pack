@@ -22,7 +22,10 @@ BoxPacker2D::~BoxPacker2D()
 
 void BoxPacker2D::Sort( bin_v_t& bins )
 {
-    stable_sort( bins.begin(), bins.end(),
+//    cout << "=> Sort " << bins.size() << "\n";
+//    theWorld.PrintAllBins();
+
+    sort( bins.begin(), bins.end(),
                  []( bin_t a, bin_t b )
     {
         // for a onebin pack, we want to work our way up from the bottom
@@ -39,17 +42,17 @@ void BoxPacker2D::Sort( bin_v_t& bins )
               then we try the largest unused bin
             */
 
-            bool Aused = ! a->IsUnusedBin();
-            bool Bused = ! b->IsUnusedBin();
-
-            if( ( ! Aused ) && Bused  )
-            {
-                cout << "swap " << a->id() << " " << b->id() << "\n";
-                // move used bin before unused
-                return true;
-            }
-
-            return false;
+//            bool Aused = ! a->IsUnusedBin();
+//            bool Bused = ! b->IsUnusedBin();
+//
+//            if( ( ! Aused ) && Bused  )
+//            {
+//                cout << "swap " << a->id() << " " << b->id() << "\n";
+//                // move used bin before unused
+//                return true;
+//            }
+//
+//            return false;
 
             if( ! a->IsUnusedBin() )
             {
@@ -66,17 +69,16 @@ void BoxPacker2D::Sort( bin_v_t& bins )
         }
     });
 
-    cout << "avalable bins: ";
-    for( auto member : bins )
-    {
-        cout << member->id() << " in " << member->Root( member )->id() << ", ";
-    }
-    cout << "\n";
+//    cout << "avalable bins: ";
+//    for( auto member : bins )
+//    {
+//        cout << member->id() << " in " << member->Root( member )->id() << ", ";
+//    }
+//    cout << "\n";
 }
 
 void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 {
-
     bin_v_t bins( ref_bins );
 
     items[0]->ClearPackSeq();
@@ -87,7 +89,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
         sort( items.begin(), items.end(),
               []( item_t a, item_t b )
         {
-            return a->volume() > b->volume();
+            return a->area() > b->area();
         });
     }
     else
@@ -97,6 +99,12 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
         (
             std::chrono::system_clock::now().time_since_epoch().count() );
         std::shuffle(items.begin(), items.end(), engine);
+    }
+
+    cout << "packthem items\n";
+    for( auto i : items )
+    {
+        cout << i->id() <<" "<< i->side_1()->size() << " x " << i->side_2()->size() << "\n";
     }
 
     // three passes, one for each positional constraint
@@ -141,7 +149,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             int bin_found_index = 0;
             for( auto member : bins )
             {
-                cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
+                //cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
                 if ( packIt( member, items[k], bins ) == true)
                 {
                     cout << "added item to bin " << member->id() << "\n";
@@ -176,7 +184,6 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
                 // this item would not fit in any of the bins we have available
                 theWorld.myUnpackedItems.push_back( items[k] );
             }
-
         }
 
         // delete unused extra bins
@@ -193,8 +200,6 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
         ref_bins.end() );
 
     }
-
-
 }
 
 
@@ -288,6 +293,7 @@ bool BoxPacker2D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
 
 bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
 {
+    if( item->IsSpinAllowed( 1 )) {
 
     //rotate both bin and item so side1 is longer than side2
     if ( bin->side_1()->size() < bin->side_2()->size() )
@@ -310,6 +316,7 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
         //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
     }
 
+    }
 
     if( item->side_1()->size() <= bin->side_1()->size() && item->side_2()->size() <= bin->side_2()->size() )
     {
@@ -322,11 +329,11 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
         {
             item->setSpinLocation( true );
         }
-//        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
-//        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
-//        //if( bin_rotated ) cout << "bin rotated ";
-//        if( item->getSpinLocation()  ) cout << "item rotated ";
-//        cout << endl;
+        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
+        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
+        //if( bin_rotated ) cout << "bin rotated ";
+        if( item->getSpinLocation()  ) cout << "item rotated ";
+        cout << endl;
 
         bin->set_item( item );
         item->setBin( bin->Root( bin )->progid() );
@@ -390,15 +397,15 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
 
 bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
 {
-//    cout << "->Merger" << endl;
-//    newbin->Dumper();
-//    cout << "candidates:" << endl;
+    //cout << "->Merger" << endl;
+    //newbin->Dumper();
+    //cout << "candidates:" << endl;
     bin_t newbinroot = newbin->Root( newbin );
     // loop over all bins
     for( auto bin : bins )
     {
         // check that this is part of the user specified bin we are adding to
-        if( newbinroot != bin->Root( bin ) )
+        if( ! newbin->IsSameRoot( bin) )
             continue;
         // check that this is not the bin we are packing item into
         if( packbin == bin )
@@ -410,7 +417,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             if( newbin->getLocationHeight() + newbin->side_2()->size() ==
                     bin->getLocationHeight() )
             {
-                //cout << "merge!" << endl;
+                cout << "merge!" << endl;
                 bin->side_2()->set_size( newbin->side_2()->size() + bin->side_2()->size() );
                 bin->setLocationHeight( newbin->getLocationHeight() );
                 return true;
@@ -418,7 +425,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             else if ( bin->getLocationHeight() + bin->side_2()->size() ==
                       newbin->getLocationHeight() )
             {
-                //cout << "merge!" << endl;
+                cout << "merge!" << endl;
                 bin->side_2()->set_size( newbin->side_2()->size() + bin->side_2()->size() );
                 return true;
             }
@@ -428,7 +435,7 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             if( newbin->getLocationWidth() + newbin->side_1()->size() ==
                     bin->getLocationWidth() )
             {
-                //cout << "merge!" << endl;
+                cout << "merge!" << endl;
                 bin->side_1()->set_size( newbin->side_1()->size() + bin->side_1()->size() );
                 bin->setLocationWidth(newbin->getLocationWidth() );
                 return true;
@@ -436,15 +443,39 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
             else if ( bin->getLocationWidth() + bin->side_1()->size() ==
                       newbin->getLocationWidth() )
             {
-                //cout << "merge!" << endl;
+                cout << "merge!" << endl;
                 bin->side_1()->set_size( newbin->side_1()->size() + bin->side_1()->size() );
                 return true;
             }
+        }
+        else
+        {
+//            if( MergeOnRight( newbin, bin ) )
+//                return true;
         }
     }
 //    cout << "<-Merger" << endl;
     return false;
 }
+
+ bool BoxPacker2D::MergeOnRight( bin_t newbin, bin_t testbin )
+ {
+     double newbin_right = newbin->getLocationWidth() + newbin->side_1()->size();
+     double testbin_right = testbin->getLocationWidth() + testbin->side_1()->size();
+     if( newbin_right == testbin_right )
+     {
+         if( testbin->getLocationBottom() == newbin->getLocationHeight()) {
+         cout << "MergeOnRight " << newbin_right << "\n";
+
+
+
+         double newbinW =  newbin->side_1()->size();
+         double testbinW =  testbin->side_1()->size();
+         double mgbinW = min( newbinW, testbinW );
+         }
+     }
+     return false;
+ }
 
 void BoxPacker2D::splitBinWidth( bin_t bin, item_t item )
 {
@@ -463,6 +494,7 @@ void BoxPacker2D::splitBinWidth( bin_t bin, item_t item )
         sub_binX->set_side_1( bin->side_1()->size_side_to( dx_w ));
         sub_binX->set_side_2( bin->side_2()->size_side_to( dx_h ));
         sub_binX->set_parent_bin( bin );
+        sub_binX->set_original_parent_bin( bin->Root( bin ) );
         sub_binX->set_id(bin->id());
         sub_binX->setLocationWidth( bin->getLocationWidth() + item->side_1()->size() );
         sub_binX->setLocationHeight( bin->getLocationHeight() );
@@ -491,6 +523,7 @@ void BoxPacker2D::splitBinHeight( bin_t bin, item_t item )
         sub_binY->set_side_1( bin->side_1()->size_side_to( dy_w ));
         sub_binY->set_side_2( bin->side_2()->size_side_to( dy_h ));
         sub_binY->set_parent_bin( bin );
+        sub_binY->set_original_parent_bin( bin->Root( bin ) );
         sub_binY->set_id(bin->id());
         sub_binY->setLocationHeight( bin->getLocationHeight() + item->side_2()->size() );
         sub_binY->setLocationWidth( bin->getLocationWidth() );

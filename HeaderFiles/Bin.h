@@ -84,6 +84,10 @@ public:
     {
         return myHOffsetFromRoot;
     }
+    double getLocationBottom()
+    {
+        return myHOffsetFromRoot + side_2()->size();
+    }
     void setLocationHeight( double h ) { myHOffsetFromRoot = h; }
     double getLocationWidth()
     {
@@ -106,6 +110,17 @@ public:
     virtual bool operator <( Shape &b) = 0;
     virtual bool operator >( Shape &b) = 0;
     virtual bool operator ==( Shape &b) = 0;
+
+    virtual bool IsSameRoot( bin_t other )
+    {
+        int id;
+        if( ! myOriginalParentBin )
+            id = progid();
+        else
+            id = myOriginalParentBin->progid();
+
+        return ( id == other->original_parent_bin()->progid() );
+    }
 
     static Bin* Build(  bin_build_instructions& instructions );
 

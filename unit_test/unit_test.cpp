@@ -6,6 +6,17 @@
 
 cWorld theWorld;
 
+TEST( One ) {
+    char* bins = "b1:in:1:4x4:100";
+    char* items = "i1:in:7:2:2.5x1:1,i1:in:7:1:1x2:1";
+
+    theWorld.Build( bins, items );
+    theWorld.Pack();
+    theWorld.PrintAllBins();
+    cout << theWorld.getJson();
+    exit(0);
+}
+
 TEST( DimensionalUnits2 )
 {
     char* bins = "0:ft:1:1x1:100";

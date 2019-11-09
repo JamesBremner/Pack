@@ -544,6 +544,21 @@ int cWorld::CountBinsUsed()
     return count;
 }
 
+void cWorld::PrintAllBins()
+{
+    if( ! Bins.size() ) {
+        cout << "the world has zero bins!\n";
+        return;
+    }
+    cout << "All " << Bins.size() << " Bins\n";
+    for( auto b : Bins )
+    {
+        cout << "Bin " << b->id() <<" contains " << b->itemsInBinCount() << "\n";
+    }
+    cout << "===All Bins\n";
+}
+
+
 Bin* Bin::Build(  bin_build_instructions& instructions )
 {
     Bin *bin;
