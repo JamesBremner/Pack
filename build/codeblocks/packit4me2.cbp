@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc_v83" />
-				<Option parameters=" --bins 1:in:-1:2440x1220:0 --items SidePanel_Right:in:0:1:698.4x558.4:0,SidePanel_Left:in:0:1:698.4x558.4:0,BottomShelf:in:0:1:112.4x558.4:0,TopShelf:in:0:1:112.4x558.4:0,SidePanel_Right:in:0:1:698.4x558.4:0,SidePanel_Left:in:0:1:698.4x558.4:0,BottomShelf2:in:0:1:512.4x558.4:0,TopShelf2:in:0:1:512.4x558.4:0,AdjustableShelf:in:0:1:511.4x518.4:0" />
+				<Option parameters=" --bins 1:in:1:2440x1220:0 --items SidePanel_Right_BC_BPO_11001:in:0:1:698.4x558.4:0,SidePanel_Left_BC_BPO_11002:in:0:1:698.4x558.4:0,BottomShelf_BC_BPO_11003:in:0:1:112.4x558.4:0,TopShelf_BC_BPO_11004:in:0:1:112.4x558.4:0,SidePanel_Right_BC_SSD_51001:in:0:1:698.4x558.4:0,SidePanel_Left_BC_SSD_51002:in:0:1:698.4x558.4:0,BottomShelf_BC_SSD_51003:in:0:1:512.4x558.4:0,TopShelf_BC_SSD_51004:in:0:1:512.4x558.4:0,AdjustableShelf_BC_SSD_51005:in:0:1:511.4x518.4:0" />
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
@@ -25,7 +25,7 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc_v83" />
-				<Option parameters=" -b 0:mm:-1:1500:1500:500 -i 0:mm:12:300x200x100 -s b" />
+				<Option parameters="--bins 1:in:1:2440x1220:0 --items SidePanel_Right_BC_BPO_11001:in:0:1:698.4x558.4:0,SidePanel_Left_BC_BPO_11002:in:0:1:698.4x558.4:0,BottomShelf_BC_BPO_11003:in:0:1:112.4x558.4:0,TopShelf_BC_BPO_11004:in:0:1:112.4x558.4:0,SidePanel_Right_BC_SSD_51001:in:0:1:698.4x558.4:0,SidePanel_Left_BC_SSD_51002:in:0:1:698.4x558.4:0,BottomShelf_BC_SSD_51003:in:0:1:512.4x558.4:0,TopShelf_BC_SSD_51004:in:0:1:512.4x558.4:0,AdjustableShelf_BC_SSD_51005:in:0:1:511.4x518.4:0" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>

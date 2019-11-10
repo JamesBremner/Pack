@@ -6,16 +6,16 @@
 
 cWorld theWorld;
 
-TEST( One ) {
-    char* bins = "b1:in:1:4x4:100";
-    char* items = "i1:in:7:2:2.5x1:1,i1:in:7:1:1x2:1";
-
-    theWorld.Build( bins, items );
-    theWorld.Pack();
-    theWorld.PrintAllBins();
-    cout << theWorld.getJson();
-    exit(0);
-}
+//TEST( One ) {
+//    char* bins = "b1:in:1:4x4:100";
+//    char* items = "i1:in:7:2:2.5x1:1,i1:in:7:1:1x2:1";
+//
+//    theWorld.Build( bins, items );
+//    theWorld.Pack();
+//    theWorld.PrintAllBins();
+//    cout << theWorld.getJson();
+//    exit(0);
+//}
 
 TEST( DimensionalUnits2 )
 {
@@ -185,7 +185,7 @@ TEST( BinCutList )
     W.Build( bins, items );
     W.Pack();
     cCutList L;
-    W.Bins[0]->CreateCutList( L );
+    W.Bins[0]->AddToCutList( L );
     CHECK_EQUAL( 4, L.size());
 
    // cout << L.get();
@@ -200,7 +200,7 @@ TEST( BinCutList2 )
     W.Build( bins, items );
     W.Pack();
     cCutList L;
-    W.Bins[0]->CreateCutList( L );
+    W.Bins[0]->AddToCutList( L );
     CHECK_EQUAL( 5, L.size());
 
     //cout << L.get();

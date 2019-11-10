@@ -20,17 +20,20 @@ public:
     Item2D(const Item& orig);
     virtual ~Item2D();
 
-    virtual void encodeAsJSON(stringstream &jsonStr);
-
-    string getSpin()
+    double bottom()
     {
-    stringstream ss;
-    ss << side_1_->orig_side() <<side_2_->orig_side();
-    return ss.str();
+        return getHLocation() + side2size();
     }
+    double right()
+    {
+        return getWLocation() + side1size();
+    }
+
+    string getSpin();
     virtual void AddToCutList( cCutList& l );
     virtual void DrawList( std::stringstream& ss);
-
+    string getCSV();
+    virtual void encodeAsJSON(stringstream &jsonStr);
 
 private:
 

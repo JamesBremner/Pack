@@ -239,20 +239,21 @@ string cWorld::getJson()
 
 string cWorld::getCutList()
 {
-    stringstream ss;
+
+    cCutList L;
     for( auto b : Bins )
     {
-        cCutList L;
-        b->CreateCutList( L );
-        ss << L.get();
-        ss << "\n==================\n";
+        b->AddToCutList( L );
     }
+    stringstream ss;
+    ss << L.get();
+    ss << "\n==================\n";
     return ss.str();
 }
 
 string cWorld::DrawList()
 {
-     stringstream ss;
+    stringstream ss;
     for( auto b : Bins )
     {
         b->DrawList( ss );
@@ -263,12 +264,14 @@ string cWorld::DrawList()
 
 string cWorld::getCSV()
 {
-    string s;
+    stringstream ss;
+
+    ss << "id, W, H, left, top\n";
     for( auto& b : Bins )
     {
-        s += b->getCSV();
+        ss << b->getCSV();
     }
-    return s;
+    return ss.str();
 }
 
 void cWorld::getSTL()
@@ -546,7 +549,8 @@ int cWorld::CountBinsUsed()
 
 void cWorld::PrintAllBins()
 {
-    if( ! Bins.size() ) {
+    if( ! Bins.size() )
+    {
         cout << "the world has zero bins!\n";
         return;
     }

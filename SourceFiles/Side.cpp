@@ -21,7 +21,7 @@ Side::~Side()
 
 }
 
-double Side::size()
+double Side::size() const
 {
     return size_;
 }

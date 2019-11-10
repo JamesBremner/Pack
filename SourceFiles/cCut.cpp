@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 
+#define SMALL_DIFF 0.01
 
 using namespace std;
 
@@ -84,10 +85,21 @@ bool cCut::CanJoin( cCut& joined, const cCut& cut1, const cCut& cut2 )
 
 void cCutList::Add( const cCut& cut )
 {
+    //cout << "Add " << cut.get() << "\n";
+
+    // check if cut is along bin edge, so not needed
+    if( cut.myIntercept < SMALL_DIFF )
+        return;
+
+    // check if cut already exists
+    // this happens when two items with the same dimension
+    // are aligned perfectly side by side
     vector < cCut >::iterator it =
         std::find( myCut.begin(), myCut.end(), cut );
     if( it != myCut.end() )
         return;
+
+    // add the cut
     myCut.push_back( cut );
 }
 void cCutList::Join()
@@ -103,6 +115,10 @@ void cCutList::Join()
             for( vector < cCut >::iterator it2 = it1+1;
                     it2 != myCut.end(); it2++ )
             {
+//                if( ( ! it1->myIsVertical ) && ( ! it2-> myIsVertical )) {
+//                cout << "test join " << it1->get() << " and "
+//                                        << it2->get() << "\n";
+//                }
                 if( cCut::CanJoin( cut, *it1, *it2 ) )
                 {
 
@@ -132,7 +148,7 @@ void cCutList::Join()
         }
     }
 }
-string cCut::get()
+string cCut::get() const
 {
     stringstream ss;
     if( myIsVertical )
@@ -147,7 +163,7 @@ string cCut::get()
     }
     return ss.str();
 }
-string cCutList::get()
+string cCutList::get() const
 {
     stringstream ss;
     for( auto& c : myCut )

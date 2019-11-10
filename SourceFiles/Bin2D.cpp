@@ -237,7 +237,7 @@ void Bin2D::encodeAsJSON(stringstream &jsonStr, bool isDeep)
 
 }
 
-void Bin2D::CreateCutList( cCutList& l )
+void Bin2D::AddToCutList( cCutList& l )
 {
     l.clear();
     item_v_t items;
@@ -264,6 +264,16 @@ void Bin2D::DrawList( std::stringstream& ss )
     for( auto i : items )
         i->DrawList( ss );
     ss << "\n===================\n";
+}
+
+string Bin2D::getCSV()
+{
+    stringstream s;
+    item_v_t items;
+    itemsInBin( items );
+    for( auto& i : items )
+        s << i->getCSV();
+    return s.str();
 }
 
 bool Bin2D::IsUnusedBin()

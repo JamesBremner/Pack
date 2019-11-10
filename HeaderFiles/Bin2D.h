@@ -31,8 +31,9 @@ public:
     virtual Bin * CreateNewEmptyCopy();
     virtual void Dumper();
     virtual void encodeAsJSON(stringstream &jsonStr, bool isDeep);
-    virtual void CreateCutList( cCutList& l );
+    virtual void AddToCutList( cCutList& l );
     virtual void DrawList( std::stringstream& ss );
+    virtual string getCSV();
     bool IsUnusedBin();
 
     virtual bool operator <( Shape &b);

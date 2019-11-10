@@ -8,7 +8,7 @@ class cCut
 {
 public:
     bool myIsVertical;
-    double myIntercept;
+    double myIntercept;     // axis intercept, y for horizontal, x for vertical
     double myStart;
     double myStop;
 
@@ -27,7 +27,7 @@ public:
     static bool CanJoin( cCut& joined, const cCut& cut1, const cCut& cut2 );
 
     /// descriptive string (x0,y0) to (x1,y1)
-    std::string get();
+    std::string get() const;
 
     /// identity operator
     bool operator==( const cCut& other ) const;
@@ -66,7 +66,7 @@ public:
 
     /**  Descriptive string
     */
-    std::string get();
+    std::string get() const;
 
     void set( bin_t bin ) { myBin = bin; }
 };

@@ -44,28 +44,38 @@ void Item2D::encodeAsJSON(stringstream &jsonStr)
 
 }
 
+string Item2D::getSpin()
+{
+    stringstream ss;
+    ss << side_1_->orig_side() <<side_2_->orig_side();
+    return ss.str();
+}
+
 void Item2D::AddToCutList( cCutList& l )
 {
+//    cout << "AddToCutList " << id()
+//         <<" "<<getWLocation()<<" "<<getHLocation()<< "\n";
+
     l.Add( cCut(
                getWLocation(),
                getHLocation(),
                getWLocation(),
-               getHLocation()+ side_1()->size()
+               bottom()
            ));
     l.Add( cCut(
                getWLocation(),
-               getHLocation()+ side_1()->size(),
-               getWLocation()+ side_2()->size(),
-               getHLocation() + side_1()->size()
+               bottom(),
+               right(),
+               bottom()
            ));
     l.Add( cCut(
-               getWLocation()+ side_2()->size(),
-               getHLocation() + side_1()->size(),
-               getWLocation()+ side_2()->size(),
+               right(),
+               bottom(),
+               right(),
                getHLocation()
            ));
     l.Add( cCut(
-               getWLocation()+ side_2()->size(),
+               right(),
                getHLocation(),
                getWLocation(),
                getHLocation()
@@ -99,25 +109,16 @@ void Item2D::DrawList( std::stringstream& ss )
     ss << "S.text(\"" << id() <<"\", {"
        << left+5 <<", "
        << top+5 <<", 50,30 } );\n";
-//    ss << "S.line( { "
-//        << left <<", "
-//        << top << ", "
-//        << left << ", "
-//        << bottom << " } );\n";
-//    ss << "S.line( { "
-//        << left <<", "
-//        << bottom << ", "
-//        << right << ", "
-//        << bottom << " } );\n";
-//    ss << "S.line( { "
-//        << right <<", "
-//        << bottom << ", "
-//        << right << ", "
-//        << top << " } );\n";
-//    ss << "S.line( { "
-//        << right <<", "
-//        << top << ", "
-//        << left << ", "
-//        << top << " } );\n";
+}
+string Item2D::getCSV()
+{
+    stringstream s;
+    s << id() << ",";
+    s << side_1()->size() << ",";
+    s << side_2()->size() << ",";
+    s  << getWLocation() << ",";
+    s  << getHLocation() << "\n";
+
+    return s.str();
 }
 

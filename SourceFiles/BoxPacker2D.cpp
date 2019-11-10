@@ -459,25 +459,6 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
     return false;
 }
 
- bool BoxPacker2D::MergeOnRight( bin_t newbin, bin_t testbin )
- {
-     double newbin_right = newbin->getLocationWidth() + newbin->side_1()->size();
-     double testbin_right = testbin->getLocationWidth() + testbin->side_1()->size();
-     if( newbin_right == testbin_right )
-     {
-         if( testbin->getLocationBottom() == newbin->getLocationHeight()) {
-         cout << "MergeOnRight " << newbin_right << "\n";
-
-
-
-         double newbinW =  newbin->side_1()->size();
-         double testbinW =  testbin->side_1()->size();
-         double mgbinW = min( newbinW, testbinW );
-         }
-     }
-     return false;
- }
-
 void BoxPacker2D::splitBinWidth( bin_t bin, item_t item )
 {
 

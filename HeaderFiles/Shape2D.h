@@ -18,7 +18,8 @@
 
 using namespace std;
 
-class Shape2D : public Shape{
+class Shape2D : public Shape
+{
 
 protected:
     Side *side_1_;
@@ -33,20 +34,35 @@ public:
     void set_side_1(Side *value);
     Side *side_2();
     void set_side_2(Side *value);
-    virtual Side * side_3() { return NULL; }
+    virtual Side * side_3()
+    {
+        return NULL;
+    }
 
     virtual void ScaleSize( float f );
 
 
     virtual Side * origSide1();
     virtual Side * origSide2();
-    virtual Side * origSide3() { return NULL; }
+    virtual Side * origSide3()
+    {
+        return NULL;
+    }
     virtual string origSize();
 
 
-        bool IsSpun()
+    bool IsSpun()
     {
         return ( side_1_->orig_side() != 'w' );
+    }
+
+    double side1size()
+    {
+        return side_1()->size();
+    }
+    double side2size()
+    {
+        return side_2()->size();
     }
 
     double area();

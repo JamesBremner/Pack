@@ -232,6 +232,7 @@ int main(int argc, char *argv[])
         cout << json_s << endl;
         //cout << cutlist_s;
         cout << drawlist_s;
+        cout << csv;
     }
     else
     {
