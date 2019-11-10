@@ -37,6 +37,8 @@ public:
     */
     bool IsSpinAllowed( int axis );
 
+    virtual bool FitsInto( bin_t bin ) { return false; }
+
     /** Claculate spin axis compared to original orientation
     */
 

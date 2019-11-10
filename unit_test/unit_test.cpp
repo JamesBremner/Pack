@@ -6,21 +6,25 @@
 
 cWorld theWorld;
 
-//TEST( One ) {
-//    char* bins = "b1:in:1:4x4:100";
-//    char* items = "i1:in:7:2:2.5x1:1,i1:in:7:1:1x2:1";
-//
-//    theWorld.Build( bins, items );
-//    theWorld.Pack();
-//    theWorld.PrintAllBins();
-//    cout << theWorld.getJson();
-//    exit(0);
-//}
+TEST( SpinConstrained )
+{
+    theWorld.Build(
+        "b1:in:1:2x3:100",
+        "i1:in:7:1:3x1:1" );        // spin disallowed
+    theWorld.Pack();
+    CHECK_EQUAL( 0, theWorld.CountBinsUsed() );
+
+    theWorld.Build(
+        "b1:in:1:2x3:100",
+        "i1:in:0:1:3x1:1" );        // spin allowed
+    theWorld.Pack();
+    CHECK_EQUAL( 1, theWorld.CountBinsUsed() );
+}
 
 TEST( DimensionalUnits2 )
 {
-    char* bins = "0:ft:1:1x1:100";
-    char* items = "0:in:0:1250:1x1:1";
+    const char* bins = "0:ft:1:1x1:100";
+    const char* items = "0:in:0:1250:1x1:1";
 
     cWorld W;
     W.Build( bins, items );
@@ -188,13 +192,13 @@ TEST( BinCutList )
     W.Bins[0]->AddToCutList( L );
     CHECK_EQUAL( 2, L.size());
 
-   // cout << L.get();
+    // cout << L.get();
 
 }
 TEST( BinCutList2 )
 {
-    char *bins = "0:ft:1:2x2:100";
-    char *items = "0:ft:0:2:1x1:1";
+    const char *bins = "0:ft:1:2x2:100";
+    const char *items = "0:ft:0:2:1x1:1";
 
     cWorld W;
     W.Build( bins, items );
@@ -277,28 +281,28 @@ TEST( OverlapArea )
     i3->setWLocation(0.5);
     i3->setHLocation(0);
     i3->setLLocation(0);
-     CHECK_CLOSE( i3->AreaWidthLength() / 2, i3->OverlapArea( i2 ), 0.1 );
+    CHECK_CLOSE( i3->AreaWidthLength() / 2, i3->OverlapArea( i2 ), 0.1 );
 
 }
 
 TEST(AboveBelowBug)
 {
-	std::shared_ptr<Item> i1(new Item3D());
-	i1->set_side_1(new Side(1, 'w'));
-	i1->set_side_2(new Side(2, 'h'));
-	i1->set_side_3(new Side(3, 'l'));
-	i1->setWLocation(0);
-	i1->setHLocation(0);
-	i1->setLLocation(7);
-	std::shared_ptr<Item> i2(new Item3D());
-	i2->set_side_1(new Side(1, 'w'));
-	i2->set_side_2(new Side(2, 'h'));
-	i2->set_side_3(new Side(3, 'l'));
-	i2->setWLocation(0);
-	i2->setHLocation(200);
-	i2->setLLocation(5);
+    std::shared_ptr<Item> i1(new Item3D());
+    i1->set_side_1(new Side(1, 'w'));
+    i1->set_side_2(new Side(2, 'h'));
+    i1->set_side_3(new Side(3, 'l'));
+    i1->setWLocation(0);
+    i1->setHLocation(0);
+    i1->setLLocation(7);
+    std::shared_ptr<Item> i2(new Item3D());
+    i2->set_side_1(new Side(1, 'w'));
+    i2->set_side_2(new Side(2, 'h'));
+    i2->set_side_3(new Side(3, 'l'));
+    i2->setWLocation(0);
+    i2->setHLocation(200);
+    i2->setLLocation(5);
 
-	CHECK(i1->IsAboveBelow(i2));
+    CHECK(i1->IsAboveBelow(i2));
 }
 
 int main(int argc, char *argv[])

@@ -45,10 +45,6 @@ protected:
     @return true if the merge took place
     */
     virtual bool merger( bin_t packbin, bin_t newbin, bin_v_t &bins );
-
-private:
-    bool MergeOnRight( bin_t newbin, bin_t testbin );
-
 };
 
 #endif	/* BOXPACKER2D_H */

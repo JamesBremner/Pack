@@ -77,6 +77,8 @@ public:
 
     void PrintAllBins();
 
+    int CountBinsUsed();
+
 private:
     std::string myError;
 
@@ -88,7 +90,6 @@ private:
     void RemoveBinsTooLightForAllItems();
     void RemoveAllButLargestBin();
     bin_t SmallestBinForAllItems();
-    int CountBinsUsed();
 };
 
 extern cWorld theWorld;

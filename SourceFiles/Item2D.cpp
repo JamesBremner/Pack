@@ -51,6 +51,12 @@ string Item2D::getSpin()
     return ss.str();
 }
 
+bool Item2D::FitsInto( bin_t bin )
+{
+    return (   side1size() <= bin->side1size() &&
+               side2size() <= bin->side2size() );
+}
+
 void Item2D::AddToCutList( cCutList& l )
 {
 //    cout << "AddToCutList " << id()

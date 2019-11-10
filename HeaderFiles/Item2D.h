@@ -28,6 +28,13 @@ public:
     {
         return getWLocation() + side1size();
     }
+    /** Check that item fits inside bin
+        @param[in] bin to try fitting inside
+        @return true if item fits
+
+        Assumes that any neccessary rotation has taken place
+    */
+    bool FitsInto( bin_t bin );
 
     string getSpin();
     virtual void AddToCutList( cCutList& l );

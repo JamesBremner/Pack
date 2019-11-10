@@ -293,32 +293,31 @@ bool BoxPacker2D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
 
 bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
 {
-    //if( item->IsSpinAllowed( 1 )) {
+    if( item->IsSpinAllowed( 1 )) {
 
     //rotate both bin and item so side1 is longer than side2
-//    if ( bin->side_1()->size() < bin->side_2()->size() )
-//    {
-//
-//        Side *tmps;
-//        tmps = bin->side_1();
-//        bin->set_side_1( bin->side_2() );
-//        bin->set_side_2( tmps );
-//    }
-//
-//
-//    if ( item->side_1()->size() < item->side_2()->size() )
-//    {
-//        //cout << "item rotating " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
-//        Side *tmps;
-//        tmps = item->side_1();
-//        item->set_side_1( item->side_2() );
-//        item->set_side_2( tmps );
-//        //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
-//    }
+    if ( bin->side_1()->size() < bin->side_2()->size() )
+    {
+        Side *tmps;
+        tmps = bin->side_1();
+        bin->set_side_1( bin->side_2() );
+        bin->set_side_2( tmps );
+    }
 
-    //}
 
-    if( item->side_1()->size() <= bin->side_1()->size() && item->side_2()->size() <= bin->side_2()->size() )
+    if ( item->side_1()->size() < item->side_2()->size() )
+    {
+        //cout << "item rotating " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
+        Side *tmps;
+        tmps = item->side_1();
+        item->set_side_1( item->side_2() );
+        item->set_side_2( tmps );
+        //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
+    }
+
+    }
+
+    if( item->FitsInto( bin) )
     {
         item->setSpinLocation( false );
         if( item->IsSpun() && ( ! bin->IsSpun() ) )
@@ -448,11 +447,6 @@ bool BoxPacker2D::merger( bin_t packbin, bin_t newbin, bin_v_t &bins )
                 bin->side_1()->set_size( newbin->side_1()->size() + bin->side_1()->size() );
                 return true;
             }
-        }
-        else
-        {
-//            if( MergeOnRight( newbin, bin ) )
-//                return true;
         }
     }
 //    cout << "<-Merger" << endl;
