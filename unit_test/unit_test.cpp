@@ -186,7 +186,7 @@ TEST( BinCutList )
     W.Pack();
     cCutList L;
     W.Bins[0]->AddToCutList( L );
-    CHECK_EQUAL( 4, L.size());
+    CHECK_EQUAL( 2, L.size());
 
    // cout << L.get();
 
@@ -201,7 +201,7 @@ TEST( BinCutList2 )
     W.Pack();
     cCutList L;
     W.Bins[0]->AddToCutList( L );
-    CHECK_EQUAL( 5, L.size());
+    CHECK_EQUAL( 3, L.size());
 
     //cout << L.get();
 
