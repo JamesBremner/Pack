@@ -34,6 +34,7 @@ void cWorld::Clear()
 {
     Bins.clear();
     Items.clear();
+    myUnpackedItems.clear();
     Dimension = 0;
 }
 
@@ -345,8 +346,10 @@ int cWorld::BuildBins( vector<string>& bin_v )
     }
     return 0;
 }
-int cWorld::BuildItems(  vector<string>& item_v )
+int cWorld::BuildItems( vector<string>& item_v )
 {
+    //cout << "Building " << item_v.size() << " items" << "\n";
+
     for(unsigned i= 0; i < item_v.size(); i++)
     {
         item_build_instructions instructions;
@@ -386,9 +389,6 @@ int cWorld::BuildItems(  vector<string>& item_v )
         {
             Items.push_back( item_t( Item::Build( instructions  ) ) );
         }
-
-
-
     }
     return 0;
 }
