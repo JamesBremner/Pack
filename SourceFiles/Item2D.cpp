@@ -51,6 +51,16 @@ string Item2D::getSpin()
     return ss.str();
 }
 
+void Item2D::Spin( int axis )
+{
+    //cout << "item rotating " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
+    Side *tmps;
+    tmps = side_1();
+    set_side_1( side_2() );
+    set_side_2( tmps );
+    //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
+}
+
 bool Item2D::FitsInto( bin_t bin )
 {
     return (   side1size() <= bin->side1size() &&
@@ -90,22 +100,16 @@ void Item2D::AddToCutList( cCutList& l )
 
 void Item2D::DrawList( std::stringstream& ss )
 {
+//    cout << "DrawList " << progid() <<" "<< getWLocation() <<" "<< getHLocation()
+//        <<" "<< side1size() <<" "<< side2size()
+//        <<" "<< mySpinLocation << "\n";
+
     const float scale = 2;
     int left = getWLocation() / scale;
     int top  = getHLocation() / scale;
-    int w, h;
-    if( ! SpinAxis() )
-    {
-        w = side_1()->size();
-        h = side_2()->size();
-    }
-    else
-    {
-        w = side_2()->size();
-        h = side_1()->size();
-    }
-    w /= scale;
-    h /= scale;
+    int w = side1size() / scale;
+    int h = side2size() / scale;
+
 
     ss << "S.rectangle( { "
        << left <<", "

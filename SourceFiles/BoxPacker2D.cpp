@@ -26,7 +26,7 @@ void BoxPacker2D::Sort( bin_v_t& bins )
 //    theWorld.PrintAllBins();
 
     sort( bins.begin(), bins.end(),
-                 []( bin_t a, bin_t b )
+          []( bin_t a, bin_t b )
     {
         // for a onebin pack, we want to work our way up from the bottom
         if( theWorld.myfOneBin )
@@ -149,7 +149,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             int bin_found_index = 0;
             for( auto member : bins )
             {
-               // cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
+                // cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
                 if ( packIt( member, items[k], bins ) == true)
                 {
                     //cout << "added item to bin " << member->id() << "\n";
@@ -293,41 +293,29 @@ bool BoxPacker2D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins
 
 bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
 {
-    if( item->IsSpinAllowed( 1 )) {
-
-    //rotate both bin and item so side1 is longer than side2
-    if ( bin->side_1()->size() < bin->side_2()->size() )
+    if( ! item->FitsInto( bin) )
     {
-        Side *tmps;
-        tmps = bin->side_1();
-        bin->set_side_1( bin->side_2() );
-        bin->set_side_2( tmps );
-    }
-
-
-    if ( item->side_1()->size() < item->side_2()->size() )
-    {
-        //cout << "item rotating " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
-        Side *tmps;
-        tmps = item->side_1();
-        item->set_side_1( item->side_2() );
-        item->set_side_2( tmps );
-        //cout << "item rotated " << item2d->side_1()->orig_side() <<  item2d->side_2()->orig_side() << endl;
-    }
-
-    }
-
-    if( item->FitsInto( bin) )
-    {
-        item->setSpinLocation( false );
-        if( item->IsSpun() && ( ! bin->IsSpun() ) )
+        if( !item->IsSpinAllowed( 1 ))
         {
+            // does not fit
+            return false;
+        }
+        else
+        {
+            // try rotating the item
+            item->Spin(0);
+            if( ! item->FitsInto( bin) )
+            {
+                // rotated item does not fit
+                item->Spin(0);
+                return false;
+            }
             item->setSpinLocation( true );
         }
-        else if( ( ! item->IsSpun() ) && bin->IsSpun() )
-        {
-            item->setSpinLocation( true );
-        }
+    }
+
+    // fit found
+
 //        cout << "packing item " << item->progid() << " ( " << item->getSpin() << " ) into bin " << bin->progid();
 //        cout << " "<< bin->side_1()->size() <<" x "<< bin->side_2()->size();
 //        cout << " located at " << bin->getLocationHeight() << "," << bin->getLocationWidth() << endl;
@@ -335,63 +323,59 @@ bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
 //        if( item->getSpinLocation()  ) cout << "item rotated ";
 //        cout << endl;
 
-        bin->set_item( item );
-        item->setBin( bin->Root( bin )->progid() );
-        item->setHLocation( bin->getLocationHeight() );
-        item->setWLocation( bin->getLocationWidth() );
+    bin->set_item( item );
+    item->setBin( bin->Root( bin )->progid() );
+    item->setHLocation( bin->getLocationHeight() );
+    item->setWLocation( bin->getLocationWidth() );
 
-        //if it fits split item and recurse
-        splitBinWidth( bin, item );
-        splitBinHeight( bin, item );
+    //if it fits split item and recurse
+    splitBinWidth( bin, item );
+    splitBinHeight( bin, item );
 
 
-        if ( bin->get_x_sub_bin() != NULL )
-        {
+    if ( bin->get_x_sub_bin() != NULL )
+    {
 //            cout << "x_sub_bin " << bin2d->x_sub_bin()->progid() << " " <<
 //                 bin2d->x_sub_bin()->side_1()->size() << " by " << bin2d->x_sub_bin()->side_2()->size() <<
 //                 " at " << bin2d->x_sub_bin()->getLocationHeight() << "," <<  bin2d->x_sub_bin()->getLocationWidth() <<endl;
 //
 
-            // we have created a new bin from the unused space when the item was added to the bin
-            // check if this space could be merged with any previously unused space in the user specified bin
-            if( ! merger( bin, bin->get_x_sub_bin(), bins ) )
-            {
-                // no merge possible, so add unused space bin to total list of unused bins
-                bins.push_back( bin->get_x_sub_bin() );
-
-            }
-            else
-            {
-                // unused space was merge, so forget about it
-                // TODO: Check if this is a memory leak!
-                bin->set_x_sub_bin( NULL );
-            }
+        // we have created a new bin from the unused space when the item was added to the bin
+        // check if this space could be merged with any previously unused space in the user specified bin
+        if( ! merger( bin, bin->get_x_sub_bin(), bins ) )
+        {
+            // no merge possible, so add unused space bin to total list of unused bins
+            bins.push_back( bin->get_x_sub_bin() );
 
         }
-
-        if( bin->get_y_sub_bin() != NULL )
+        else
         {
+            // unused space was merge, so forget about it
+            // TODO: Check if this is a memory leak!
+            bin->set_x_sub_bin( NULL );
+        }
+
+    }
+
+    if( bin->get_y_sub_bin() != NULL )
+    {
 //            cout << "y_sub_bin " << bin2d->y_sub_bin()->progid() << " " <<
 //                 bin2d->y_sub_bin()->side_1()->size() << " by " << bin2d->y_sub_bin()->side_2()->size() <<
 //                 " at " << bin2d->y_sub_bin()->getLocationHeight() << "," <<  bin2d->y_sub_bin()->getLocationWidth() <<endl;
 
-            if( ! merger( bin, bin->get_y_sub_bin(), bins ) )
-            {
+        if( ! merger( bin, bin->get_y_sub_bin(), bins ) )
+        {
 
-                bins.push_back( bin->get_y_sub_bin() );
+            bins.push_back( bin->get_y_sub_bin() );
 
-            }
-            else
-            {
-                bin->set_y_sub_bin( NULL );
-            }
         }
-
-        return true;
-
+        else
+        {
+            bin->set_y_sub_bin( NULL );
+        }
     }
 
-    return false;
+    return true;
 
 }
 

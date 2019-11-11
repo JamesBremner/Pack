@@ -20,6 +20,8 @@ public:
     Item2D(const Item& orig);
     virtual ~Item2D();
 
+    virtual void Spin( int axis );
+
     double bottom()
     {
         return getHLocation() + side2size();

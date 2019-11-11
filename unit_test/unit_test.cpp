@@ -9,16 +9,27 @@ cWorld theWorld;
 TEST( SpinConstrained )
 {
     theWorld.Build(
-        "b1:in:1:2x3:100",
-        "i1:in:7:1:3x1:1" );        // spin disallowed
+        "b1:in:1:20x30:100",
+        "i1:in:7:2:30x10:1" );        // spin disallowed
     theWorld.Pack();
     CHECK_EQUAL( 0, theWorld.CountBinsUsed() );
 
     theWorld.Build(
-        "b1:in:1:2x3:100",
-        "i1:in:0:1:3x1:1" );        // spin allowed
+        "b1:in:1:20x30:100",
+        "i1:in:0:2:30x10:1" );        // spin allowed
     theWorld.Pack();
     CHECK_EQUAL( 1, theWorld.CountBinsUsed() );
+    item_v_t items;
+    theWorld.Bins[0]->itemsInBin( items );
+    CHECK_CLOSE( 0, items[0]->getWLocation(), 0.01 );
+    CHECK_CLOSE( 0, items[0]->getHLocation(), 0.01 );
+    CHECK_CLOSE( 10, items[1]->getWLocation(), 0.01 );
+    CHECK_CLOSE( 0, items[0]->getHLocation(), 0.01 );
+    CHECK_CLOSE( 10, items[0]->side1size(), 0.01 );
+    CHECK_CLOSE( 30, items[0]->side2size(), 0.01 );
+    CHECK_CLOSE( 10, items[1]->side1size(), 0.01 );
+    CHECK_CLOSE( 30, items[1]->side2size(), 0.01 );
+
 }
 
 TEST( DimensionalUnits2 )

@@ -27,9 +27,8 @@ public:
     }
     int getBin() { return myBinProgID; }
 
-    /** Spin around axis
-
-    Only makes sense for 3D items
+    /* Spin around axis
+        @param[in] axis ( ignored for 2D, set to 0 )
     */
     virtual void Spin( int axis ) { }
 
