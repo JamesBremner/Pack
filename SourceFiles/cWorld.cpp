@@ -267,7 +267,6 @@ string cWorld::getCSV()
 {
     stringstream ss;
 
-    ss << "id, W, H, left, top\n";
     for( auto& b : Bins )
     {
         ss << b->getCSV();

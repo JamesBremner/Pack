@@ -272,7 +272,7 @@ string Bin2D::getCSV()
     item_v_t items;
     itemsInBin( items );
     for( auto& i : items )
-        s << i->getCSV();
+        s << id() << "," << i->getCSV();
     return s.str();
 }
 
