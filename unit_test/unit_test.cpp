@@ -6,6 +6,16 @@
 
 cWorld theWorld;
 
+TEST( MultipleBins )
+{
+    theWorld.Build(
+        "b1:in:-1:10x10:100",
+        "i1:in:7:200:1x1:1" );        // spin disallowed
+    theWorld.Pack();
+    CHECK_EQUAL( 2, theWorld.CountBinsUsed() );
+    cout << theWorld.getJson() << "\n";
+}
+
 TEST( SpinConstrained )
 {
     theWorld.Build(
