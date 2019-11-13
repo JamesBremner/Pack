@@ -153,13 +153,13 @@ string cCut::get() const
     stringstream ss;
     if( myIsVertical )
     {
-        ss << "( " << myIntercept << "," << myStart << " ) to ( ";
-        ss << myIntercept << "," << myStop << " )";
+        ss << myIntercept << "," << myStart << ",";
+        ss << myIntercept << "," << myStop;
     }
     else
     {
-        ss << "( " << myStart << "," << myIntercept << " ) to ( ";
-        ss << myStop << "," << myIntercept << " )";
+        ss << myStart << "," << myIntercept << ",";
+        ss << myStop << "," << myIntercept;
     }
     return ss.str();
 }

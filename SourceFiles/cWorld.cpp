@@ -240,16 +240,13 @@ string cWorld::getJson()
 
 string cWorld::getCutList()
 {
-
     cCutList L;
     for( auto b : Bins )
     {
         b->AddToCutList( L );
     }
-    stringstream ss;
-    ss << L.get();
-    ss << "\n==================\n";
-    return ss.str();
+
+    return L.get();
 }
 
 string cWorld::DrawList()
