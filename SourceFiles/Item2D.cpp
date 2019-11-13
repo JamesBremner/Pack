@@ -104,7 +104,7 @@ void Item2D::DrawList( std::stringstream& ss )
 //        <<" "<< side1size() <<" "<< side2size()
 //        <<" "<< mySpinLocation << "\n";
 
-    const float scale = 2;
+    const float scale = 1;
     int left = getWLocation() / scale;
     int top  = getHLocation() / scale;
     int w = side1size() / scale;

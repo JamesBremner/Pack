@@ -254,12 +254,13 @@ void Bin2D::DrawList( std::stringstream& ss )
 {
     item_v_t items;
     itemsInBin(items);
+    ss << "S.bin,"<<id()<<"\n";
     ss << "S.color( 0xFF0000 );\n";
     ss << "S.rectangle( { "
        << 0 <<", "
        << 0 << ", "
-       << (int)( side_1()->size() / 2 )  << ", "
-       << (int)(side_2()->size() / 2 ) << " } );\n";
+       << (int)( side_1()->size() )  << ", "
+       << (int)(side_2()->size() ) << " } );\n";
     ss << "S.color( 0x00FF );\n";
     for( auto i : items )
         i->DrawList( ss );
