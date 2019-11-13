@@ -168,7 +168,7 @@ string cCutList::get() const
     stringstream ss;
     for( auto& c : myCut )
     {
-        ss << c.get() << endl;
+        ss << myBin->id() << ","<< c.get() << endl;
     }
     return ss.str();
 }

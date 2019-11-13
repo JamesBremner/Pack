@@ -13,7 +13,6 @@ TEST( MultipleBins )
         "i1:in:7:200:1x1:1" );        // spin disallowed
     theWorld.Pack();
     CHECK_EQUAL( 2, theWorld.CountBinsUsed() );
-    cout << theWorld.getJson() << "\n";
 }
 
 TEST( SpinConstrained )
