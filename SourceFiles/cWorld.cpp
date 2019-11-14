@@ -262,6 +262,14 @@ string cWorld::DrawList()
     return ss.str();
 }
 
+string cWorld::Unpacked()
+{
+    string s;
+    for( auto i : myUnpackedItems )
+        s += i->id() + ",";
+    return s;
+}
+
 
 string cWorld::getCSV()
 {

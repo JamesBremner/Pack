@@ -47,7 +47,11 @@ public:
 
     string getCutList();
 
+    /// windex format instructions to display 2D packing arrangement
     string DrawList();
+
+    /// CSV item ids that could not be fittted
+    string Unpacked();
 
     string getCSV();
 
