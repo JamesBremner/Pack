@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <iosfwd>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -105,12 +106,12 @@ void Item2D::DrawList( std::stringstream& ss )
 //        <<" "<< mySpinLocation << "\n";
 
     const float scale = 1;
-    int left = getWLocation() / scale;
-    int top  = getHLocation() / scale;
-    int w = side1size() / scale;
-    int h = side2size() / scale;
+    float left = getWLocation() / scale;
+    float top  = getHLocation() / scale;
+    float w = side1size() / scale;
+    float h = side2size() / scale;
 
-
+    ss << fixed << setprecision(1);
     ss << "S.rectangle( { "
        << left <<", "
        << top << ", "
