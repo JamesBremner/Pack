@@ -4,32 +4,32 @@
 #include "stdafx.h"
 #include "cutest.h"
 
-cWorld theWorld;
+cPackEngine thePackEngine;
 
 TEST( MultipleBins )
 {
-    theWorld.Build(
+    thePackEngine.Build(
         "b1:in:-1:10x10:100",
         "i1:in:7:200:1x1:1" );        // spin disallowed
-    theWorld.Pack();
-    CHECK_EQUAL( 2, theWorld.CountBinsUsed() );
+    thePackEngine.Pack();
+    CHECK_EQUAL( 2, thePackEngine.CountBinsUsed() );
 }
 
 TEST( SpinConstrained )
 {
-    theWorld.Build(
+    thePackEngine.Build(
         "b1:in:1:20x30:100",
         "i1:in:7:2:30x10:1" );        // spin disallowed
-    theWorld.Pack();
-    CHECK_EQUAL( 0, theWorld.CountBinsUsed() );
+    thePackEngine.Pack();
+    CHECK_EQUAL( 0, thePackEngine.CountBinsUsed() );
 
-    theWorld.Build(
+    thePackEngine.Build(
         "b1:in:1:20x30:100",
         "i1:in:0:2:30x10:1" );        // spin allowed
-    theWorld.Pack();
-    CHECK_EQUAL( 1, theWorld.CountBinsUsed() );
+    thePackEngine.Pack();
+    CHECK_EQUAL( 1, thePackEngine.CountBinsUsed() );
     item_v_t items;
-    theWorld.Bins[0]->itemsInBin( items );
+    thePackEngine.Bins[0]->itemsInBin( items );
     CHECK_CLOSE( 0, items[0]->getWLocation(), 0.01 );
     CHECK_CLOSE( 0, items[0]->getHLocation(), 0.01 );
     CHECK_CLOSE( 10, items[1]->getWLocation(), 0.01 );
@@ -46,7 +46,7 @@ TEST( DimensionalUnits2 )
     const char* bins = "0:ft:1:1x1:100";
     const char* items = "0:in:0:1250:1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.Build( bins, items );
     W.Pack();
     CHECK_EQUAL( 1, W.Bins.size() );
@@ -90,7 +90,7 @@ TEST( BinQuantity1 )
     char *bins = "0:ft:1:2x2:100";
     char *items = "0:ft:0:125:1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.Build( bins, items );
     W.Pack();
     CHECK_EQUAL( 1, W.Bins.size() );
@@ -104,7 +104,7 @@ TEST( Bin3DQuantity1 )
     char *bins = "0:ft:1:2x2x1:100";
     char *items = "0:ft:0:4:1x1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.Build( bins, items );
     W.Pack();
     CHECK_EQUAL( 1, W.Bins.size() );
@@ -128,7 +128,7 @@ TEST( BinQuantity2 )
     char* bins = "0:ft:2:2x2:100";
     char* items = "0:ft:0:125:1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.Build( bins, items );
     W.Pack();
     CHECK_EQUAL( 2, W.Bins.size() );
@@ -143,7 +143,7 @@ TEST( BinQuantityEndless )
     char* bins = "0:ft:-1:2x2x2:100";
     char* items = "0:ft:0:125:1x1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.myfOneBin = false;
     W.Build( bins, items );
     W.Pack();
@@ -159,7 +159,7 @@ TEST( weight )
     char* bins = "0:ft:1:2x2x2:7";
     char* items = "0:ft:0:125:1x1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.myfOneBin = false;
     W.Build( bins, items );
     W.Pack();
@@ -205,7 +205,7 @@ TEST( BinCutList )
     char *bins = "0:ft:1:2x2:100";
     char *items = "0:ft:0:1:1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.Build( bins, items );
     W.Pack();
     cCutList L;
@@ -220,7 +220,7 @@ TEST( BinCutList2 )
     const char *bins = "0:ft:1:2x2:100";
     const char *items = "0:ft:0:2:1x1:1";
 
-    cWorld W;
+    cPackEngine W;
     W.Build( bins, items );
     W.Pack();
     cCutList L;

@@ -30,7 +30,7 @@ using item_v_t = std::vector< item_t >;
 
 /**  A world of items and bins into which they can be packed
 */
-class cWorld
+class cPackEngine
 {
 
 public:
@@ -51,7 +51,7 @@ public:
     int Dimension;
 
     /// Construct a new empty world
-    cWorld()
+    cPackEngine()
         : Dimension( 0 )
         , myfRandom( false )
     {
@@ -124,4 +124,4 @@ private:
     bin_t SmallestBinForAllItems();
 };
 
-extern cWorld theWorld;
+extern cPackEngine thePackEngine;

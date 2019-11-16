@@ -29,7 +29,7 @@ void BoxPacker2D::Sort( bin_v_t& bins )
           []( bin_t a, bin_t b )
     {
         // for a onebin pack, we want to work our way up from the bottom
-        if( theWorld.myfOneBin )
+        if( thePackEngine.myfOneBin )
         {
             return a->getLocationHeight() < b->getLocationHeight();
         }
@@ -83,7 +83,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
 
     items[0]->ClearPackSeq();
 
-    if( ! theWorld.myfRandom )
+    if( ! thePackEngine.myfRandom )
     {
         // pack items starting with largest
         sort( items.begin(), items.end(),
@@ -182,7 +182,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             else
             {
                 // this item would not fit in any of the bins we have available
-                theWorld.myUnpackedItems.push_back( items[k] );
+                thePackEngine.myUnpackedItems.push_back( items[k] );
             }
         }
 

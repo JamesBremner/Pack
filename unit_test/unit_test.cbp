@@ -77,7 +77,7 @@
 		<Unit filename="../SourceFiles/TubePacker.cpp" />
 		<Unit filename="../SourceFiles/Utils.cpp" />
 		<Unit filename="../SourceFiles/cCut.cpp" />
-		<Unit filename="../SourceFiles/cWorld.cpp" />
+		<Unit filename="../SourceFiles/cPackEngine.cpp" />
 		<Unit filename="../SourceFiles/stdafx.cpp" />
 		<Unit filename="unit_test.cpp" />
 		<Extensions>

@@ -11,7 +11,7 @@ struct item_build_instructions
     float weight;
 };
 
-int   cWorld::Build(
+int   cPackEngine::Build(
     const char* bin_input_description,
     const char* item_input_description )
 {
@@ -30,7 +30,7 @@ int   cWorld::Build(
     return BuildItems( item_v );
 }
 
-void cWorld::Clear()
+void cPackEngine::Clear()
 {
     Bins.clear();
     Items.clear();
@@ -38,7 +38,7 @@ void cWorld::Clear()
     Dimension = 0;
 }
 
-void cWorld::Pack()
+void cPackEngine::Pack()
 {
     if( Dimension == 2 )
     {
@@ -191,7 +191,7 @@ void cWorld::Pack()
     Bins.end() );
 }
 
-string cWorld::getJson()
+string cPackEngine::getJson()
 {
     stringstream jsonStr;
     if( myError.length() )
@@ -238,7 +238,7 @@ string cWorld::getJson()
     return string( s_buffer );
 }
 
-string cWorld::getCutList()
+string cPackEngine::getCutList()
 {
     string sl;
     for( auto b : Bins )
@@ -252,7 +252,7 @@ string cWorld::getCutList()
     return sl;
 }
 
-string cWorld::DrawList()
+string cPackEngine::DrawList()
 {
     stringstream ss;
     for( auto b : Bins )
@@ -262,7 +262,7 @@ string cWorld::DrawList()
     return ss.str();
 }
 
-string cWorld::Unpacked()
+string cPackEngine::Unpacked()
 {
     string s;
     for( auto i : myUnpackedItems )
@@ -271,7 +271,7 @@ string cWorld::Unpacked()
 }
 
 
-string cWorld::getCSV()
+string cPackEngine::getCSV()
 {
     stringstream ss;
 
@@ -282,7 +282,7 @@ string cWorld::getCSV()
     return ss.str();
 }
 
-void cWorld::getSTL()
+void cPackEngine::getSTL()
 {
     if( myfRandom )
         return;
@@ -300,7 +300,7 @@ void cWorld::getSTL()
     filestl.close();
 }
 
-int cWorld::BuildBins( vector<string>& bin_v )
+int cPackEngine::BuildBins( vector<string>& bin_v )
 {
 
     for(unsigned i= 0; i < bin_v.size(); i++)
@@ -353,7 +353,7 @@ int cWorld::BuildBins( vector<string>& bin_v )
     }
     return 0;
 }
-int cWorld::BuildItems( vector<string>& item_v )
+int cPackEngine::BuildItems( vector<string>& item_v )
 {
     //cout << "Building " << item_v.size() << " items" << "\n";
 
@@ -399,7 +399,7 @@ int cWorld::BuildItems( vector<string>& item_v )
     }
     return 0;
 }
-bool cWorld::isDimError( int dim )
+bool cPackEngine::isDimError( int dim )
 {
     if ( dim < 2 || dim > 3 )
         return true;
@@ -419,7 +419,7 @@ bool cWorld::isDimError( int dim )
 }
 
 /**
-cWorld
+cPackEngine
   Scale according to input dimension units into inches
 
 	param[in] unit_string  The dimensional unit string input e.g. ft, in
@@ -427,7 +427,7 @@ cWorld
 	@return Scale required, 1.0 if not recognized
 
 */
-float cWorld::DimensionUnitScale( const string& unit_string )
+float cPackEngine::DimensionUnitScale( const string& unit_string )
 {
     if ( unit_string == "ft" )
     {
@@ -448,7 +448,7 @@ float cWorld::DimensionUnitScale( const string& unit_string )
     return 1.0f;
 }
 
-void cWorld::RemoveBinsTooSmallForAllItems()
+void cPackEngine::RemoveBinsTooSmallForAllItems()
 {
     // check that this is wanted
     if( ! myfOneBin )
@@ -474,7 +474,7 @@ void cWorld::RemoveBinsTooSmallForAllItems()
 
 }
 
-bin_t cWorld::SmallestBinForAllItems()
+bin_t cPackEngine::SmallestBinForAllItems()
 {
     // calculate total volume of all items
     double totalVolumeAllItems = 0;
@@ -493,7 +493,7 @@ bin_t cWorld::SmallestBinForAllItems()
     return Bins.back();
 }
 
-void cWorld::RemoveBinsTooLightForAllItems()
+void cPackEngine::RemoveBinsTooLightForAllItems()
 {
     // check that this is wanted
     if( ! myfOneBin )
@@ -520,7 +520,7 @@ void cWorld::RemoveBinsTooLightForAllItems()
 
 }
 
-void cWorld::RemoveSmallestBin()
+void cPackEngine::RemoveSmallestBin()
 {
     if( Bins.size() <= 1 )
     {
@@ -532,7 +532,7 @@ void cWorld::RemoveSmallestBin()
     Bins.erase( Bins.begin() );
 }
 
-void cWorld::RemoveAllButLargestBin()
+void cPackEngine::RemoveAllButLargestBin()
 {
     if( Bins.size() <= 1 )
         return;
@@ -543,7 +543,7 @@ void cWorld::RemoveAllButLargestBin()
     Bins.erase( Bins.begin(), iter_last_but_one );
 }
 
-int cWorld::CountBinsUsed()
+int cPackEngine::CountBinsUsed()
 {
     int count = 0;
     for( auto b : Bins )
@@ -554,7 +554,7 @@ int cWorld::CountBinsUsed()
     return count;
 }
 
-void cWorld::PrintAllBins()
+void cPackEngine::PrintAllBins()
 {
     if( ! Bins.size() )
     {
@@ -609,7 +609,7 @@ Bin* Bin::Build(  bin_build_instructions& instructions )
     // Convert from input dimensional units
     // to internal units, assumed to be inches ( the default )
 
-    bin->ScaleSize( cWorld::DimensionUnitScale( instructions.dimension_units ) );
+    bin->ScaleSize( cPackEngine::DimensionUnitScale( instructions.dimension_units ) );
 
     bin->setCanCopy( instructions.can_copy );
 
@@ -656,7 +656,7 @@ Item* Item::Build(  item_build_instructions& instructions )
 
     item->set_constraints( instructions.constraints );
 
-    item->ScaleSize( cWorld::DimensionUnitScale( instructions.dimension_units ) );
+    item->ScaleSize( cPackEngine::DimensionUnitScale( instructions.dimension_units ) );
 
     item->Weight( instructions.weight );
 
