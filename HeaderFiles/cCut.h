@@ -1,4 +1,4 @@
-
+#pragma once
 /**
 
   A 2D line

@@ -4,7 +4,7 @@
  *
  * Created on June 7, 2012, 3:43 PM
  */
-
+#pragma once
 #ifndef SHAPE2D_H
 #define	ISHAPE2D_H
 

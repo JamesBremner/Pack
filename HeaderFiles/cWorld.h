@@ -1,4 +1,32 @@
 #include <memory>
+class Bin;
+class Item;
+using bin_t = std::shared_ptr< Bin >;
+using bin_v_t = std::vector< bin_t >;
+using item_t = std::shared_ptr< Item >;
+using item_v_t = std::vector< item_t >;
+#include "cCut.h"
+#include "Side.h"
+#include "Shape.h"
+#include "Shape2D.h"
+#include "Shape3D.h"
+#include "Item.h"
+#include "Item2D.h"
+#include "Item3D.h"
+
+#include "Bin.h"
+#include "Bin1D.h"
+#include "Bin2D.h"
+#include "Bin3D.h"
+#include "Packer.h"
+#include "BoxPacker2D.h"
+#include "BoxPacker3D.h"
+#include "TubePacker.h"
+#include "Bindings.h"
+#include "BoxBindingsParser.h"
+#include "TubeBindingsParser.h"
+#include "Utils.h"
+
 
 /**  A world of items and bins into which they can be packed
 */

@@ -4,13 +4,13 @@
 	<Project>
 		<Option title="unit_test" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="gcc_v83" />
 		<Build>
 			<Target title="Debug">
 				<Option output="../Debug/unit_test" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
+				<Option compiler="gcc_v83" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -19,7 +19,7 @@
 				<Option output="../Release/unit_test" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
+				<Option compiler="gcc_v83" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
@@ -32,12 +32,12 @@
 			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="$(#ravenset.include)" />
+			<Add directory="$(#ravenset)" />
 			<Add directory="../HeaderFiles" />
 			<Add directory="$(#boost.include)" />
 		</Compiler>
-		<Unit filename="../../../ravenset/cutest.cpp" />
 		<Unit filename="../../../ravenset/cutest.h" />
+		<Unit filename="../../raven-set/cutest.cpp" />
 		<Unit filename="../HeaderFiles/Bin.h" />
 		<Unit filename="../HeaderFiles/Bin1D.h" />
 		<Unit filename="../HeaderFiles/Bin2D.h" />
