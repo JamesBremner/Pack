@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "cPackEngine.h"
 
 #ifndef NULL
 #define NULL   ((void *) 0)
@@ -134,7 +134,7 @@ Bin * Bin2D::CreateNewEmptyCopy()
     snprintf(buf,19,"%9f",side_2_->size() );
     instructions.size_v.push_back( string( buf ) );
 
-    // we should always be using the defaultyunits internally
+    // we should always be using the default units internally
     instructions.dimension_units = "in";
 
     // we would never come here unless we have an endless supply of these

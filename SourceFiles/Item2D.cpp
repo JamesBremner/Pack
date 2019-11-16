@@ -1,7 +1,4 @@
-#include "stdafx.h"
-#include <iosfwd>
-#include <sstream>
-#include <iomanip>
+#include "cPackEngine.h"
 
 using namespace std;
 

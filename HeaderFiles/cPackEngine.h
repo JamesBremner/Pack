@@ -1,4 +1,12 @@
 #include <memory>
+#include <vector>
+#include <map>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
 class Bin;
 class Item;
 using bin_t = std::shared_ptr< Bin >;
@@ -18,7 +26,6 @@ using item_v_t = std::vector< item_t >;
 #include "Bin1D.h"
 #include "Bin2D.h"
 #include "Bin3D.h"
-#include "Packer.h"
 #include "BoxPacker2D.h"
 #include "BoxPacker3D.h"
 #include "TubePacker.h"

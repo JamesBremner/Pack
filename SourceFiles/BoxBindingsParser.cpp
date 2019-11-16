@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "cPackEngine.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/unordered_set.hpp>
 #ifndef NULL

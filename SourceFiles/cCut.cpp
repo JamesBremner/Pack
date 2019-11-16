@@ -1,9 +1,4 @@
-#include "stdafx.h"
-#include <cmath>
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <sstream>
+#include <cPackEngine.h>
 
 #define SMALL_DIFF 0.01
 

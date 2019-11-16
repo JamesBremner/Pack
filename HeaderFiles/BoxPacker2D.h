@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class BoxPacker2D : public Packer
+class BoxPacker2D
 {
 
 public:
@@ -28,10 +28,7 @@ public:
 
 protected:
 
-
-    virtual bool checkFitsConstrWidth(Bin *bin, Item *item, vector<Bin*> &bins);
-    virtual bool checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins);
-    virtual bool checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins );
+    virtual bool Fits( bin_t bin, item_t item, bin_v_t &bins );
 
     /** Sort unused spaces and bins into order we want to try packing the next item
     @param[in] bins

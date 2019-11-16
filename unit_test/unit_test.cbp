@@ -68,7 +68,6 @@
 		<Unit filename="../SourceFiles/Item.cpp" />
 		<Unit filename="../SourceFiles/Item2D.cpp" />
 		<Unit filename="../SourceFiles/Item3D.cpp" />
-		<Unit filename="../SourceFiles/Packer.cpp" />
 		<Unit filename="../SourceFiles/Shape.cpp" />
 		<Unit filename="../SourceFiles/Shape2D.cpp" />
 		<Unit filename="../SourceFiles/Shape3D.cpp" />

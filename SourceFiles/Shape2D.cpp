@@ -1,6 +1,5 @@
-#include "stdafx.h"
+#include "cPackEngine.h"
 #include <iosfwd>
-#include <sstream>
 
 #ifndef NULL
 #define NULL   ((void *) 0)

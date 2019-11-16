@@ -1,8 +1,9 @@
 // unit_test.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include "cutest.h"
+
+#include "cPackEngine.h"
 
 cPackEngine thePackEngine;
 
@@ -104,20 +105,19 @@ TEST( Bin3DQuantity1 )
     char *bins = "0:ft:1:2x2x1:100";
     char *items = "0:ft:0:4:1x1x1:1";
 
-    cPackEngine W;
-    W.Build( bins, items );
-    W.Pack();
-    CHECK_EQUAL( 1, W.Bins.size() );
-    CHECK_EQUAL( 4, W.Bins[0]->itemsInBinCount() );
+    thePackEngine.Build( bins, items );
+    thePackEngine.Pack();
+    CHECK_EQUAL( 1, thePackEngine.Bins.size() );
+    CHECK_EQUAL( 4, thePackEngine.Bins[0]->itemsInBinCount() );
 
     bins = "0:ft:1:2x2x2:100";
     items = "0:ft:0:8:1x1x1:1";
 
-    W.Clear();
-    W.Build( bins, items );
-    W.Pack();
-    CHECK_EQUAL( 1, W.Bins.size() );
-    CHECK_EQUAL( 8, W.Bins[0]->itemsInBinCount() );
+    thePackEngine.Clear();
+    thePackEngine.Build( bins, items );
+   thePackEngine.Pack();
+    CHECK_EQUAL( 1, thePackEngine.Bins.size() );
+    CHECK_EQUAL( 8, thePackEngine.Bins[0]->itemsInBinCount() );
 
 
 
@@ -140,16 +140,15 @@ TEST( BinQuantity2 )
 TEST( BinQuantityEndless )
 {
 
-    char* bins = "0:ft:-1:2x2x2:100";
-    char* items = "0:ft:0:125:1x1x1:1";
+    const char* bins = "0:ft:-1:2x2x2:100";
+    const char* items = "0:ft:0:125:1x1x1:1";
 
-    cPackEngine W;
-    W.myfOneBin = false;
-    W.Build( bins, items );
-    W.Pack();
-    CHECK_EQUAL( 16, W.Bins.size() );
-    CHECK_EQUAL( 8, W.Bins[0]->itemsInBinCount() );
-    CHECK_EQUAL( 8, W.Bins[1]->itemsInBinCount() );
+    thePackEngine.myfOneBin = false;
+    thePackEngine.Build( bins, items );
+    thePackEngine.Pack();
+    CHECK_EQUAL( 16, thePackEngine.Bins.size() );
+    CHECK_EQUAL( 8, thePackEngine.Bins[0]->itemsInBinCount() );
+    CHECK_EQUAL( 8, thePackEngine.Bins[1]->itemsInBinCount() );
 
 }
 

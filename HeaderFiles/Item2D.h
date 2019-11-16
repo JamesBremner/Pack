@@ -5,9 +5,7 @@
  * Created on June 8, 2012, 5:19 PM
  */
 
-#ifndef ITEM2D_H
-#define	ITEM2D_H
-using namespace std;
+#pragma once
 
 class Item2D : public virtual Item
 {
@@ -47,6 +45,4 @@ public:
 private:
 
 };
-
-#endif	/* ITEM2D_H */
 

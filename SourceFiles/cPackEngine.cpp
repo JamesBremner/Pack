@@ -1,6 +1,6 @@
-#include "stdafx.h"
 #include <boost/algorithm/string.hpp>
 
+#include "cPackEngine.h"
 
 struct item_build_instructions
 {

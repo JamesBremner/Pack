@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include <random>
+#include <chrono>
+#include "cPackEngine.h"
 
 #ifndef NULL
 #define NULL   ((void *) 0)
@@ -6,7 +8,7 @@
 
 using namespace std;
 
-BoxPacker2D::BoxPacker2D():Packer()
+BoxPacker2D::BoxPacker2D()
 {
 }
 
@@ -150,7 +152,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
             for( auto member : bins )
             {
                 // cout << "try " << items[k]->id() << " in "<< member->id() << "\n";
-                if ( packIt( member, items[k], bins ) == true)
+                if ( packIt( member, items[k], bins ) )
                 {
                     //cout << "added item to bin " << member->id() << "\n";
                     is_bin_found = true;
@@ -216,82 +218,13 @@ bool BoxPacker2D::packIt( bin_t bin, item_t item, bin_v_t &bins )
 //    else if ( constraints == Item2D::CONSTRAINT_HEIGHT )
 //        return checkFitsConstrHeight(bin, item, bins);
 //    else
-    return checkFitsNoConstr(bin, item, bins );
+    return Fits(bin, item, bins );
 
 
 
 }
 
-bool BoxPacker2D::checkFitsConstrWidth(Bin *bin, Item *item, vector<Bin*> &bins)
-{
-//    Item2D *item2d = dynamic_cast<Item2D*>(item);
-//    if( item2d->side_1()->size() <= bin->side_1()->size() &&
-//            item2d->side_2()->size() <= bin->side_2()->size() )
-//    {
-//
-//        bin->set_item( item );
-//
-//        //if it fits split item and recurse
-//        splitBinWidth( bin, item );
-//        splitBinHeight( bin, item );
-//
-//        Bin2D * bin2d = dynamic_cast<Bin2D*>(bin);
-//
-//        if ( bin2d->x_sub_bin() != NULL )
-//        {
-//
-//            bins.push_back( bin2d->x_sub_bin() );
-//
-//        }
-//        if( bin2d->y_sub_bin() != NULL )
-//        {
-//
-//            bins.push_back( bin2d->y_sub_bin() );
-//        }
-//
-//        return true;
-//
-//    }
-//
-    return false;
-
-}
-
-bool BoxPacker2D::checkFitsConstrHeight(Bin *bin, Item *item, vector<Bin*> &bins)
-{
-//    Item2D *item2d = dynamic_cast<Item2D*>(item);
-//    if( item2d->side_1()->size() <= bin->side_1()->size() && item2d->side_2()->size() <= bin->side_2()->size())
-//    {
-//
-//        bin->set_item( item );
-//
-//        //if it fits split item and recurse
-//        splitBinWidth( bin, item );
-//        splitBinHeight( bin, item );
-//        Bin2D * bin2d = dynamic_cast<Bin2D*>(bin);
-//
-//        if ( bin2d->x_sub_bin() != NULL )
-//        {
-//
-//            bins.push_back( bin2d->x_sub_bin() );
-//
-//        }
-//        if( bin2d->y_sub_bin() != NULL )
-//        {
-//
-//            bins.push_back( bin2d->y_sub_bin() );
-//        }
-//
-//
-//        return true;
-//
-//    }
-//
-    return false;
-
-}
-
-bool BoxPacker2D::checkFitsNoConstr( bin_t bin, item_t item, bin_v_t &bins )
+bool BoxPacker2D::Fits( bin_t bin, item_t item, bin_v_t &bins )
 {
     if( ! item->FitsInto( bin) )
     {
