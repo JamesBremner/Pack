@@ -189,17 +189,7 @@ void BoxPacker2D::packThem( bin_v_t& ref_bins, item_v_t& items )
         }
 
         // delete unused extra bins
-
-        ref_bins.erase(
-            remove_if(
-                ref_bins.begin(),
-                ref_bins.end(),
-                [ ] ( bin_t b )
-        {
-            return (int)b->id().find("_cpy") != -1 &&
-                   b->itemsInBinCount() == 0 ;
-        } ),
-        ref_bins.end() );
+        pack::RemoveUnusedBins( thePackEngine );
 
     }
 }

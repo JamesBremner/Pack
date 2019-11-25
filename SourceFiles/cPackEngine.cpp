@@ -662,3 +662,26 @@ Item* Item::Build(  item_build_instructions& instructions )
 
     return item;
 }
+
+namespace pack {
+void RemoveUnusedBins( cPackEngine& packer )
+{
+    bin_v_t& bins = packer.bins();
+    bins.erase(
+        remove_if(
+            bins.begin(),
+            bins.end(),
+            [ ] ( bin_t b )
+    {
+        if( (int)b->id().find("_cpy") != -1 )
+        {
+            // generated duplicate bin
+            if( ! b->itemsInBinCount() )
+                // contains no items
+                return true;
+        }
+        return false;
+    } ),
+    bins.end() );
+}
+}

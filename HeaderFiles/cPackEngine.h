@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 #include <vector>
 #include <map>
@@ -33,6 +34,7 @@ using item_v_t = std::vector< item_t >;
 #include "BoxBindingsParser.h"
 #include "TubeBindingsParser.h"
 #include "Utils.h"
+
 
 
 /**  A world of items and bins into which they can be packed
@@ -118,6 +120,11 @@ public:
 
     int CountBinsUsed();
 
+    bin_v_t& bins()
+    {
+        return Bins;
+    }
+
 private:
     std::string myError;
 
@@ -132,3 +139,9 @@ private:
 };
 
 extern cPackEngine thePackEngine;
+
+namespace pack
+{
+void RemoveUnusedBins( cPackEngine& packer );
+
+}
