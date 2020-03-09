@@ -66,8 +66,10 @@ rotation constraint
 Dependencies:
 1.  To compile the algorithm you need to make sure you have boost for c++ installed
 
-
-
 run ./packit4me or ./packit4me -help for options
+
+<hr>
+
+This code can handle both 2D and 3D packing problems, but it is focussed on 3D problems.  Pack2 ( https://github.com/JamesBremner/pack2 ) is optimized for 2D problems.
 
 
