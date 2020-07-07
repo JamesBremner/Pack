@@ -66,9 +66,7 @@ rotation constraint
 Dependencies:
 1.  To compile the algorithm you need to make sure you have boost for c++ installed
 
-run ./packit4me or ./packit4me -help for options
-
-<hr>
+A simple example application demonstrates how to use this code in a standalone application.  Source code at https://github.com/JamesBremner/Pack/blob/master/SourceFiles/example.cpp and codeblocks project at https://github.com/JamesBremner/Pack/blob/master/build/codeblocks/example.cbp
 
 This code can handle both 2D and 3D packing problems, but it is focussed on 3D problems.  Pack2 ( https://github.com/JamesBremner/pack2 ) is optimized for 2D problems.
 
