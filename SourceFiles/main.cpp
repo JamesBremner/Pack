@@ -1,9 +1,11 @@
-
-#include "stdafx.h"
+#include <iostream>
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string.hpp>
+#include "cPackEngine.h"
 
-cWorld theWorld;
+using namespace std;
+
+cPackEngine thePackEngine;
 
 bool ParseOriginalOptions( vector< string >& argv,
                            string& bin,
@@ -101,8 +103,8 @@ bool ParseNewOptions( int argc, char *argv[],
     ("items",po::value<std::string>(),"item specification. Comma separate multiple items. format:\n"
         "{id}:{unit}:{constraints}:{quantity}:{size1}x{size2}x{size3}:{weight}\n" )
     ("o", po::value<std::string>(), "output file. the output (json) are written to this file.  prints to stdout if left out")
-    ("onebin",po::bool_switch( &theWorld.myfOneBin ),"Pack all items into one bin")
-    ("random",po::bool_switch( &theWorld.myfRandom ),"Disable heuristics, use random pack")
+    ("onebin",po::bool_switch( &thePackEngine.myfOneBin ),"Pack all items into one bin")
+    ("random",po::bool_switch( &thePackEngine.myfRandom ),"Disable heuristics, use random pack")
     ;
 
     // parse the command line
@@ -191,12 +193,12 @@ int main(int argc, char *argv[])
     try
     {
 
-        if( theWorld.Build( bin.c_str(), item.c_str() ) != 0 )
+        if( thePackEngine.Build( bin.c_str(), item.c_str() ) != 0 )
         {
             throw std::runtime_error( "ERROR: could not build bins and items" );
         }
 
-        theWorld.Pack();
+        thePackEngine.Pack();
 
     }
     catch ( std::runtime_error& e )
@@ -212,10 +214,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    string json_s = theWorld.getJson();
-    string cutlist_s = theWorld.getCutList();
-    string drawlist_s = theWorld.DrawList();
-    string csv = theWorld.getCSV();
+    string json_s = thePackEngine.getJson();
+    string cutlist_s = thePackEngine.getCutList();
+    string drawlist_s = thePackEngine.DrawList();
+    string csv = thePackEngine.getCSV();
 
 //    if 	( json_s.find("error") != string::npos )
 //    {
@@ -253,7 +255,7 @@ int main(int argc, char *argv[])
 //    filecsv.close();
 
 
-    theWorld.getSTL();
+    thePackEngine.getSTL();
 
     return 0;
 }

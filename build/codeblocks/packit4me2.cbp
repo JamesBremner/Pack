@@ -66,10 +66,6 @@
 		<Unit filename="../../HeaderFiles/Utils.h" />
 		<Unit filename="../../HeaderFiles/cCut.h" />
 		<Unit filename="../../HeaderFiles/cWorld.h" />
-		<Unit filename="../../HeaderFiles/stdafx.h">
-			<Option compile="1" />
-			<Option weight="0" />
-		</Unit>
 		<Unit filename="../../HeaderFiles/stdafx.h.gch" />
 		<Unit filename="../../SourceFiles/Bin.cpp" />
 		<Unit filename="../../SourceFiles/Bin1D.cpp" />
@@ -81,7 +77,6 @@
 		<Unit filename="../../SourceFiles/Item.cpp" />
 		<Unit filename="../../SourceFiles/Item2D.cpp" />
 		<Unit filename="../../SourceFiles/Item3D.cpp" />
-		<Unit filename="../../SourceFiles/Packer.cpp" />
 		<Unit filename="../../SourceFiles/Shape.cpp" />
 		<Unit filename="../../SourceFiles/Shape2D.cpp" />
 		<Unit filename="../../SourceFiles/Shape3D.cpp" />
@@ -90,9 +85,8 @@
 		<Unit filename="../../SourceFiles/TubePacker.cpp" />
 		<Unit filename="../../SourceFiles/Utils.cpp" />
 		<Unit filename="../../SourceFiles/cCut.cpp" />
-		<Unit filename="../../SourceFiles/cWorld.cpp" />
+		<Unit filename="../../SourceFiles/cPackEngine.cpp" />
 		<Unit filename="../../SourceFiles/main.cpp" />
-		<Unit filename="../../SourceFiles/stdafx.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
